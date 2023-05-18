@@ -1,0 +1,35 @@
+@import './../../../styles.scss';
+.header {
+    background-color: $dark-bg;
+    padding: 20px 50px;
+    display: flex;
+    flex-direction: row;
+
+    .navigation {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        .nav-home {
+            color: $light-bg;
+            text-decoration: none;
+            display: flex;
+            flex-direction: row;
+            align-items: center;
+            gap: 5px;
+            
+            .logo-icon {
+                width: 40px;
+            }
+        }
+        .nav-btn-wrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 10px;
+        }
+
+        
+    }
+}
