@@ -1,18 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { TextareaComponent } from './textarea.component';
+import { IconComponent } from './icon.component';
 
-describe('TextareaComponent', () => {
-  let component: TextareaComponent;
-  let fixture: ComponentFixture<TextareaComponent>;
+describe('IconComponent', () => {
+  let component: IconComponent;
+  let fixture: ComponentFixture<IconComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ TextareaComponent ]
+      declarations: [ IconComponent ]
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(TextareaComponent);
+    fixture = TestBed.createComponent(IconComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

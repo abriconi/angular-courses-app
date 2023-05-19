@@ -1,0 +1,16 @@
+@import '../../../styles.scss';
+
+.footer {
+    width: 100%;
+    background-color: $dark-bg;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: auto;
+
+    .rights {
+        padding: 20px 50px 20px 0;
+        color: $text-info-color;
+        margin: 0;
+        font-size: 12px;
+    }
+}
