@@ -8,6 +8,13 @@
     width: 100%;
     cursor: pointer;
     border: none;
+    box-sizing: border-box;
+    white-space: nowrap;
+    justify-content: center;
+
+    &.icon {
+        justify-content: start;
+    }
 }
 .filled {
     border-radius: 3px;
@@ -15,8 +22,6 @@
     display: flex;
     flex-direction: row;
     align-items: center;
-    justify-content: center;
-    box-sizing: content-box;
     gap: 4px;
 }
 .text {
@@ -27,9 +32,6 @@
     background-color: transparent;
     color: $light-bg;
     justify-content: flex-end;
-        img {
-            width: 20px;
-        }
 }
 .linkSpecial {
     width: 100%;
@@ -43,13 +45,13 @@
     text-decoration: underline;
 }
 .large {
-    padding: 10px 0;
+    padding: 10px;
     font-size: 14px;
     max-width: 120px;
     
 }
 .small {
-    padding: 7px 0;
+    padding: 7px;
     font-size: 12px;
     max-width: 90px;
 

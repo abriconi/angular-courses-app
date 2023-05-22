@@ -9,4 +9,5 @@ export class ButtonComponent {
   @Input() variant: 'text' | 'filled' | 'linkSpecial' = 'text';
   @Input() size?: 'small' | 'large' | '' = '';
   @Input() color? : 'primary' | 'secondary' | ''  = '';
+  @Input() icon?: string;
 }

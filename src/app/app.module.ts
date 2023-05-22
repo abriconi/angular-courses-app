@@ -5,28 +5,22 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ButtonComponent } from './shared/button/button.component';
-import { LogoComponent } from './shared/logo/logo.component';
-import { IconComponent } from './shared/icon/icon.component';
 import { CoursesComponent } from './components/courses/courses.component';
-import { BreadcrumpsComponent } from './shared/breadcrumps/breadcrumps.component';
 import { SectionComponent } from './components/courses/section/section.component';
+import { SharedModule } from './shared/shared.module';
 
 @NgModule({
   declarations: [
     AppComponent,
     HeaderComponent,
     FooterComponent,
-    ButtonComponent,
-    LogoComponent,
-    IconComponent,
     CoursesComponent,
-    BreadcrumpsComponent,
     SectionComponent
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    SharedModule,
   ],
   providers: [],
   bootstrap: [AppComponent]

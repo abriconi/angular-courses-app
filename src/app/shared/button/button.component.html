@@ -1,4 +1,10 @@
-<button class="btnDefault" type="button" [ngClass]="[variant, size, color]">
+<button 
+  class="btnDefault" 
+  type="button" 
+  [ngClass]="[variant, size, color]"
+  [class.icon] = "!!icon"
+>
+  <app-icon *ngIf="icon" [icon]="icon"></app-icon>
   <ng-content></ng-content>
 </button>
 
