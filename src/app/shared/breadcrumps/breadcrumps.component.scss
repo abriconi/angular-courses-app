@@ -1,0 +1,12 @@
+@import '../../../styles.scss';
+
+.breadcrumps {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 25px 80px; // padding-wrapper
+    color: $text-main-color;
+    font-size: 14px;
+    font-weight: 600;
+    background-color: $light-bg;
+    
+}

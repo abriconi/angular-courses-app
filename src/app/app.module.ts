@@ -5,9 +5,12 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './components/header/header.component';
 import { FooterComponent } from './components/footer/footer.component';
-import { ButtonComponent } from './common/button/button.component';
-import { LogoComponent } from './common/logo/logo.component';
-import { IconComponent } from './common/icon/icon.component';
+import { ButtonComponent } from './shared/button/button.component';
+import { LogoComponent } from './shared/logo/logo.component';
+import { IconComponent } from './shared/icon/icon.component';
+import { CoursesComponent } from './components/courses/courses.component';
+import { BreadcrumpsComponent } from './shared/breadcrumps/breadcrumps.component';
+import { SectionComponent } from './components/courses/section/section.component';
 
 @NgModule({
   declarations: [
@@ -16,7 +19,10 @@ import { IconComponent } from './common/icon/icon.component';
     FooterComponent,
     ButtonComponent,
     LogoComponent,
-    IconComponent
+    IconComponent,
+    CoursesComponent,
+    BreadcrumpsComponent,
+    SectionComponent
   ],
   imports: [
     BrowserModule,

@@ -1,9 +1,13 @@
 @import './../../../styles.scss';
 .header {
     background-color: $dark-bg;
-    padding: 20px 50px;
     display: flex;
     flex-direction: row;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 60px;
 
     .navigation {
         display: flex;
@@ -11,23 +15,12 @@
         align-items: center;
         justify-content: space-between;
         width: 100%;
+        padding: 12px 80px;
 
-        // .nav-home {
-        //     color: $light-bg;
-        //     text-decoration: none;
-        //     display: flex;
-        //     flex-direction: row;
-        //     align-items: center;
-        //     gap: 5px;
-            
-        //     .logo-icon {
-        //         width: 40px;
-        //     }
-        // }
         .nav-btn-wrapper {
             display: flex;
             flex-direction: row;
-            gap: 10px;
+            width: 18%;
         }
 
         

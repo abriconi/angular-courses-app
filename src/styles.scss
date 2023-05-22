@@ -1,11 +1,6 @@
 html {
     height: 100%;
 }
-body {
-    margin: 0;
-    font-family: 'Roboto', sans-serif;
-    min-height: 100vh
-}
 .root {
     display: block;
     min-height: 100%;
@@ -24,8 +19,24 @@ $link-coor: #648bef;
 
 $text-main-color: #333333;
 $text-info-color: #b0b3bd;
+$text-description-color: #787a85;
+$text-light-color: #cccdd8;
 
 $addition-color:#ced0dc;
+
+body {
+    margin: 0;
+    font-family: 'Roboto', sans-serif;
+    min-height: 100vh;
+    background-color: $grey-bg;
+}
+.heading {
+    font-size: 25px;
+    font-weight: 400;
+    margin: 0;
+    color: $text-main-color;
+}
+
 
 
 
