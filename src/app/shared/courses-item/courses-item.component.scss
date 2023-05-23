@@ -1,0 +1,62 @@
+@import '../../../styles.scss';
+
+.section {
+    background-color: $light-bg;
+    width: 100%;
+    border-radius: 7px;
+    display: flex;
+    box-sizing: border-box;
+    box-shadow: 5px 6px 6px $addition-color;
+    padding: 25px $wrapper;
+}
+.course {
+    padding: 30px;
+    flex-direction: column;
+    width: 100%;
+
+
+    .header {
+        display: flex;
+        flex-direction: row;
+        align-items: center;
+        justify-content: space-between;
+        width: 100%;
+
+        .infoWrapper {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+
+            .infoItem {
+                display: flex;
+                flex-direction: row;
+                gap: 5px;
+                align-items: center;
+                color: $text-info-color;
+                font-size: 14px;
+            }
+        }
+    }
+    .description {
+        display: flex;
+        flex-direction: row;
+        width: 100%;
+        gap: 20px;
+        align-items: center;
+
+        .descriptionText {
+            color: $text-description-color;
+            font-size: 14px;
+            line-height: 1.5;
+            margin: 0;
+            padding-top: 15px;
+            width: 90%;
+        }
+        .editArea {
+            display: flex;
+            flex-direction: row;
+            gap: 15px;
+            width: 20%;
+        }
+    }
+}

@@ -5,7 +5,7 @@
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 25px 80px; // padding-wrapper
+    padding: 25px $wrapper;
 
     .searchForm {
         max-width: 50%;
@@ -14,7 +14,7 @@
         flex-direction: row;
         gap: 10px;
         justify-content: flex-start;
-    
+
         .inputDefault {
             width: 70%;
             padding: 10px 0 10px 10px;
@@ -22,17 +22,17 @@
             border: 1px solid $addition-color;
             border-radius: 3px;
             font-size: 14px;
-    
+
             &::placeholder {
-                color: $text-light-color; 
+                color: $text-light-color;
             }
             &:focus {
                 outline: none;
-    
+
                 &::placeholder {
                     color: transparent;
                 }
-            } 
+            }
         }
         .searchBtnContainer {
             display: flex;

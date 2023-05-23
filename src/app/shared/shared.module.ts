@@ -4,6 +4,7 @@ import { ButtonComponent } from './button/button.component';
 import { IconComponent } from './icon/icon.component';
 import { LogoComponent } from './logo/logo.component';
 import { CommonModule } from '@angular/common';
+import { CoursesItemComponent } from './courses-item/courses-item.component';
 
 
 
@@ -13,6 +14,7 @@ import { CommonModule } from '@angular/common';
     LogoComponent,
     IconComponent,
     BreadcrumpsComponent,
+    CoursesItemComponent,
   ],
   imports: [
     CommonModule
@@ -23,6 +25,7 @@ import { CommonModule } from '@angular/common';
     LogoComponent,
     IconComponent,
     BreadcrumpsComponent,
+    CoursesItemComponent,
   ],
 })
 export class SharedModule { }
