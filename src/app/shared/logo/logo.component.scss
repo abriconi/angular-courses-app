@@ -1,0 +1,14 @@
+@import '../../../styles.scss';
+
+.nav-home {
+    color: $light-bg;
+    text-decoration: none;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 5px;
+    
+    .logo-icon {
+        width: 40px;
+    }
+}

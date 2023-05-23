@@ -1,0 +1,68 @@
+@import '../../../styles.scss';
+
+:host {
+    display: block;
+    width: 100%;
+}
+.btnDefault {
+    width: 100%;
+    cursor: pointer;
+    border: none;
+    box-sizing: border-box;
+    white-space: nowrap;
+    justify-content: center;
+
+    &.icon {
+        justify-content: start;
+    }
+}
+.filled {
+    border-radius: 3px;
+    color: $light-bg;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 4px;
+}
+.text {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    gap: 10px;
+    background-color: transparent;
+    color: $light-bg;
+    justify-content: flex-end;
+}
+.linkSpecial {
+    width: 100%;
+    padding: 10px;
+    margin: 25px 0;
+    font-size: 14px;
+    background-color: $light-bg;
+    border-radius: 7px;
+    box-shadow: 5px 6px 6px $addition-color;
+    color: blue;
+    text-decoration: underline;
+}
+.large {
+    padding: 10px;
+    font-size: 14px;
+    max-width: 120px;
+    
+}
+.small {
+    padding: 7px;
+    font-size: 12px;
+    max-width: 90px;
+
+}
+.primary {
+    background-color: $primary-btn-color;
+}
+.secondary {
+    background-color: $secondary-btn-color;
+}
+
+
+
+
