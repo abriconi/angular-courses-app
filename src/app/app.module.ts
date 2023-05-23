@@ -8,6 +8,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { SectionComponent } from './components/courses/section/section.component';
 import { SharedModule } from './shared/shared.module';
+import { InputComponent } from './shared/input/input.component';
 
 @NgModule({
   declarations: [
@@ -15,7 +16,8 @@ import { SharedModule } from './shared/shared.module';
     HeaderComponent,
     FooterComponent,
     CoursesComponent,
-    SectionComponent
+    SectionComponent,
+    InputComponent
   ],
   imports: [
     BrowserModule,

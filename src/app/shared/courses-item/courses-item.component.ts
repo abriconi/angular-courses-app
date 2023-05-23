@@ -1,5 +1,6 @@
 import { Component, Input } from '@angular/core'
 import { type Course } from 'src/app/utilus/global.moduls'
+import { formatMinutesToHours } from 'src/app/helpers/formatMinutesToHours';
 
 @Component({
   selector: 'app-courses-item',
@@ -9,8 +10,8 @@ import { type Course } from 'src/app/utilus/global.moduls'
 export class CoursesItemComponent {
   @Input() courseData?: Course
 
-  log() {
-    console.log(this.courseData);
-
+  formatDuration(minutes: string): string {
+    return formatMinutesToHours(minutes);
   }
+
 }

@@ -14,25 +14,9 @@
         flex-direction: row;
         gap: 10px;
         justify-content: flex-start;
-
-        .inputDefault {
-            width: 70%;
-            padding: 10px 0 10px 10px;
-            color: $text-main-color;
-            border: 1px solid $addition-color;
-            border-radius: 3px;
-            font-size: 14px;
-
-            &::placeholder {
-                color: $text-light-color;
-            }
-            &:focus {
-                outline: none;
-
-                &::placeholder {
-                    color: transparent;
-                }
-            }
+        .searchInputContainer {
+          display: flex;
+          width: 70%;
         }
         .searchBtnContainer {
             display: flex;
