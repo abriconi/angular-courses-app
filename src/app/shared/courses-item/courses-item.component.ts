@@ -13,5 +13,8 @@ export class CoursesItemComponent {
   formatDuration(minutes: string): string {
     return formatMinutesToHours(minutes);
   }
+  handleClick(id: string) {
+    console.log(`Course's id: ${id}`);
+  }
 
 }

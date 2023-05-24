@@ -11,5 +11,5 @@ export class ButtonComponent {
   @Input() size?: 'small' | 'large' | '' = '';
   @Input() color? : 'primary' | 'secondary' | ''  = '';
   @Input() icon?: string;
-  @Input() onClick?: () => void;
+  @Input() onClick?: () => void | undefined;
 }
