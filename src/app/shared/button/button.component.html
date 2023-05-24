@@ -3,6 +3,7 @@
   [type]="type"
   [ngClass]="[variant, size, color]"
   [class.icon] = "!!icon"
+  (click)="onClick && onClick()"
 >
   <app-icon *ngIf="icon" [icon]="icon"></app-icon>
   <ng-content></ng-content>

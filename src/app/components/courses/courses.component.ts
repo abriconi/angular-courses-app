@@ -10,4 +10,8 @@ import { Course } from 'src/app/utilus/global.moduls';
 export class CoursesComponent {
   courses:Course[] = coursesMockedData;
 
+  handleClick():void {
+    console.log('Button "Load more" cliked');
+  }
+
 }
