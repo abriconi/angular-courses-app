@@ -1,0 +1,17 @@
+<form class="searchForm" [formGroup]="searchForm" (ngSubmit)="handleSearch()">
+  <div class="searchInputContainer">
+    <input
+      type="text"
+      class="inputDefault"
+      id="searchText"
+      formControlName="searchText"
+      placeholder="Text to search"
+    />
+  </div>
+
+  <div class="searchBtnContainer">
+    <app-button type="submit" variant="filled" size="large" color="secondary">
+      Search
+    </app-button>
+  </div>
+</form>

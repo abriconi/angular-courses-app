@@ -1,32 +1,23 @@
 @import '../../../../styles.scss';
 
-.searchPanel {
+:host {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  width: 100%;
+  padding: 25px $wrapper;
+  box-sizing: border-box;
+
+  .searchPanel {
     width: 100%;
     box-sizing: border-box;
     display: flex;
     flex-direction: column;
-    padding: 25px $wrapper;
-
-    .searchForm {
-        max-width: 50%;
-        background-color: $grey-bg;
-        display: flex;
-        flex-direction: row;
-        gap: 10px;
-        justify-content: flex-start;
-        .searchInputContainer {
-          display: flex;
-          width: 70%;
-        }
-        .searchBtnContainer {
-            display: flex;
-            width: 30%;
-        }
-    }
-    .addCourse {
-        background-color: $grey-bg;
-        align-self: flex-end;
-        width: 11%;
-    }
+  }
+  .addCourse {
+    background-color: $grey-bg;
+    align-self: flex-end;
+  }
 }
+
 

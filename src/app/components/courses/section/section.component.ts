@@ -7,4 +7,8 @@ import { Component } from '@angular/core';
 })
 export class SectionComponent {
 
+  handleSearch(value: string):void {
+    console.log(value);
+  }
+
 }

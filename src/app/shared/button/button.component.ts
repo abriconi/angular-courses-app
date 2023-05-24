@@ -6,6 +6,7 @@ import { Component, Input } from '@angular/core';
   styleUrls: ['./button.component.scss']
 })
 export class ButtonComponent {
+  @Input() type: 'submit' | 'reset' | 'button' = 'button';
   @Input() variant: 'text' | 'filled' | 'linkSpecial' = 'text';
   @Input() size?: 'small' | 'large' | '' = '';
   @Input() color? : 'primary' | 'secondary' | ''  = '';
