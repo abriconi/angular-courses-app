@@ -13,8 +13,10 @@ export class CoursesItemComponent {
   formatDuration(minutes: string): string {
     return formatMinutesToHours(minutes);
   }
+  handleEdit(id: string): void {
+    console.log(`Button "Edit" cliked on course ${id}`);
+  }
   handleClick(id: string) {
     console.log(`Course's id: ${id}`);
   }
-
 }
