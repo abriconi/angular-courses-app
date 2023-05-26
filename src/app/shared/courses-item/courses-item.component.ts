@@ -16,7 +16,7 @@ export class CoursesItemComponent {
   handleEdit(id: string): void {
     console.log(`Button "Edit" cliked on course ${id}`);
   }
-  handleClick(id: string) {
+  deleteClick(id: string) {
     console.log(`Course's id: ${id}`);
   }
 }

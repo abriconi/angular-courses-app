@@ -19,7 +19,7 @@ export class CoursesComponent implements OnInit {
     console.log('onInit');
   }
 
-  handleClick():void {
+  loadMoreClick():void {
     console.log('Button "Load more" cliked');
   }
 }
