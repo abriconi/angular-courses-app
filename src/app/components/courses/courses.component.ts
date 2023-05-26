@@ -22,4 +22,7 @@ export class CoursesComponent implements OnInit {
   loadMoreClick():void {
     console.log('Button "Load more" cliked');
   }
+  logDeletedCourse(id: string): void {
+    console.log(`Deleted course ID: ${id}`);
+  }
 }

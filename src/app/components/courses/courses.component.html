@@ -4,7 +4,10 @@
     <div class="coursesWrapper">
         <ul class="coursesList">
           <li *ngFor="let course of courses; trackBy: trackCourseById">
-            <app-courses-item [courseData]="course"></app-courses-item>
+            <app-courses-item
+              [courseData]="course"
+              (deleteCourse)="logDeletedCourse($event)"
+            ></app-courses-item>
           </li>
         </ul>
 
