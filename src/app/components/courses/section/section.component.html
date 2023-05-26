@@ -1,26 +1,12 @@
 <div class="searchPanel">
-    <div class="searchForm">
-        <div class="searchInputContainer">
-          <app-input></app-input>
-        </div>
-        <div class="searchBtnContainer">
-            <app-button
-                variant="filled"
-                size="large"
-                color="secondary">
-                Search
-            </app-button>
-        </div>
-      </div>
-    <div class="addCourse">
-        <app-button
-            variant="filled"
-            size="large"
-            color="primary"
-            icon="add_circle">
-            <!-- <app-icon icon="add_circle"></app-icon> -->
-            Add course
-        </app-button>
-    </div>
+  <app-search-form (search)="handleSearch($event)"></app-search-form>
 </div>
-
+<div class="addCourse">
+  <app-button
+      variant="filled"
+      size="large"
+      color="primary"
+      icon="add_circle">
+      Add course
+  </app-button>
+</div>

@@ -20,6 +20,7 @@
                 size="small"
                 color="primary"
                 icon="edit"
+                (click)="handleEdit(courseData.id)"
             >
                 Edit
             </app-button>
@@ -28,6 +29,7 @@
                 size="small"
                 color="primary"
                 icon="delete"
+                (click)="deleteClick(courseData.id)"
             >
                 Delete
             </app-button>

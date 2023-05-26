@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core'
+import { Component, EventEmitter, Input, Output } from '@angular/core'
 import { type Course } from 'src/app/utilus/global.moduls'
 import { formatMinutesToHours } from 'src/app/helpers/formatMinutesToHours';
 
@@ -8,10 +8,17 @@ import { formatMinutesToHours } from 'src/app/helpers/formatMinutesToHours';
   styleUrls: ['./courses-item.component.scss']
 })
 export class CoursesItemComponent {
-  @Input() courseData?: Course
+  @Input() courseData?: Course;
+  @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>();
+
 
   formatDuration(minutes: string): string {
     return formatMinutesToHours(minutes);
   }
-
+  handleEdit(id: string): void {
+    console.log(`Button "Edit" cliked on course ${id}`);
+  }
+  deleteClick(id: string) {
+    this.deleteCourse.emit(id);
+  }
 }

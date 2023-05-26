@@ -3,13 +3,20 @@
     <app-section></app-section>
     <div class="coursesWrapper">
         <ul class="coursesList">
-          <li *ngFor="let course of courses">
-            <app-courses-item [courseData]="course"></app-courses-item>
+          <li *ngFor="let course of courses; trackBy: trackCourseById">
+            <app-courses-item
+              [courseData]="course"
+              (deleteCourse)="logDeletedCourse($event)"
+            ></app-courses-item>
           </li>
         </ul>
 
         <div class="coursesList">
-            <app-button variant="linkSpecial">Load more</app-button>
+            <app-button
+              variant="linkSpecial"
+              [onClick]="loadMoreClick"
+            >Load more
+            </app-button>
         </div>
     </div>
 </div>

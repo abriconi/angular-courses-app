@@ -1,0 +1,40 @@
+@import '../../../styles.scss';
+.searchForm {
+  max-width: 50%;
+  background-color: $grey-bg;
+  display: flex;
+  flex-direction: row;
+  gap: 10px;
+  justify-content: flex-start;
+
+  .searchInputContainer {
+    display: flex;
+    width: 70%;
+
+    .inputDefault {
+      width: 100%;
+      padding: 10px 0 10px 10px;
+      color: $text-main-color;
+      border: 1px solid $addition-color;
+      border-radius: 3px;
+      font-size: 14px;
+      box-sizing: border-box;
+
+      &::placeholder {
+          color: $text-light-color;
+      }
+      &:focus {
+          outline: none;
+
+          &::placeholder {
+              color: transparent;
+          }
+      }
+    }
+  }
+  .searchBtnContainer {
+      display: flex;
+      width: 30%;
+  }
+}
+
