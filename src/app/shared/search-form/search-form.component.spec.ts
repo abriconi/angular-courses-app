@@ -30,27 +30,4 @@ describe('SearchFormComponent', () => {
     component.handleSearch();
     expect(component.search.emit).toHaveBeenCalledWith({ searchText: 'example' });
   });
-
-  // it('should not emit search event when searchForm is invalid', () => {
-  //   spyOn(component.search, 'emit');
-  //   component.searchForm.patchValue({ searchText: '' });
-  //   component.handleSearch();
-  //   fixture.detectChanges();
-  //   expect(component.search.emit).not.toHaveBeenCalled();
-  // });
-  // it('should not emit search event when searchForm is invalid', () => {
-  //   spyOn(component.search, 'emit');
-  //   component.searchForm.patchValue({ searchText: '' });
-  //   component.searchForm.markAllAsTouched(); // Trigger form validation
-  //   component.handleSearch();
-  //   expect(component.search.emit).not.toHaveBeenCalled();
-  // });
-  // it('should not emit search event when searchForm is invalid', () => {
-  //   spyOn(component.search, 'emit');
-  //   component.searchForm.patchValue({ searchText: '' });
-  //   component.searchForm.controls.searchText.updateValueAndValidity(); // Trigger form control validation
-  //   component.handleSearch();
-  //   expect(component.search.emit).not.toHaveBeenCalled();
-  // });
-
 });

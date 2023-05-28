@@ -1,7 +1,6 @@
 import { type ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { CoursesItemComponent } from './courses-item.component';
-// import { formatDuration } from '../../helpers/formatMinutesToHours'
 
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent
