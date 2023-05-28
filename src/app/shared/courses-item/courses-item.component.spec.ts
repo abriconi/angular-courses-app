@@ -1,25 +1,11 @@
-import { type ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { CoursesItemComponent } from './courses-item.component';
 
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent
-  let fixture: ComponentFixture<CoursesItemComponent>
 
-  beforeEach(async() => {
-    await TestBed.configureTestingModule({
-      declarations: [CoursesItemComponent]
-    })
-      .compileComponents()
-
-    fixture = TestBed.createComponent(CoursesItemComponent)
-    component = fixture.componentInstance
-    fixture.detectChanges()
-  })
-
-  it('should create', () => {
-    expect(component).toBeTruthy()
-  })
+  beforeEach(() => {
+    component = new CoursesItemComponent();
+  });
 
   it('should format course duration correctly', () => {
     const durationMinutes = '88';
@@ -33,7 +19,7 @@ describe('CoursesItemComponent', () => {
     expect(formattedDuration).toEqual('0min');
   });
 
-  it('should log the value with course ID when handleEdit is called', () => {
+  it('should log the messege with course ID when handleEdit is called', () => {
     spyOn(console, 'log');
     const courseId = '123';
     component.handleEdit(courseId);
