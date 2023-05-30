@@ -1,7 +1,7 @@
 <div *ngIf="courseData" class="section course">
     <div class="header">
       <div class="headingWrapper">
-        <h1 class="heading">{{ courseData.title }}</h1>
+        <h1 class="heading">{{ courseData.title | uppercase }}</h1>
         <app-icon icon="star_rate" *ngIf="courseData.topRated" variant="rate"></app-icon></div>
       <div class="infoWrapper">
           <div class="infoItem">
