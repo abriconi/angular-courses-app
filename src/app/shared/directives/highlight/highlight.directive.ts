@@ -19,7 +19,6 @@ export class HighlightDirective implements OnInit {
     const creationDate = new Date(formattedDateString);
 
     const daysDifference = (currentDate.getTime() - creationDate.getTime()) / (1000 * 60 * 60 * 24);
-    console.log('daysDifference', daysDifference);
 
     if (daysDifference <= 14 && 0 < daysDifference) {
       this.elementRef.nativeElement.style.borderColor = 'green';

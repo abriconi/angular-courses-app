@@ -1,1 +1,6 @@
-<span *ngIf="icon" class="material-icons">{{icon}}</span>
+<span
+  *ngIf="icon"
+  class="material-icons"
+  [ngClass]="variant ? [variant] : []">
+  {{icon}}
+</span>
