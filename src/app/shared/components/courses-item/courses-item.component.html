@@ -6,11 +6,11 @@
       <div class="infoWrapper">
           <div class="infoItem">
               <app-icon icon="schedule"></app-icon>
-              <p>{{ formatDuration(courseData.duration) }}</p>
+              <p>{{ courseData.duration | duration }}</p>
           </div>
           <div class="infoItem">
               <app-icon icon="calendar_today"></app-icon>
-              <p>{{ courseData.creationDate }}</p>
+              <p>{{ courseData.creationDate | date: 'dd MMM, yyyy' }}</p>
           </div>
       </div>
     </div>

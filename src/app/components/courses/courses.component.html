@@ -4,7 +4,7 @@
     <div class="coursesWrapper">
       <ng-container *ngIf="courses.length > 0; else noData">
         <ul class="coursesList">
-          <li *ngFor="let course of courses; trackBy: trackCourseById">
+          <li *ngFor="let course of courses | orderBy ; trackBy: trackCourseById">
             <app-courses-item
               [courseData]="course"
               [appHighlight]="course.creationDate"

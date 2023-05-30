@@ -8,6 +8,8 @@ import { CommonModule } from '@angular/common';
 import { CoursesItemComponent } from './components/courses-item/courses-item.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { HighlightDirective } from './directives/highlight/highlight.directive';
+import { OrderByPipe } from './pipes/orderBy.pipe';
+import { DurationPipe } from './pipes/duration.pipe';
 
 
 
@@ -20,6 +22,9 @@ import { HighlightDirective } from './directives/highlight/highlight.directive';
     BreadcrumpsComponent,
     CoursesItemComponent,
     HighlightDirective,
+    OrderByPipe,
+    DurationPipe,
+
   ],
   imports: [
     CommonModule,
@@ -34,6 +39,8 @@ import { HighlightDirective } from './directives/highlight/highlight.directive';
     BreadcrumpsComponent,
     CoursesItemComponent,
     HighlightDirective,
+    OrderByPipe,
+    DurationPipe,
   ],
 })
 export class SharedModule { }

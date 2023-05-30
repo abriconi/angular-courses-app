@@ -1,4 +1,4 @@
-import { type Course } from './global.moduls'
+  import { type Course } from './global.moduls'
 
  export const coursesMockedData: Course[] = [
   {
