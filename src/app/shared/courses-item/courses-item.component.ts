@@ -16,7 +16,7 @@ export class CoursesItemComponent {
     return formatMinutesToHours(minutes);
   }
   handleEdit(id: string): void {
-    console.log(`Button "Edit" cliked on course ${id}`);
+    console.log(`Button "Edit" clicked on course ${id}`);
   }
   deleteClick(id: string) {
     this.deleteCourse.emit(id);
