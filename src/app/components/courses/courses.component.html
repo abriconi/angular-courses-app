@@ -6,6 +6,7 @@
           <li *ngFor="let course of courses; trackBy: trackCourseById">
             <app-courses-item
               [courseData]="course"
+              [appHighlight]="course.creationDate"
               (deleteCourse)="logDeletedCourse($event)"
             ></app-courses-item>
           </li>

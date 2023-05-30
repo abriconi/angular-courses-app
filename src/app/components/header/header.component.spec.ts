@@ -1,9 +1,9 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
 import { HeaderComponent } from './header.component';
-import { LogoComponent } from '../../shared/logo/logo.component';
-import { ButtonComponent } from '../../shared/button/button.component';
-import { IconComponent } from '../../shared/icon/icon.component';
+import { LogoComponent } from '../../shared/components/logo/logo.component';
+import { ButtonComponent } from '../../shared/components/button/button.component';
+import { IconComponent } from '../../shared/components/icon/icon.component';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;

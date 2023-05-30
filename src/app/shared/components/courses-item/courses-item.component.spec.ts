@@ -1,6 +1,6 @@
 import { TestBed } from '@angular/core/testing';
 import { CoursesItemComponent } from './courses-item.component';
-import { SharedModule } from '../../shared/shared.module';
+import { SharedModule } from '../../shared.module';
 
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent;

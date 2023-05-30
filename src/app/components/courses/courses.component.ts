@@ -1,13 +1,16 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ContentChildren, OnInit } from '@angular/core';
+import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
 import { coursesMockedData } from 'src/app/utilus/global.constans';
 import { Course } from 'src/app/utilus/global.moduls';
 
 @Component({
   selector: 'app-courses',
   templateUrl: './courses.component.html',
-  styleUrls: ['./courses.component.scss']
+  styleUrls: ['./courses.component.scss'],
 })
 export class CoursesComponent implements OnInit {
+  @ContentChildren(HighlightDirective) appHighlight: any;
+
   courses: Course[] = [];
 
   trackCourseById(_index: number, course: Course): string {
