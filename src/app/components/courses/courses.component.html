@@ -2,6 +2,7 @@
     <app-breadcrumps></app-breadcrumps>
     <app-section></app-section>
     <div class="coursesWrapper">
+      <ng-container *ngIf="courses.length > 0; else noData">
         <ul class="coursesList">
           <li *ngFor="let course of courses; trackBy: trackCourseById">
             <app-courses-item
@@ -19,5 +20,12 @@
             >Load more
             </app-button>
         </div>
+      </ng-container>
+      <ng-template #noData>
+        <div class="noDataWrapper">
+          <p>No data. Feel free to add new course</p>
+        </div>
+      </ng-template>
+
     </div>
 </div>
