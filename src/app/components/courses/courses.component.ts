@@ -43,6 +43,11 @@ export class CoursesComponent implements OnInit {
     console.log(`Deleted course ID: ${id}`);
   }
   handleSearch(searchText: string) {
-    this.courses = this.filterPipe.transform(this.courses, searchText);
+    if (searchText.trim() === '') {
+      this.courses = coursesMockedData; // Display all courses
+    } else {
+      this.courses = this.filterPipe.transform(this.courses, searchText);
+    }
+
   }
 }
