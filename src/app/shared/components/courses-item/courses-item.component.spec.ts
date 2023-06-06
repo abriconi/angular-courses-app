@@ -1,28 +1,32 @@
 import { TestBed } from '@angular/core/testing';
 import { CoursesItemComponent } from './courses-item.component';
 import { SharedModule } from '../../shared.module';
+import { DurationPipe } from '../../pipes/duration.pipe';
 
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent;
+  let pipe: DurationPipe;
 
   beforeEach(() => {
     TestBed.configureTestingModule({
       declarations: [CoursesItemComponent],
-      imports: [SharedModule]
+      imports: [SharedModule],
+      providers: [DurationPipe]
     });
+    pipe = TestBed.inject(DurationPipe);
   });
 
   it('should format course duration correctly', () => {
     component = TestBed.createComponent(CoursesItemComponent).componentInstance;
     const durationMinutes = '88';
-    const formattedDuration = component.formatDuration(durationMinutes);
+    const formattedDuration = pipe.transform(durationMinutes);
     expect(formattedDuration).toEqual('1h 28min');
   });
 
   it('should return "0min" for duration of 0 minutes', () => {
     component = TestBed.createComponent(CoursesItemComponent).componentInstance;
     const durationMinutes = '0';
-    const formattedDuration = component.formatDuration(durationMinutes);
+    const formattedDuration = pipe.transform(durationMinutes);
     expect(formattedDuration).toEqual('0min');
   });
 

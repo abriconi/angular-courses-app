@@ -13,10 +13,12 @@ export class SearchFormComponent {
     searchText: new FormControl(''),
   });
 
-  handleSearch() {
+  handleSearch(event: Event) {
+    event.preventDefault();
+
     if (this.searchForm.valid) {
-      const searchText = this.searchForm.value.searchText; // Extract the search text
-      this.search.emit(searchText); // Emit the search text value
+      const searchText = this.searchForm.value.searchText;
+      this.search.emit(searchText);
     }
   }
 }

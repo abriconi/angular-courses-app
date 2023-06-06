@@ -33,7 +33,6 @@ export class CoursesComponent implements OnInit {
   ngOnInit(): void {
     this.courses = coursesMockedData;
     this.sortCoursesByCreationDate();
-    console.log('onInit');
   }
 
   loadMoreClick():void {
@@ -44,7 +43,7 @@ export class CoursesComponent implements OnInit {
   }
   handleSearch(searchText: string) {
     if (searchText.trim() === '') {
-      this.courses = coursesMockedData; // Display all courses
+      this.courses = coursesMockedData;
     } else {
       this.courses = this.filterPipe.transform(this.courses, searchText);
     }
