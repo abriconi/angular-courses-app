@@ -14,10 +14,9 @@ export class SearchFormComponent {
   });
 
   handleSearch() {
-    console.log(this.searchForm.value);
-
     if (this.searchForm.valid) {
-      this.search.emit(this.searchForm.value);
+      const searchText = this.searchForm.value.searchText; // Extract the search text
+      this.search.emit(searchText); // Emit the search text value
     }
   }
 }
