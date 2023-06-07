@@ -89,7 +89,14 @@
             }
         }
     }
-
+    .noDataWrapper {
+      display: flex;
+      background-color: $light-bg;
+      margin: 0 $wrapper;
+      box-shadow: 5px 6px 6px $addition-color;
+      border-radius: 7px;
+      justify-content: center;
+    }
 
 
 }

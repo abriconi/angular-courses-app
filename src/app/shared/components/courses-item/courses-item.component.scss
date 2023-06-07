@@ -1,12 +1,17 @@
-@import '../../../styles.scss';
+@import '../../../../styles.scss';
+
+:host {
+  display: block;
+  border: 1px solid transparent;
+  box-shadow: 5px 6px 6px $addition-color;
+  border-radius: 7px;
+  background-color: $light-bg;
+}
 
 .section {
-    background-color: $light-bg;
     width: 100%;
-    border-radius: 7px;
     display: flex;
     box-sizing: border-box;
-    box-shadow: 5px 6px 6px $addition-color;
     padding: 25px $wrapper;
 }
 .course {
@@ -14,13 +19,19 @@
     flex-direction: column;
     width: 100%;
 
-
     .header {
         display: flex;
         flex-direction: row;
         align-items: center;
         justify-content: space-between;
         width: 100%;
+
+        .headingWrapper {
+          display: flex;
+          flex-direction: row;
+          gap: 10px;
+          align-items: center;
+        }
 
         .infoWrapper {
             display: flex;

@@ -1,8 +1,8 @@
-<form class="searchForm" [formGroup]="searchForm" (ngSubmit)="handleSearch()">
+<form class="searchForm" [formGroup]="searchForm" (ngSubmit)="handleSearch($event)">
   <div class="searchInputContainer">
     <input
       type="text"
-      class="inputDefault"
+      class="inputDefault searchInput"
       id="searchText"
       formControlName="searchText"
       placeholder="Text to search"
@@ -10,7 +10,7 @@
   </div>
 
   <div class="searchBtnContainer">
-    <app-button type="submit" variant="filled" size="large" color="secondary">
+    <app-button type="submit" variant="filled" size="large" color="secondary" class="searchBtn">
       Search
     </app-button>
   </div>

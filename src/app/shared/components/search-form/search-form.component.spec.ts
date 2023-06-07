@@ -24,10 +24,16 @@ describe('SearchFormComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should emit search event with searchForm value when searchForm is valid', () => {
+  it('should emit search event with searchForm value when form is valid', () => {
     spyOn(component.search, 'emit');
-    component.searchForm.patchValue({ searchText: 'example' });
-    component.handleSearch();
-    expect(component.search.emit).toHaveBeenCalledWith({ searchText: 'example' });
+    const searchValue = 'example';
+    const inputElement = fixture.nativeElement.querySelector('.searchInput');
+    const buttonElement = fixture.nativeElement.querySelector('.searchBtn').querySelector('button');
+
+    inputElement.value = searchValue;
+    inputElement.dispatchEvent(new Event('input'));
+    fixture.detectChanges();
+    buttonElement.click();
+    expect(component.search.emit).toHaveBeenCalledWith(searchValue);
   });
 });

@@ -10,6 +10,7 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { SectionComponent } from './components/courses/section/section.component';
 import { SharedModule } from './shared/shared.module';
 
+
 @NgModule({
   declarations: [
     AppComponent,

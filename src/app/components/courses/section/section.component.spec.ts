@@ -23,11 +23,13 @@ describe('SectionComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-  
+
   it('should log the search value when handleSearch is called', () => {
-    const consoleSpy = spyOn(console, 'log');
     const searchValue = 'example search';
+    const searchEmitterSpy = spyOn(component.search, 'emit');
+
     component.handleSearch(searchValue);
-    expect(consoleSpy).toHaveBeenCalledWith(searchValue);
+
+    expect(searchEmitterSpy).toHaveBeenCalledWith(searchValue);
   });
 });
