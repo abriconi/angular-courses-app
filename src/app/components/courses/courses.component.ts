@@ -6,6 +6,7 @@ import { Course } from 'src/app/utilus/global.moduls';
 
 import { OrderByPipe } from '../../shared/pipes/orderBy.pipe';
 import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
+import { CourseService } from 'src/app/course.service';
 
 @Component({
   selector: 'app-courses',
@@ -16,7 +17,11 @@ import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
 
 export class CoursesComponent implements OnInit {
 
-  constructor(private orderByPipe: OrderByPipe, private filterPipe: FilterPipe) { }
+  constructor(
+    private orderByPipe: OrderByPipe,
+    private filterPipe: FilterPipe,
+    private courseService: CourseService,
+  ) { }
 
   @ContentChildren(HighlightDirective) appHighlight: any;
 
@@ -31,7 +36,11 @@ export class CoursesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.courses = coursesMockedData;
+    this.getCourses();
+  }
+
+  private getCourses(): void {
+    this.courses = this.courseService.getList();
     this.sortCoursesByCreationDate();
   }
 

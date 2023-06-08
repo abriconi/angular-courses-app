@@ -1,0 +1,46 @@
+<div class="courseInfoWrapper">
+  <h1 class="heading">New course</h1>
+  <form class="courseInfoForm">
+    <label class="fieldLabel fieldLabelLarge"> Title:
+      <span class="requiredMark">*required</span>
+      <input type="text" placeholder="Add title" class="inputDefault">
+    </label>
+    <label class="fieldLabel fieldLabelLarge"> Description:
+      <textarea rows="4" cols="50" placeholder="Add description" class="inputDefault"></textarea>
+      <span class="requiredMark">*required</span>
+    </label>
+    <label class="fieldLabel fieldLabelSmall">Duration
+      <input type="text" placeholder="minutes" class="inputDefault">
+      <span class="requiredMark">*required</span>
+    </label>
+    <label class="fieldLabel fieldLabelSmall"> Date:
+      <input
+        type="text"
+        placeholder="MM/DD/YYYY"
+        class="inputDefault"
+        onfocus="(this.type='date')"
+      >
+      <span class="requiredMark">*required</span>
+    </label>
+    <label class="fieldLabel fieldLabelMedium"> Authors:
+      <input type="text" placeholder="Start typing" class="inputDefault">
+      <span class="requiredMark">*required</span>
+    </label>
+    <div class="btnWrapper">
+      <app-button
+        type="button"
+        variant="filled"
+        size="large"
+        color="tertiary">
+        Cancel
+      </app-button>
+      <app-button
+        type="submit"
+        variant="filled"
+        size="large"
+        color="secondary">
+        Save
+      </app-button>
+    </div>
+  </form>
+</div>

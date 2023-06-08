@@ -9,7 +9,7 @@ export class ButtonComponent {
   @Input() type: 'submit' | 'reset' | 'button' = 'button';
   @Input() variant: 'text' | 'filled' | 'linkSpecial' = 'text';
   @Input() size?: 'small' | 'large' | '' = '';
-  @Input() color? : 'primary' | 'secondary' | ''  = '';
+  @Input() color? : 'primary' | 'secondary' | 'tertiary' | ''  = '';
   @Input() icon?: string;
   @Input() onClick?: () => void | undefined;
 }

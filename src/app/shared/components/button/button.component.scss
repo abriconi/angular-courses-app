@@ -30,7 +30,6 @@
     align-items: center;
     gap: 10px;
     background-color: transparent;
-    color: $light-bg;
     justify-content: flex-end;
 }
 .linkSpecial {
@@ -58,9 +57,15 @@
 }
 .primary {
     background-color: $primary-btn-color;
+    color: $light-bg;
 }
 .secondary {
     background-color: $secondary-btn-color;
+    color: $light-bg;
+}
+.tertiary {
+  background-color: $tertiary-btn-color;
+  color: $text-main-color;
 }
 
 

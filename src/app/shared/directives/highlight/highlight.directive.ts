@@ -6,7 +6,11 @@ import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 export class HighlightDirective implements OnInit {
   @Input() appHighlight?: string;
 
-  constructor(private elementRef: ElementRef) {}
+  constructor(private elementRef: ElementRef) {
+    if (!this.appHighlight) {
+      return;
+    }
+  }
 
   ngOnInit(): void {
     if (!this.appHighlight) {

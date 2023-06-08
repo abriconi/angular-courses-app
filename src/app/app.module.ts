@@ -9,6 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { SectionComponent } from './components/courses/section/section.component';
 import { SharedModule } from './shared/shared.module';
+import { CourseInfoComponent } from './shared/components/course-info/course-info.component';
 
 
 @NgModule({
@@ -18,6 +19,7 @@ import { SharedModule } from './shared/shared.module';
     FooterComponent,
     CoursesComponent,
     SectionComponent,
+    CourseInfoComponent,
   ],
   imports: [
     BrowserModule,
