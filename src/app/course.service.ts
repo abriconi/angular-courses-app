@@ -9,22 +9,23 @@ import { generateId } from './utilus/helpers';
 export class CourseService {
   static courses: Course[] = coursesMockedData;
 
-  // constructor() {}
-
   getList(): Course[] {
     return CourseService.courses;
   }
-  createCourse(newCourseData: Partial<Course>): Course {
-    const newCourseID = generateId()
+  courseCreated(newCourseData: Omit<Course, 'id' | 'topRated'>): Course {
 
-    const newCourse = {
+    const newCourseID = generateId();
+
+    const newCourse: Course = {
       id: newCourseID,
-      title: newCourseData.title || '',
-      topRated: newCourseData.topRated || false,
-      creationDate: newCourseData.creationDate || '',
-      duration: newCourseData.duration || '',
-      description: newCourseData.description || ''
+      topRated: false,
+      title: newCourseData.title,
+      creationDate: newCourseData.creationDate,
+      duration: newCourseData.duration,
+      description: newCourseData.description,
+      authors: newCourseData.authors
     }
+
     CourseService.courses.push(newCourse);
 
     return newCourse;

@@ -1,45 +1,76 @@
 <div class="courseInfoWrapper">
-  <h1 class="heading">New course</h1>
-  <form class="courseInfoForm">
-    <label class="fieldLabel fieldLabelLarge"> Title:
+  <div class="titleWrapper">
+    <h1 class="heading">New course</h1>
+    <p class="error-message" *ngIf="!ifAllFieldFill">
+      * Please fill all fields.
+    </p>
+  </div>
+  <form class="courseInfoForm" [formGroup]="courseForm" (ngSubmit)="createCourse($event)">
+    <label class="fieldLabel fieldLabelLarge">
+      Title:
       <span class="requiredMark">*required</span>
-      <input type="text" placeholder="Add title" class="inputDefault">
-    </label>
-    <label class="fieldLabel fieldLabelLarge"> Description:
-      <textarea rows="4" cols="50" placeholder="Add description" class="inputDefault"></textarea>
-      <span class="requiredMark">*required</span>
-    </label>
-    <label class="fieldLabel fieldLabelSmall">Duration
-      <input type="text" placeholder="minutes" class="inputDefault">
-      <span class="requiredMark">*required</span>
-    </label>
-    <label class="fieldLabel fieldLabelSmall"> Date:
       <input
         type="text"
+        placeholder="Add title"
+        class="inputDefault"
+        formControlName="title"
+
+      >
+    </label>
+    <label class="fieldLabel fieldLabelLarge">
+      Description:
+      <textarea
+        rows="4"
+        cols="50"
+        placeholder="Add description"
+        class="inputDefault"
+        formControlName="description"
+        ></textarea>
+      <span class="requiredMark">*required</span>
+    </label>
+    <label class="fieldLabel fieldLabelSmall">
+      Duration:
+      <input
+        type="text"
+        placeholder="minutes"
+        class="inputDefault"
+        formControlName="duration">
+      <span class="requiredMark">*required</span>
+    </label>
+    <label class="fieldLabel fieldLabelSmall">
+      Date:
+      <input
+        type="date"
         placeholder="MM/DD/YYYY"
         class="inputDefault"
-        onfocus="(this.type='date')"
-      >
+        formControlName="creationDate">
       <span class="requiredMark">*required</span>
     </label>
-    <label class="fieldLabel fieldLabelMedium"> Authors:
-      <input type="text" placeholder="Start typing" class="inputDefault">
+    <label class="fieldLabel fieldLabelMedium">
+      Authors:
+      <input
+        type="text"
+        placeholder="Start typing"
+        class="inputDefault"
+        formControlName="authors">
       <span class="requiredMark">*required</span>
     </label>
+
     <div class="btnWrapper">
       <app-button
         type="button"
         variant="filled"
         size="large"
-        color="tertiary">
-        Cancel
+        color="tertiary"
+        (click)="cancelCreating()"
+      >Cancel
       </app-button>
       <app-button
         type="submit"
         variant="filled"
         size="large"
-        color="secondary">
-        Save
+        color="secondary"
+      >Save
       </app-button>
     </div>
   </form>

@@ -5,6 +5,7 @@ export interface Course {
     creationDate: string;
     duration: string;
     description: string;
+    authors?: string;
 }
 
 export interface User {
