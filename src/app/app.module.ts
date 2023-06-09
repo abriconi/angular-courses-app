@@ -9,7 +9,8 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { SectionComponent } from './components/courses/section/section.component';
 import { SharedModule } from './shared/shared.module';
-import { CourseInfoComponent } from './shared/components/course-info/course-info.component';
+import { CourseInfoComponent } from './course-info/course-info.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 
 @NgModule({
@@ -20,6 +21,7 @@ import { CourseInfoComponent } from './shared/components/course-info/course-info
     CoursesComponent,
     SectionComponent,
     CourseInfoComponent,
+    ConfirmationModalComponent,
   ],
   imports: [
     BrowserModule,

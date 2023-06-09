@@ -43,16 +43,23 @@
     color: blue;
     text-decoration: underline;
 }
+.icon {
+  background-color: transparent;
+  max-width: 20px;
+  color: $text-description-color;
+}
 .large {
     padding: 10px;
     font-size: 14px;
     max-width: 120px;
+    margin: auto;
 
 }
 .small {
     padding: 7px;
     font-size: 12px;
     max-width: 90px;
+    margin: auto;
 
 }
 .primary {
