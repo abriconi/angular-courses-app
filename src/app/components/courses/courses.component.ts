@@ -47,8 +47,15 @@ export class CoursesComponent implements OnInit {
   loadMoreClick():void {
     console.log('Button "Load more" cliked');
   }
-  logDeletedCourse(id: string): void {
-    console.log(`Deleted course ID: ${id}`);
+
+  deleteCourse(id: string): void {
+    const deletedCourse = this.courseService.getItemById(id);
+    if (deletedCourse) {
+      this.courseService.removeItem(id);
+      console.log(`Deleted course:`, deletedCourse);
+    } else {
+      console.log(`Course with ID ${id} not found.`);
+    }
   }
   handleSearch(searchText: string) {
     if (searchText.trim() === '') {

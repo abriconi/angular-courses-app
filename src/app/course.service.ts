@@ -30,13 +30,18 @@ export class CourseService {
 
     return newCourse;
   }
-  // getItemById(id: string): Course {
-  //   return
-  // }
-  // updateItem(id: string): Course {
-  //   return
-  // }
-  // removeItem(id: string): void {
 
-  // }
+  getItemById(id: string): Course | undefined {
+    return CourseService.courses.find(course => course.id === id);
+  }
+  updateItem(id: string): void {
+    console.log(id);
+  }
+
+  removeItem(id: string): void {
+    const index = CourseService.courses.findIndex(course => course.id === id);
+    if (index !== -1) {
+      CourseService.courses.splice(index, 1);
+    }
+  }
 }
