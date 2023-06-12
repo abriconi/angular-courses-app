@@ -1,5 +1,9 @@
 <div class="body">
+  <div [ngClass]="showConfirmationModal ? 'maskShow' : 'maskHide'"></div>
   <app-header></app-header>
   <app-courses></app-courses>
   <app-footer></app-footer>
+  <ng-container *ngIf="showConfirmationModal">
+    <app-confirmation-modal [onCloseModal]="onCloseModal"></app-confirmation-modal>
+  </ng-container>
 </div>

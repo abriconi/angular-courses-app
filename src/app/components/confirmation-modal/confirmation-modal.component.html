@@ -1,16 +1,17 @@
-<div class="confirmationModalWrapper">
+<div class="modalShow">
   <div class="headerWrapper">
     <h3 class="modalHeading">Delete course</h3>
     <div class="btnWrapper">
       <app-button
       variant="icon"
       icon="close"
+      [onClick]="onCloseModal"
       />
     </div>
   </div>
 
   <div class="descriptionWrapper">
-    <p class="modalDescription">Are you sure you want to delete Video Course 1?</p>
+    <p class="modalDescription">Are you sure you want to delete {{ courseName }}?</p>
   </div>
   <div class="buttonWrapper">
     <app-button
@@ -18,6 +19,7 @@
       variant="filled"
       size="large"
       color="tertiary"
+      [onClick]="onCancel"
     >Cancel
     </app-button>
     <app-button
@@ -25,7 +27,8 @@
       variant="filled"
       size="large"
       color="secondary"
-      >Yes,delete
+      [onClick]="onConfirm"
+      >Yes, delete
     </app-button>
   </div>
 

@@ -63,6 +63,16 @@ export class CoursesComponent implements OnInit {
     } else {
       this.courses = this.filterPipe.transform(this.courses, searchText);
     }
-
   }
+
+  // confirmDelete(id: string): void {
+  //   // Logic for confirming the delete action
+  //   console.log(`Confirm delete course with ID: ${id}`);
+  //   this.deleteCourse(id);
+  // }
+
+  // cancelDelete(): void {
+  //   // Logic for canceling the delete action
+  //   console.log('Delete action canceled');
+  // }
 }

@@ -1,11 +1,10 @@
 @import '../../../styles.scss';
 
-:host {
-  display: flex;
+
+.modalShow {
   justify-content: center;
-}
-.confirmationModalWrapper {
-  margin-top: 100px;
+  position: fixed;
+  z-index: 9001;
   width: 30%;
   display: flex;
   flex-direction: column;
@@ -13,6 +12,9 @@
   align-self: center;
   border: 1px solid $addition-color;
   border-radius: 7px;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
 
   .headerWrapper {
     box-sizing: border-box;
@@ -58,5 +60,5 @@
     width: 100%;
     padding: 25px;
   }
-
 }
+
