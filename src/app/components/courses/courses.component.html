@@ -1,5 +1,9 @@
 <div class="coursesPage">
+  <div [ngClass]="showConfirmationModal ? 'maskShow' : 'maskHide'"></div>
     <app-breadcrumps></app-breadcrumps>
+    <ng-container *ngIf="showConfirmationModal">
+      <app-confirmation-modal [onCloseModal]="onCloseModal"></app-confirmation-modal>
+    </ng-container>
     <!-- <app-course-info></app-course-info> -->
     <app-section (search)="handleSearch($event)"></app-section>
     <div class="coursesWrapper">

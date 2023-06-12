@@ -64,6 +64,11 @@ export class CoursesComponent implements OnInit {
       this.courses = this.filterPipe.transform(this.courses, searchText);
     }
   }
+  showConfirmationModal = true;
+
+  onCloseModal = () => {
+    this.showConfirmationModal = false;
+  }
 
   // confirmDelete(id: string): void {
   //   // Logic for confirming the delete action
