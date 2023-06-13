@@ -7,7 +7,7 @@ import { Component, Input } from '@angular/core';
 })
 export class ButtonComponent {
   @Input() type: 'submit' | 'reset' | 'button' = 'button';
-  @Input() variant: 'text' | 'filled' | 'linkSpecial' | 'icon' = 'text';
+  @Input() variant: 'text' | 'filled' | 'linkSpecial' | 'icon' | 'linkSmall' = 'text';
   @Input() size?: 'small' | 'large' | '' = '';
   @Input() color? : 'primary' | 'secondary' | 'tertiary' | ''  = '';
   @Input() icon?: string;

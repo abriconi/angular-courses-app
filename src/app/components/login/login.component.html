@@ -1,0 +1,53 @@
+<div class="loginPage">
+  <div class="loginWrapper">
+ <div class="titleWrapper">
+   <h1 class="heading">Login</h1>
+   <p class="errorMessage">Wrong email or password</p>
+ </div>
+ <form class="userLoginForm">
+   <div class="inputsWrapper">
+    <label class="fieldLabel">
+      Email:
+      <span class="requiredMark">*required</span>
+      <input
+        type="email"
+        placeholder="Enter email..."
+        class="inputDefault"
+        formControlName="email"
+      >
+    </label>
+
+    <label class="fieldLabel">
+      Password:
+      <span class="requiredMark">*required</span>
+      <input
+        type="password"
+        placeholder="Enter password"
+        class="inputDefault"
+        formControlName="password"
+      >
+    </label>
+   </div>
+
+  <div class="btnWrapper">
+    <div class="linkBtnWrapper">
+      <app-button
+        type="button"
+        variant="linkSmall"
+        (onClick)="forgotPassword()"
+      >Forgot your password?</app-button>
+    </div>
+
+    <div class="linkBtnWrapper">
+      <app-button
+      type="submit"
+      variant="filled"
+      size="large"
+      color="secondary"
+      >Login</app-button>
+    </div>
+  </div>
+
+ </form>
+</div>
+</div>

@@ -1,7 +1,6 @@
-import { Component, ContentChildren, Input, OnInit } from '@angular/core';
+import { Component, ContentChildren, OnInit } from '@angular/core';
 
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
-import { coursesMockedData } from 'src/app/utilus/global.constans';
 import { Course } from 'src/app/utilus/global.moduls';
 
 import { OrderByPipe } from '../../shared/pipes/orderBy.pipe';
@@ -22,7 +21,6 @@ export class CoursesComponent implements OnInit {
     private filterPipe: FilterPipe,
     private courseService: CourseService,
   ) { }
-
 
   @ContentChildren(HighlightDirective) appHighlight: any;
 
@@ -61,10 +59,9 @@ export class CoursesComponent implements OnInit {
   }
   handleSearch(searchText: string) {
     if (searchText.trim() === '') {
-      this.courses = coursesMockedData;
+      this.courses = this.courseService.getList();
     } else {
       this.courses = this.filterPipe.transform(this.courses, searchText);
     }
   }
-
 }
