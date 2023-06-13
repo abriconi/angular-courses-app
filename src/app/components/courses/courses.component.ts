@@ -1,4 +1,4 @@
-import { Component, ContentChildren, OnInit } from '@angular/core';
+import { Component, ContentChildren, Input, OnInit } from '@angular/core';
 
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
 import { coursesMockedData } from 'src/app/utilus/global.constans';
@@ -22,6 +22,7 @@ export class CoursesComponent implements OnInit {
     private filterPipe: FilterPipe,
     private courseService: CourseService,
   ) { }
+
 
   @ContentChildren(HighlightDirective) appHighlight: any;
 
@@ -50,6 +51,7 @@ export class CoursesComponent implements OnInit {
 
   deleteCourse(id: string): void {
     const deletedCourse = this.courseService.getItemById(id);
+
     if (deletedCourse) {
       this.courseService.removeItem(id);
       console.log(`Deleted course:`, deletedCourse);
@@ -64,20 +66,5 @@ export class CoursesComponent implements OnInit {
       this.courses = this.filterPipe.transform(this.courses, searchText);
     }
   }
-  showConfirmationModal = true;
 
-  onCloseModal = () => {
-    this.showConfirmationModal = false;
-  }
-
-  // confirmDelete(id: string): void {
-  //   // Logic for confirming the delete action
-  //   console.log(`Confirm delete course with ID: ${id}`);
-  //   this.deleteCourse(id);
-  // }
-
-  // cancelDelete(): void {
-  //   // Logic for canceling the delete action
-  //   console.log('Delete action canceled');
-  // }
 }

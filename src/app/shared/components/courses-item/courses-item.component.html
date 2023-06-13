@@ -1,4 +1,13 @@
 <div *ngIf="courseData" class="section course">
+  <ng-container *ngIf="showConfirmationModal">
+    <app-confirmation-modal
+      *ngIf="showConfirmationModal"
+      (closeModal)="closeModal()"
+      (handleDelete)="deleteCourse.emit(courseData.id)"
+      [courseName]="courseData.title"
+      [courseId]="courseData.id"
+    ></app-confirmation-modal>
+  </ng-container>
     <div class="header">
       <div class="headingWrapper">
         <h1 class="heading">{{ courseData.title | uppercase }}</h1>
@@ -22,7 +31,6 @@
                 size="small"
                 color="primary"
                 icon="edit"
-                (click)="handleEdit(courseData.id)"
             >
                 Edit
             </app-button>
@@ -31,9 +39,8 @@
                 size="small"
                 color="primary"
                 icon="delete"
-                (click)="deleteClick(courseData.id)"
-            >
-                Delete
+                (click)="showModal()"
+            >Delete
             </app-button>
         </div>
     </div>

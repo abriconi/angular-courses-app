@@ -9,21 +9,19 @@ import { type Course } from 'src/app/utilus/global.moduls';
 })
 export class CoursesItemComponent {
   @Input() courseData?: Course;
-  @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>()
+
+  showConfirmationModal = false;
 
   handleEdit(id: string): void {
     console.log(`Button "Edit" clicked on course ${id}`);
   }
-  deleteClick(id: string) {
-    this.deleteCourse.emit(id);
+  showModal() {
+    this.showConfirmationModal = true;
   }
 
-  // confirmDelete(id: string): void {
-  //   this.deleteCourse.emit(id);
-  //   this.showConfirmationModal = false;
-  // }
+  closeModal() {
+    this.showConfirmationModal = false;
+  }
 
-  // cancelDelete(): void {
-  //   this.showConfirmationModal = false;
-  // }
 }

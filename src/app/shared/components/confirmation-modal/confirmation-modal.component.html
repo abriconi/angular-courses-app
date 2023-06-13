@@ -1,3 +1,4 @@
+<div class="maskShow"></div>
 <div class="modalShow">
   <div class="headerWrapper">
     <h3 class="modalHeading">Delete course</h3>
@@ -5,7 +6,7 @@
       <app-button
       variant="icon"
       icon="close"
-      [onClick]="onCloseModal"
+      (click)="onCloseModal()"
       />
     </div>
   </div>
@@ -19,7 +20,7 @@
       variant="filled"
       size="large"
       color="tertiary"
-      [onClick]="onCancel"
+      (click)="onCloseModal()"
     >Cancel
     </app-button>
     <app-button
@@ -27,7 +28,7 @@
       variant="filled"
       size="large"
       color="secondary"
-      [onClick]="onConfirm"
+      (click)="onConfirm()"
       >Yes, delete
     </app-button>
   </div>

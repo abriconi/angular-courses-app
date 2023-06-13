@@ -8,6 +8,7 @@ import { IconComponent } from './components/icon/icon.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { CoursesItemComponent } from './components/courses-item/courses-item.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 import { HighlightDirective } from './directives/highlight/highlight.directive';
 
@@ -25,6 +26,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     SearchFormComponent,
     BreadcrumpsComponent,
     CoursesItemComponent,
+    ConfirmationModalComponent,
     HighlightDirective,
     OrderByPipe,
     DurationPipe,
@@ -43,6 +45,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     SearchFormComponent,
     BreadcrumpsComponent,
     CoursesItemComponent,
+    ConfirmationModalComponent,
     HighlightDirective,
     OrderByPipe,
     DurationPipe,

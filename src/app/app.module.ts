@@ -10,8 +10,6 @@ import { CoursesComponent } from './components/courses/courses.component';
 import { SectionComponent } from './components/courses/section/section.component';
 import { SharedModule } from './shared/shared.module';
 import { CourseInfoComponent } from './course-info/course-info.component';
-import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
-
 
 @NgModule({
   declarations: [
@@ -21,7 +19,6 @@ import { ConfirmationModalComponent } from './components/confirmation-modal/conf
     CoursesComponent,
     SectionComponent,
     CourseInfoComponent,
-    ConfirmationModalComponent,
   ],
   imports: [
     BrowserModule,
