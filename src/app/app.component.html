@@ -1,6 +1,6 @@
 <div class="body">
   <app-header></app-header>
-  <ng-container *ngIf="isAuthenticated(); else loginTemplate">
+  <ng-container *ngIf="isAuthenticated$ | async; else loginTemplate">
     <app-courses></app-courses>
   </ng-container>
   <ng-template #loginTemplate>

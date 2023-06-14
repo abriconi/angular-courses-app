@@ -49,6 +49,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     CoursesItemComponent,
     ConfirmationModalComponent,
     HighlightDirective,
+    IfAuthenticatedDirective,
     OrderByPipe,
     DurationPipe,
     FilterPipe,

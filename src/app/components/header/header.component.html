@@ -1,14 +1,14 @@
 <header class="header">
   <nav class="navigation">
       <app-logo></app-logo>
-      <div class="nav-btn-wrapper" *ngIf="isLoggedIn()">
+      <div class="nav-btn-wrapper" *appIfAuthenticated="true">
           <app-button
               variant="text"
               color="light"
               size="small"
           >
               <app-icon icon="person"></app-icon>
-              {{ getUserName() }}
+              {{ user?.login }}
           </app-button>
 
           <app-button
