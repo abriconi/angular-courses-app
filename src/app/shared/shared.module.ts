@@ -11,6 +11,7 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 import { HighlightDirective } from './directives/highlight/highlight.directive';
+import { IfAuthenticatedDirective } from './directives/ifAuthenticated/if-authenticated.directive';
 
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
@@ -28,6 +29,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     CoursesItemComponent,
     ConfirmationModalComponent,
     HighlightDirective,
+    IfAuthenticatedDirective,
     OrderByPipe,
     DurationPipe,
     FilterPipe,

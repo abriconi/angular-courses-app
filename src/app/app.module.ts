@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { CourseInfoComponent } from './components/course-info/course-info.component';
 import { LoginComponent } from './components/login/login.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,

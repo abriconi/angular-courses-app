@@ -2,18 +2,18 @@
   <div class="loginWrapper">
  <div class="titleWrapper">
    <h1 class="heading">Login</h1>
-   <p class="errorMessage">Wrong email or password</p>
+   <p class="errorMessage" *ngIf="this.userForm.invalid && this.isError">Wrong e-mail or password</p>
  </div>
- <form class="userLoginForm">
+ <form class="userLoginForm" [formGroup]="userForm" (ngSubmit)="login($event)">
    <div class="inputsWrapper">
     <label class="fieldLabel">
-      Email:
+      E-mail:
       <span class="requiredMark">*required</span>
       <input
         type="email"
-        placeholder="Enter email..."
+        placeholder="Enter e-mail..."
         class="inputDefault"
-        formControlName="email"
+        formControlName="login"
       >
     </label>
 
