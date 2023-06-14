@@ -14,10 +14,7 @@ export class AuthService {
       password: password,
       token: this.token
     };
-    console.log('this user in service on login', this.user);
     console.log(`${this.user.login} logged in succesfully`);
-
-
     localStorage.setItem('token', this.token);
     localStorage.setItem('user', JSON.stringify(this.user));
   }

@@ -18,6 +18,5 @@ export class ConfirmationModalComponent {
   onConfirm(): void {
     this.closeModal.emit();
     this.handleDelete.emit();
-    console.log('onConfirm');
   }
 }

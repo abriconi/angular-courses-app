@@ -1,7 +1,7 @@
 <header class="header">
   <nav class="navigation">
       <app-logo></app-logo>
-      <div class="nav-btn-wrapper" *appIfAuthenticated="isLoggedIn()">
+      <div class="nav-btn-wrapper" *ngIf="isLoggedIn()">
           <app-button
               variant="text"
               color="light"

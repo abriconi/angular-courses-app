@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component } from '@angular/core';
 import { AuthService } from 'src/app/auth.service';
 import { UserLogin } from 'src/app/utilus/global.moduls';
 
@@ -7,23 +7,17 @@ import { UserLogin } from 'src/app/utilus/global.moduls';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
+export class HeaderComponent {
   user: UserLogin | null = null;
 
   constructor(private authService: AuthService) {}
 
-  ngOnInit(): void {
-    this.user = this.authService.getUserInfo();
-    console.log('this.user onInit', this.user);
-  }
-
   isLoggedIn(): boolean {
-    console.log(111);
-
     return this.authService.isAuthenticated();
   }
 
   getUserName(): string {
+    this.user = this.authService.getUserInfo();
     return this.user ? this.user.login : '';
   }
 
