@@ -7,7 +7,6 @@ import { AuthService } from 'src/app/auth.service';
 import { UserLogin } from 'src/app/utilus/global.moduls';
 import { IfAuthenticatedDirective } from '../../shared/directives/ifAuthenticated/if-authenticated.directive';
 import { By } from '@angular/platform-browser';
-import { of } from 'rxjs';
 
 describe('HeaderComponent', () => {
   let component: HeaderComponent;
@@ -41,25 +40,8 @@ describe('HeaderComponent', () => {
     fixture.detectChanges();
 
     const buttonElement = fixture.debugElement.query(By.css('.nav-btn-wrapper app-button'));
+
     expect(buttonElement.nativeElement.textContent).toContain(testUser.login);
   });
 
-  // it('should subscribe to user$ observable on initialization', () => {
-  //   spyOn(authService.user$, 'subscribe').and.returnValue(of({ token: 'Fake token', login: 'user', password: '123' }));
-  //   component.ngOnInit();
-  //   expect(component.user).toEqual({ id: '123', login: 'user' });
-  // });
-
-  // it('should call authService.logout() and clear user on logout', () => {
-  //   spyOn(authService, 'logout');
-
-  //   const logoutButton = fixture.debugElement.query(By.css('[testID="loginButton"]'));
-  //   console.log(logoutButton);
-
-  //   logoutButton.triggerEventHandler('click', null);
-  //   fixture.detectChanges();
-
-  //   expect(authService.logout).toHaveBeenCalled();
-  //   expect(component.user).toBeNull();
-  // });
 });

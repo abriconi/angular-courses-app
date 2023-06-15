@@ -6,6 +6,7 @@
               variant="text"
               color="light"
               size="small"
+              testID="loginButton"
           >
               <app-icon icon="person"></app-icon>
               {{ user?.login }}
@@ -16,7 +17,7 @@
               size="small"
               color="light"
               (click)="logout()"
-              testID="loginButton"
+              testID="logoutButton"
           >
               <app-icon icon="logout"></app-icon>
               Log out

@@ -31,7 +31,7 @@ describe('CoursesItemComponent', () => {
     component.courseData = { id: '12345' } as Course;
     fixture.detectChanges();
 
-    const deleteButton = fixture.debugElement.query(By.css('[testId="deleteCourse"]'));
+    const deleteButton = fixture.debugElement.query(By.css('[testID="deleteCourse"]'));
     deleteButton.triggerEventHandler('click', null);
     fixture.detectChanges();
 
