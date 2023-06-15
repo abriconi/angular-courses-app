@@ -51,4 +51,12 @@ describe('CoursesItemComponent', () => {
     expect(confirmationModal).toBeFalsy();
   });
 
+  it('should log the course ID when handleEdit is called', () => {
+    const consoleSpy = spyOn(console, 'log');
+    const courseId = '12345';
+    component.handleEdit(courseId);
+
+    expect(consoleSpy).toHaveBeenCalledWith(`Button "Edit" clicked on course ${courseId}`);
+  });
+
 });

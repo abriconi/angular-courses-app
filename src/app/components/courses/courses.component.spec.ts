@@ -5,7 +5,6 @@ import { SharedModule } from '../../shared/shared.module';
 import { Course } from 'src/app/utilus/global.moduls';
 import { OrderByPipe } from 'src/app/shared/pipes/orderBy.pipe';
 import { CourseService } from 'src/app/course.service';
-import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
 
 const coursesMockedData: Course[] = [
   {
@@ -39,7 +38,6 @@ describe('CoursesComponent', () => {
   let fixture: ComponentFixture<CoursesComponent>;
   let orderByPipe: OrderByPipe;
   let courseService: CourseService;
-  let filterPipe: FilterPipe;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -47,7 +45,7 @@ describe('CoursesComponent', () => {
       imports: [SharedModule],
       providers: [
         { provide: 'coursesMockedData', useValue: coursesMockedData },
-        OrderByPipe, FilterPipe,
+        OrderByPipe,
         { provide: CourseService, useClass: CourseService },
       ]
     }).compileComponents();
@@ -55,7 +53,6 @@ describe('CoursesComponent', () => {
     fixture = TestBed.createComponent(CoursesComponent);
     component = fixture.componentInstance;
     orderByPipe = TestBed.inject(OrderByPipe);
-    filterPipe = TestBed.inject(FilterPipe);
     courseService = TestBed.inject(CourseService);
     fixture.detectChanges();
   });
