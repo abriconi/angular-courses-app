@@ -52,7 +52,6 @@ export class CoursesComponent implements OnInit {
 
     if (deletedCourse) {
       this.courseService.removeItem(id);
-      console.log(`Deleted course:`, deletedCourse);
     } else {
       console.log(`Course with ID ${id} not found.`);
     }
@@ -61,7 +60,7 @@ export class CoursesComponent implements OnInit {
     if (searchText.trim() === '') {
       this.courses = this.courseService.getList();
     } else {
-      this.courses = this.filterPipe.transform(this.courses, searchText);
+      this.courses = this.filterPipe.transform(this.courseService.getList(), searchText);
     }
   }
 }
