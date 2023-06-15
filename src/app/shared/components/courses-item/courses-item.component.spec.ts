@@ -1,60 +1,54 @@
-// import { ComponentFixture, TestBed } from '@angular/core/testing';
-// import { CoursesItemComponent } from './courses-item.component';
-// import { Course } from 'src/app/utilus/global.moduls';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { CoursesItemComponent } from './courses-item.component';
+import { Course } from 'src/app/utilus/global.moduls';
+import { By } from '@angular/platform-browser';
+import { IconComponent } from '../icon/icon.component';
+import { ButtonComponent } from '../button/button.component';
+import { DurationPipe } from '../../pipes/duration.pipe';
+import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 
-// describe('CoursesItemComponent', () => {
-//   let component: CoursesItemComponent;
-//   let fixture: ComponentFixture<CoursesItemComponent>;
+describe('CoursesItemComponent', () => {
+  let component: CoursesItemComponent;
+  let fixture: ComponentFixture<CoursesItemComponent>;
 
-//   beforeEach(async () => {
-//     await TestBed.configureTestingModule({
-//       declarations: [CoursesItemComponent],
-//     }).compileComponents();
-//   });
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [CoursesItemComponent, ButtonComponent, IconComponent, DurationPipe, ConfirmationModalComponent],
+    }).compileComponents();
+  });
 
-//   beforeEach(() => {
-//     fixture = TestBed.createComponent(CoursesItemComponent);
-//     component = fixture.componentInstance;
-//     fixture.detectChanges();
-//   });
+  beforeEach(() => {
+    fixture = TestBed.createComponent(CoursesItemComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
+  });
 
-//   it('should create', () => {
-//     expect(component).toBeTruthy();
-//   });
+  it('should create', () => {
+    expect(component).toBeTruthy();
+  });
 
-//   // it('should emit deleteCourse event when delete button is clicked', () => {
-//   //   spyOn(component.deleteCourse, 'emit');
-//   //   const courseId = '12345';
-//   //   component.courseData = { id: courseId } as Course;
-//   //   fixture.detectChanges();
+  it('should show modal when delete button is clicked', () => {
+    component.courseData = { id: '12345' } as Course;
+    fixture.detectChanges();
 
-//   //   const deleteButton = fixture.nativeElement.querySelector('.editArea app-button:last-child');
-//   //   deleteButton.click();
+    const deleteButton = fixture.debugElement.query(By.css('[testId="deleteCourse"]'));
+    deleteButton.triggerEventHandler('click', null);
+    fixture.detectChanges();
 
-//   //   expect(component.deleteCourse.emit).toHaveBeenCalledWith(courseId);
-//   // });
+    const modal = fixture.debugElement.query(By.css('app-confirmation-modal'));
+    expect(modal).toBeTruthy();
+  });
 
-//   // it('should show confirmation modal when delete button is clicked', () => {
-//   //   component.courseData = { id: '12345' } as Course;
-//   //   fixture.detectChanges();
+  it('should close confirmation modal when closeModal is called', () => {
+    component.courseData = { id: '12345' } as Course;
+    component.showConfirmationModal = true;
+    fixture.detectChanges();
 
-//   //   const deleteButton = fixture.nativeElement.querySelector('.editArea app-button:last-child');
-//   //   deleteButton.click();
-//   //   fixture.detectChanges();
+    component.closeModal();
+    fixture.detectChanges();
 
-//   //   const confirmationModal = fixture.nativeElement.querySelector('app-confirmation-modal');
-//   //   expect(confirmationModal).toBeTruthy();
-//   // });
+    const confirmationModal = fixture.nativeElement.querySelector('app-confirmation-modal');
+    expect(confirmationModal).toBeFalsy();
+  });
 
-//   // it('should close confirmation modal when closeModal is called', () => {
-//   //   component.courseData = { id: '12345' } as Course;
-//   //   component.showConfirmationModal = true;
-//   //   fixture.detectChanges();
-
-//   //   component.closeModal();
-//   //   fixture.detectChanges();
-
-//   //   const confirmationModal = fixture.nativeElement.querySelector('app-confirmation-modal');
-//   //   expect(confirmationModal).toBeFalsy();
-//   // });
-// });
+});

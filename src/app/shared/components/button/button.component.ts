@@ -12,4 +12,5 @@ export class ButtonComponent {
   @Input() color? : 'primary' | 'secondary' | 'tertiary' | 'light' | ''  = '';
   @Input() icon?: string;
   @Input() onClick?: () => void | undefined;
+  @Input() testID?: string = '';
 }
