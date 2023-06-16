@@ -1,7 +1,7 @@
 <button
   class="btnDefault"
   [type]="type"
-  [ngClass]="[variant, size, color]"
+  [ngClass]="[variant, size, color, testID]"
   [class.icon] = "!!icon"
   (click)="onClick && onClick()"
 >

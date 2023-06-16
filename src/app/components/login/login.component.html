@@ -1,0 +1,53 @@
+<div class="loginPage">
+  <div class="loginWrapper">
+ <div class="titleWrapper">
+   <h1 class="heading">Login</h1>
+   <p class="errorMessage" *ngIf="this.userForm.invalid && this.isError">Wrong e-mail or password</p>
+ </div>
+ <form class="userLoginForm" [formGroup]="userForm" (ngSubmit)="login($event)">
+   <div class="inputsWrapper">
+    <label class="fieldLabel">
+      E-mail:
+      <span class="requiredMark">*required</span>
+      <input
+        type="email"
+        placeholder="Enter e-mail..."
+        class="inputDefault"
+        formControlName="login"
+      >
+    </label>
+
+    <label class="fieldLabel">
+      Password:
+      <span class="requiredMark">*required</span>
+      <input
+        type="password"
+        placeholder="Enter password"
+        class="inputDefault"
+        formControlName="password"
+      >
+    </label>
+   </div>
+
+  <div class="btnWrapper">
+    <div class="linkBtnWrapper">
+      <app-button
+        type="button"
+        variant="linkSmall"
+        (onClick)="forgotPassword()"
+      >Forgot your password?</app-button>
+    </div>
+
+    <div class="linkBtnWrapper">
+      <app-button
+      type="submit"
+      variant="filled"
+      size="large"
+      color="secondary"
+      >Login</app-button>
+    </div>
+  </div>
+
+ </form>
+</div>
+</div>

@@ -1,11 +1,11 @@
 import { Component, ContentChildren, OnInit } from '@angular/core';
 
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
-import { coursesMockedData } from 'src/app/utilus/global.constans';
 import { Course } from 'src/app/utilus/global.moduls';
 
 import { OrderByPipe } from '../../shared/pipes/orderBy.pipe';
 import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
+import { CourseService } from 'src/app/course.service';
 
 @Component({
   selector: 'app-courses',
@@ -16,7 +16,11 @@ import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
 
 export class CoursesComponent implements OnInit {
 
-  constructor(private orderByPipe: OrderByPipe, private filterPipe: FilterPipe) { }
+  constructor(
+    private orderByPipe: OrderByPipe,
+    private filterPipe: FilterPipe,
+    private courseService: CourseService,
+  ) { }
 
   @ContentChildren(HighlightDirective) appHighlight: any;
 
@@ -31,22 +35,32 @@ export class CoursesComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.courses = coursesMockedData;
+    this.getCourses();
+  }
+
+  private getCourses(): void {
+    this.courses = this.courseService.getList();
     this.sortCoursesByCreationDate();
   }
 
   loadMoreClick():void {
     console.log('Button "Load more" cliked');
   }
-  logDeletedCourse(id: string): void {
-    console.log(`Deleted course ID: ${id}`);
+
+  deleteCourse(id: string): void {
+    const deletedCourse = this.courseService.getItemById(id);
+
+    if (deletedCourse) {
+      this.courseService.removeItem(id);
+    } else {
+      console.log(`Course with ID ${id} not found.`);
+    }
   }
   handleSearch(searchText: string) {
     if (searchText.trim() === '') {
-      this.courses = coursesMockedData;
+      this.courses = this.courseService.getList();
     } else {
-      this.courses = this.filterPipe.transform(this.courses, searchText);
+      this.courses = this.filterPipe.transform(this.courseService.getList(), searchText);
     }
-
   }
 }

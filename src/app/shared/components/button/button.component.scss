@@ -30,7 +30,6 @@
     align-items: center;
     gap: 10px;
     background-color: transparent;
-    color: $light-bg;
     justify-content: flex-end;
 }
 .linkSpecial {
@@ -44,23 +43,47 @@
     color: blue;
     text-decoration: underline;
 }
+.linkSmall {
+    padding: 10px 0;
+    font-size: 14px;
+    background-color: $light-bg;
+    text-decoration: underline;
+    color: blue;
+    margin: 0;
+}
+.icon {
+  background-color: transparent;
+  max-width: 20px;
+  color: $text-description-color;
+}
 .large {
     padding: 10px;
     font-size: 14px;
     max-width: 120px;
+    margin: auto;
 
 }
 .small {
     padding: 7px;
     font-size: 12px;
     max-width: 90px;
+    margin: auto;
 
 }
 .primary {
     background-color: $primary-btn-color;
+    color: $light-bg;
 }
 .secondary {
     background-color: $secondary-btn-color;
+    color: $light-bg;
+}
+.tertiary {
+  background-color: $tertiary-btn-color;
+  color: $text-main-color;
+}
+.light {
+  color: $light-bg;
 }
 
 

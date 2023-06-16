@@ -1,48 +1,62 @@
-import { TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoursesItemComponent } from './courses-item.component';
-import { SharedModule } from '../../shared.module';
+import { Course } from 'src/app/utilus/global.moduls';
+import { By } from '@angular/platform-browser';
+import { IconComponent } from '../icon/icon.component';
+import { ButtonComponent } from '../button/button.component';
 import { DurationPipe } from '../../pipes/duration.pipe';
+import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-modal.component';
 
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent;
-  let pipe: DurationPipe;
+  let fixture: ComponentFixture<CoursesItemComponent>;
+
+  beforeEach(async () => {
+    await TestBed.configureTestingModule({
+      declarations: [CoursesItemComponent, ButtonComponent, IconComponent, DurationPipe, ConfirmationModalComponent],
+    }).compileComponents();
+  });
 
   beforeEach(() => {
-    TestBed.configureTestingModule({
-      declarations: [CoursesItemComponent],
-      imports: [SharedModule],
-      providers: [DurationPipe]
-    });
-    pipe = TestBed.inject(DurationPipe);
+    fixture = TestBed.createComponent(CoursesItemComponent);
+    component = fixture.componentInstance;
+    fixture.detectChanges();
   });
 
-  it('should format course duration correctly', () => {
-    component = TestBed.createComponent(CoursesItemComponent).componentInstance;
-    const durationMinutes = '88';
-    const formattedDuration = pipe.transform(durationMinutes);
-    expect(formattedDuration).toEqual('1h 28min');
+  it('should create', () => {
+    expect(component).toBeTruthy();
   });
 
-  it('should return "0min" for duration of 0 minutes', () => {
-    component = TestBed.createComponent(CoursesItemComponent).componentInstance;
-    const durationMinutes = '0';
-    const formattedDuration = pipe.transform(durationMinutes);
-    expect(formattedDuration).toEqual('0min');
+  it('should show modal when delete button is clicked', () => {
+    component.courseData = { id: '12345' } as Course;
+    fixture.detectChanges();
+
+    const deleteButton = fixture.debugElement.query(By.css('[testID="deleteCourse"]'));
+    deleteButton.triggerEventHandler('click', null);
+    fixture.detectChanges();
+
+    const modal = fixture.debugElement.query(By.css('app-confirmation-modal'));
+    expect(modal).toBeTruthy();
   });
 
-  it('should log the message with course ID when handleEdit is called', () => {
-    component = TestBed.createComponent(CoursesItemComponent).componentInstance;
-    spyOn(console, 'log');
-    const courseId = '123';
+  it('should close confirmation modal when closeModal is called', () => {
+    component.courseData = { id: '12345' } as Course;
+    component.showConfirmationModal = true;
+    fixture.detectChanges();
+
+    component.closeModal();
+    fixture.detectChanges();
+
+    const confirmationModal = fixture.nativeElement.querySelector('app-confirmation-modal');
+    expect(confirmationModal).toBeFalsy();
+  });
+
+  it('should log the course ID when handleEdit is called', () => {
+    const consoleSpy = spyOn(console, 'log');
+    const courseId = '12345';
     component.handleEdit(courseId);
-    expect(console.log).toHaveBeenCalledWith(`Button "Edit" clicked on course ${courseId}`);
+
+    expect(consoleSpy).toHaveBeenCalledWith(`Button "Edit" clicked on course ${courseId}`);
   });
 
-  it('should emit the course ID when deleteClick is called', () => {
-    component = TestBed.createComponent(CoursesItemComponent).componentInstance;
-    spyOn(component.deleteCourse, 'emit');
-    const courseId = '123';
-    component.deleteClick(courseId);
-    expect(component.deleteCourse.emit).toHaveBeenCalledWith(courseId);
-  });
 });

@@ -4,6 +4,7 @@ import { SectionComponent } from '../courses/section/section.component';
 import { SharedModule } from '../../shared/shared.module';
 import { Course } from 'src/app/utilus/global.moduls';
 import { OrderByPipe } from 'src/app/shared/pipes/orderBy.pipe';
+import { CourseService } from 'src/app/course.service';
 
 const coursesMockedData: Course[] = [
   {
@@ -36,20 +37,23 @@ describe('CoursesComponent', () => {
   let component: CoursesComponent;
   let fixture: ComponentFixture<CoursesComponent>;
   let orderByPipe: OrderByPipe;
+  let courseService: CourseService;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [CoursesComponent, SectionComponent],
       imports: [SharedModule],
-      providers:[
+      providers: [
         { provide: 'coursesMockedData', useValue: coursesMockedData },
-        OrderByPipe
+        OrderByPipe,
+        { provide: CourseService, useClass: CourseService },
       ]
     }).compileComponents();
 
     fixture = TestBed.createComponent(CoursesComponent);
     component = fixture.componentInstance;
     orderByPipe = TestBed.inject(OrderByPipe);
+    courseService = TestBed.inject(CourseService);
     fixture.detectChanges();
   });
 
@@ -61,7 +65,6 @@ describe('CoursesComponent', () => {
     component.ngOnInit();
     const sortedCourses = orderByPipe.transform(coursesMockedData);
     expect(component.courses).toEqual(sortedCourses);
-
   });
 
   it('should log "Button "Load more" clicked" when loadMoreClick is called', () => {
@@ -70,10 +73,21 @@ describe('CoursesComponent', () => {
     expect(consoleSpy).toHaveBeenCalledWith('Button "Load more" cliked');
   });
 
-  it('should log the deleted course ID when logDeletedCourse is called', () => {
-    const consoleSpy = spyOn(console, 'log');
-    const courseId = '12345';
-    component.logDeletedCourse(courseId);
-    expect(consoleSpy).toHaveBeenCalledWith(`Deleted course ID: ${courseId}`);
+  it('should delete course when deleteCourse is called', () => {
+    const courseId = '123';
+    const removeItemSpy = spyOn(courseService, 'removeItem');
+
+    component.deleteCourse(courseId);
+    expect(removeItemSpy).toHaveBeenCalledWith(courseId);
   });
+
+  it('should reset courses to the full list when handleSearch is called with an empty search text', () => {
+    component.courses = coursesMockedData.slice(0, 2);
+    const getListSpy = spyOn(courseService, 'getList').and.callThrough();
+    const sortedCourses = orderByPipe.transform(coursesMockedData);
+    component.handleSearch('');
+    expect(getListSpy).toHaveBeenCalled();
+    expect(component.courses).toEqual(sortedCourses);
+  });
+
 });

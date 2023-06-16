@@ -1,25 +1,27 @@
-
 <header class="header">
-    <nav class="navigation">
-        <app-logo></app-logo>
-        <div class="nav-btn-wrapper">
-            <app-button 
-                variant="text"
-                size="small"
-                >
-                <app-icon icon="person"></app-icon>
-                User login
-            </app-button>
-            
-            <app-button 
-                variant="text"
-                size="small">
-                <app-icon icon="logout"></app-icon>
-                Log out
-            </app-button>
-        </div>
-        
-    </nav>
-   
-</header>
+  <nav class="navigation">
+      <app-logo></app-logo>
+      <div class="nav-btn-wrapper" *appIfAuthenticated="true">
+          <app-button
+              variant="text"
+              color="light"
+              size="small"
+              testID="loginButton"
+          >
+              <app-icon icon="person"></app-icon>
+              {{ user?.login }}
+          </app-button>
 
+          <app-button
+              variant="text"
+              size="small"
+              color="light"
+              (click)="logout()"
+              testID="logoutButton"
+          >
+              <app-icon icon="logout"></app-icon>
+              Log out
+          </app-button>
+      </div>
+  </nav>
+</header>

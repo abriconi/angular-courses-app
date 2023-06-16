@@ -1,5 +1,6 @@
 <div class="coursesPage">
     <app-breadcrumps></app-breadcrumps>
+    <!-- <app-course-info></app-course-info> -->
     <app-section (search)="handleSearch($event)"></app-section>
     <div class="coursesWrapper">
       <ng-container *ngIf="courses.length > 0; else noData">
@@ -8,7 +9,7 @@
             <app-courses-item
               [courseData]="course"
               [appHighlight]="course.creationDate"
-              (deleteCourse)="logDeletedCourse($event)"
+              (deleteCourse)="deleteCourse(course.id)"
             ></app-courses-item>
           </li>
         </ul>

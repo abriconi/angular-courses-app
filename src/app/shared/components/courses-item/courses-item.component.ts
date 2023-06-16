@@ -1,5 +1,6 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core'
-import { type Course } from 'src/app/utilus/global.moduls'
+import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { type Course } from 'src/app/utilus/global.moduls';
+
 
 @Component({
   selector: 'app-courses-item',
@@ -8,13 +9,19 @@ import { type Course } from 'src/app/utilus/global.moduls'
 })
 export class CoursesItemComponent {
   @Input() courseData?: Course;
-  @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>();
+  @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>()
 
+  showConfirmationModal = false;
 
   handleEdit(id: string): void {
     console.log(`Button "Edit" clicked on course ${id}`);
   }
-  deleteClick(id: string) {
-    this.deleteCourse.emit(id);
+  showModal() {
+    this.showConfirmationModal = true;
   }
+
+  closeModal() {
+    this.showConfirmationModal = false;
+  }
+
 }

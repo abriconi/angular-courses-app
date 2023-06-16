@@ -8,8 +8,10 @@ import { IconComponent } from './components/icon/icon.component';
 import { LogoComponent } from './components/logo/logo.component';
 import { CoursesItemComponent } from './components/courses-item/courses-item.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
+import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 
 import { HighlightDirective } from './directives/highlight/highlight.directive';
+import { IfAuthenticatedDirective } from './directives/ifAuthenticated/if-authenticated.directive';
 
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
@@ -25,7 +27,9 @@ import { FilterPipe } from './pipes/filter.pipe';
     SearchFormComponent,
     BreadcrumpsComponent,
     CoursesItemComponent,
+    ConfirmationModalComponent,
     HighlightDirective,
+    IfAuthenticatedDirective,
     OrderByPipe,
     DurationPipe,
     FilterPipe,
@@ -43,7 +47,9 @@ import { FilterPipe } from './pipes/filter.pipe';
     SearchFormComponent,
     BreadcrumpsComponent,
     CoursesItemComponent,
+    ConfirmationModalComponent,
     HighlightDirective,
+    IfAuthenticatedDirective,
     OrderByPipe,
     DurationPipe,
     FilterPipe,
