@@ -14,7 +14,9 @@ export class AuthService {
   constructor() {
     this.user$.subscribe((user) => {
       if (!user) {
-        this.logout();
+        //TODO
+        // this.logout();
+        this.isAuthenticated$.next(false);
         return;
       }
 
