@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Course } from './utilus/global.moduls';
-import { coursesMockedData } from './utilus/global.constans';
-import { generateId } from './utilus/helpers';
+import { Course } from '../utilus/global.moduls';
+import { coursesMockedData } from '../utilus/global.constans';
+import { generateId } from '../utilus/helpers';
 
 @Injectable({
   providedIn: 'root'

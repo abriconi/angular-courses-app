@@ -4,7 +4,7 @@ import { SectionComponent } from '../courses/section/section.component';
 import { SharedModule } from '../../shared/shared.module';
 import { Course } from 'src/app/utilus/global.moduls';
 import { OrderByPipe } from 'src/app/shared/pipes/orderBy.pipe';
-import { CourseService } from 'src/app/course.service';
+import { CourseService } from 'src/app/services/course.service';
 
 const coursesMockedData: Course[] = [
   {

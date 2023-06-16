@@ -5,7 +5,7 @@ import { Course } from 'src/app/utilus/global.moduls';
 
 import { OrderByPipe } from '../../shared/pipes/orderBy.pipe';
 import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
-import { CourseService } from 'src/app/course.service';
+import { CourseService } from 'src/app/services/course.service';
 
 @Component({
   selector: 'app-courses',
