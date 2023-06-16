@@ -2,13 +2,14 @@ import { Component, Input } from '@angular/core';
 import { FormControl } from '@angular/forms';
 
 @Component({
-  selector: 'app-input',
-  templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  selector: 'app-textarea',
+  templateUrl: './textarea.component.html',
+  styleUrls: ['./textarea.component.scss']
 })
-
-export class InputComponent {
+export class TextareaComponent {
   @Input() size?: 'fieldLabelLarge' | 'fieldLabelSmall' | 'fieldLabelMedium' | '' = '';
+  @Input() rows?: string;
+  @Input() cols?: string;
   @Input() placeholder?: string;
   @Input() control!: FormControl;
 }

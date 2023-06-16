@@ -1,10 +1,12 @@
 <label class="fieldLabel" [ngClass]="[size]">
   <ng-content></ng-content>
   <span class="requiredMark">*required</span>
-  <input
+  <textarea
+    [rows]="rows"
+    [cols]="cols"
     type="text"
     [placeholder]="placeholder"
     class="inputDefault"
     [formControl]="control"
-  >
+  ></textarea>
 </label>

@@ -1,16 +1,10 @@
 @import '../../../../styles.scss';
 
-:host{
-  display: block;
-  width: 100%;
-}
-
 .fieldLabel {
   display: flex;
   flex-direction: column;
   position: relative;
   gap: 10px;
-  width: 100%;
 
   .requiredMark {
     position: absolute;

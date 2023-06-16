@@ -9,7 +9,8 @@ import { LogoComponent } from './components/logo/logo.component';
 import { CoursesItemComponent } from './components/courses-item/courses-item.component';
 import { SearchFormComponent } from './components/search-form/search-form.component';
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
-import { InputComponent }  from './components/input/input.component'
+import { InputComponent }  from './components/input/input.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
 
 import { HighlightDirective } from './directives/highlight/highlight.directive';
 import { IfAuthenticatedDirective } from './directives/ifAuthenticated/if-authenticated.directive';
@@ -30,6 +31,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     CoursesItemComponent,
     ConfirmationModalComponent,
     InputComponent,
+    TextareaComponent,
     HighlightDirective,
     IfAuthenticatedDirective,
     OrderByPipe,
@@ -51,6 +53,7 @@ import { FilterPipe } from './pipes/filter.pipe';
     CoursesItemComponent,
     ConfirmationModalComponent,
     InputComponent,
+    TextareaComponent,
     HighlightDirective,
     IfAuthenticatedDirective,
     OrderByPipe,

@@ -12,7 +12,6 @@ import { Course } from 'src/app/utilus/global.moduls';
 export class CourseInfoComponent {
   @Output() courseCreated = new EventEmitter<Omit<Course, 'id' | 'topRated'>>();
 
-
   ifAllFieldFill = true;
 
   courseForm = new FormGroup({
@@ -26,9 +25,12 @@ export class CourseInfoComponent {
   constructor(private courseService: CourseService) {
   }
 
+  updateDuration(value: string): void {
+      value? console.log(value) : console.log('empty')
+  }
+
   createCourse(event: Event): void {
     event.preventDefault();
-
     if (this.courseForm.invalid) {
       this.ifAllFieldFill = false;
       return;
@@ -48,13 +50,14 @@ export class CourseInfoComponent {
       authors: authors !== undefined && authors !== null ? authors : ''
     }
     const createdCourse = this.courseService.courseCreated(newCourse);
+    console.log('createdCourse', createdCourse);
 
     this.courseCreated.emit(createdCourse);
     this.resetForm();
-
-
   }
+
   cancelCreating(): void {
+    console.log('Cansel button clicked');
     this.courseForm.reset();
   }
 

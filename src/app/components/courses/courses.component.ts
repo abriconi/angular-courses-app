@@ -25,7 +25,8 @@ export class CoursesComponent implements OnInit {
   @ContentChildren(HighlightDirective) appHighlight: any;
 
   courses: Course[] = [];
-  showCourseInfo = false;
+  // showCourseInfo = false;
+  showCourseInfo = true; // need to delete
 
   trackCourseById(_index: number, course: Course): string {
     return course.id;
