@@ -6,11 +6,12 @@ import { Course } from 'src/app/utilus/global.moduls';
 @Component({
   selector: 'app-course-info',
   templateUrl: './course-info.component.html',
-  styleUrls: ['./course-info.component.scss']
+  styleUrls: ['./course-info.component.scss'],
 })
 
 export class CourseInfoComponent {
   @Output() courseCreated = new EventEmitter<Omit<Course, 'id' | 'topRated'>>();
+  @Output() closeCourseInfo =  new EventEmitter<boolean>();
 
   ifAllFieldFill = true;
 
@@ -22,12 +23,9 @@ export class CourseInfoComponent {
     authors: new FormControl('', Validators.required)
   });
 
-  constructor(private courseService: CourseService) {
-  }
-
-  updateDuration(value: string): void {
-      value? console.log(value) : console.log('empty')
-  }
+  constructor(
+    private courseService: CourseService,
+  ) {}
 
   createCourse(event: Event): void {
     event.preventDefault();
@@ -50,10 +48,10 @@ export class CourseInfoComponent {
       authors: authors !== undefined && authors !== null ? authors : ''
     }
     const createdCourse = this.courseService.courseCreated(newCourse);
-    console.log('createdCourse', createdCourse);
 
     this.courseCreated.emit(createdCourse);
     this.resetForm();
+    this.closeCourseInfo.emit(false);
   }
 
   cancelCreating(): void {

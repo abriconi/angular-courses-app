@@ -30,9 +30,8 @@
           Duration:
         </app-input>
       </div>
-      <span class="durationModif"></span>
+      <span class="durationModif">{{ courseForm.controls['duration'].value | duration }}</span>
     </div>
-
 
     <app-input
       size="fieldLabelSmall"

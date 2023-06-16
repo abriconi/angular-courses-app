@@ -14,7 +14,7 @@ export class SectionComponent {
     this.search.emit(value); // Emit the search text value
   }
 
-  addCourse() {
-    this.showCourseInfo.emit(true);
+  addCourse(value: boolean) {
+    this.showCourseInfo.emit(value);
   }
 }
