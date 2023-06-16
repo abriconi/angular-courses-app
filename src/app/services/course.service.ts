@@ -34,8 +34,14 @@ export class CourseService {
   getItemById(id: string): Course | undefined {
     return CourseService.courses.find(course => course.id === id);
   }
-  updateItem(id: string): void {
-    console.log(id);
+
+  updateItem(updatedCourse: Course): void {
+    const courses: Course[] = this.getList();
+    const index = courses.findIndex(course => course.id === updatedCourse.id);
+    if (index !== -1) {
+      courses[index] = updatedCourse;
+    }
+    //need to change fieldes to new one, but not change all course
   }
 
   removeItem(id: string): void {

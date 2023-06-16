@@ -1,15 +1,17 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
+import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
 import { type Course } from 'src/app/utilus/global.moduls';
 
 
 @Component({
   selector: 'app-courses-item',
   templateUrl: './courses-item.component.html',
-  styleUrls: ['./courses-item.component.scss']
+  styleUrls: ['./courses-item.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesItemComponent {
   @Input() courseData?: Course;
-  @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>()
+  @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>();
+
 
   showConfirmationModal = false;
 
@@ -23,5 +25,6 @@ export class CoursesItemComponent {
   closeModal() {
     this.showConfirmationModal = false;
   }
+
 
 }
