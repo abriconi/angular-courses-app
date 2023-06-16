@@ -3,7 +3,7 @@ import { HeaderComponent } from './header.component';
 import { LogoComponent } from '../../shared/components/logo/logo.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { IconComponent } from '../../shared/components/icon/icon.component';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserLogin } from 'src/app/utilus/global.moduls';
 import { IfAuthenticatedDirective } from '../../shared/directives/ifAuthenticated/if-authenticated.directive';
 import { By } from '@angular/platform-browser';

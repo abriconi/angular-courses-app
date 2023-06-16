@@ -1,6 +1,6 @@
 // import { Component, EventEmitter, Output } from '@angular/core';
 // import { FormControl, FormGroup, Validators } from '@angular/forms';
-// import { CourseService } from 'src/app/course.service';
+// import { CourseService } from 'src/app/services/course.service';
 // import { Course } from 'src/app/utilus/global.moduls';
 
 // @Component({

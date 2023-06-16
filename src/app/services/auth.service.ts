@@ -14,8 +14,7 @@ export class AuthService {
   constructor() {
     this.user$.subscribe((user) => {
       if (!user) {
-        this.isAuthenticated$.next(false);
-        console.log('Loged out');
+        this.logout();
         return;
       }
 
@@ -46,8 +45,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.user$.next(null);
     this.token = null;
+    this.isAuthenticated$.next(false);
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');
