@@ -1,4 +1,4 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Component, EventEmitter, Injectable, Output, } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/utilus/global.moduls';
@@ -7,6 +7,10 @@ import { Course } from 'src/app/utilus/global.moduls';
   selector: 'app-course-info',
   templateUrl: './course-info.component.html',
   styleUrls: ['./course-info.component.scss'],
+})
+
+@Injectable({
+  providedIn: 'root'
 })
 
 export class CourseInfoComponent {
@@ -55,7 +59,6 @@ export class CourseInfoComponent {
   }
 
   cancelCreating(): void {
-    console.log('Cansel button clicked');
     this.courseForm.reset();
   }
 
