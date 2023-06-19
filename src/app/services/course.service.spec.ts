@@ -12,7 +12,6 @@ describe('CourseService', () => {
 
   it('should return the list of courses', () => {
     const courses = service.getList();
-    console.log('coursesMockedData.length 1', coursesMockedData.length);
     expect(courses).toEqual(coursesMockedData);
   });
 

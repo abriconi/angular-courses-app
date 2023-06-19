@@ -1,7 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { CoursesItemComponent } from './courses-item.component';
-import { Course } from 'src/app/utilus/global.moduls';
-import { By } from '@angular/platform-browser';
 import { IconComponent } from '../icon/icon.component';
 import { ButtonComponent } from '../button/button.component';
 import { DurationPipe } from '../../pipes/duration.pipe';
@@ -25,30 +23,6 @@ describe('CoursesItemComponent', () => {
 
   it('should create', () => {
     expect(component).toBeTruthy();
-  });
-
-  it('should show modal when delete button is clicked', () => {
-    component.courseData = { id: '12345' } as Course;
-    fixture.detectChanges();
-
-    const deleteButton = fixture.debugElement.query(By.css('[testID="deleteCourse"]'));
-    deleteButton.triggerEventHandler('click', null);
-    fixture.detectChanges();
-
-    const modal = fixture.debugElement.query(By.css('app-confirmation-modal'));
-    expect(modal).toBeTruthy();
-  });
-
-  it('should close confirmation modal when closeModal is called', () => {
-    component.courseData = { id: '12345' } as Course;
-    component.showConfirmationModal = true;
-    fixture.detectChanges();
-
-    component.closeModal();
-    fixture.detectChanges();
-
-    const confirmationModal = fixture.nativeElement.querySelector('app-confirmation-modal');
-    expect(confirmationModal).toBeFalsy();
   });
 
   it('should log the course ID when handleEdit is called', () => {

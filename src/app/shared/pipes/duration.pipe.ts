@@ -19,7 +19,7 @@ export class DurationPipe implements PipeTransform {
     if (hoursString && minutesString) {
       return `${hoursString} ${minutesString}`;
     } else {
-      return hoursString || minutesString || '0min';
+      return hoursString || minutesString || '';
     }
   }
 }

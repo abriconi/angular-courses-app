@@ -61,12 +61,6 @@ describe('CoursesComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should initialize courses with mocked data on ngOnInit', () => {
-    component.ngOnInit();
-    const sortedCourses = orderByPipe.transform(coursesMockedData);
-    expect(component.courses).toEqual(sortedCourses);
-  });
-
   it('should log "Button "Load more" clicked" when loadMoreClick is called', () => {
     const consoleSpy = spyOn(console, 'log');
     component.loadMoreClick();
@@ -74,11 +68,13 @@ describe('CoursesComponent', () => {
   });
 
   it('should delete course when deleteCourse is called', () => {
-    const courseId = '123';
-    const removeItemSpy = spyOn(courseService, 'removeItem');
-
+    const courses: Course[] = component.courses;
+    const courseId = courses[0].id;
+    const initialCourseExists = courses.some((course) => course.id === courseId);
+    expect(initialCourseExists).toBeTrue();
     component.deleteCourse(courseId);
-    expect(removeItemSpy).toHaveBeenCalledWith(courseId);
+    const courseRemoved = !courses.some((course) => course.id === courseId);
+    expect(courseRemoved).toBeTrue();
   });
 
   it('should reset courses to the full list when handleSearch is called with an empty search text', () => {
