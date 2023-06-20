@@ -35,13 +35,16 @@ export class CourseService {
     return CourseService.courses.find(course => course.id === id);
   }
 
-  updateItem(updatedCourse: Course): void {
-    const courses: Course[] = this.getList();
-    const index = courses.findIndex(course => course.id === updatedCourse.id);
-    if (index !== -1) {
-      courses[index] = updatedCourse;
+  updateItem(courseId: string, newCourseData: Omit<Course, 'id' | 'topRated'>): void {
+    const courseToUpdate = this.getItemById(courseId);
+
+    if (courseToUpdate) {
+      for (const field in newCourseData) {
+        if (field !== 'id' && field !== 'topRated') {
+          (courseToUpdate as any)[field] = (newCourseData as any)[field];
+        }
+      }
     }
-    //need to change fieldes to new one, but not change all course
   }
 
   removeItem(id: string): void {

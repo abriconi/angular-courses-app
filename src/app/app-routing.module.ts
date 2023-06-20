@@ -6,12 +6,12 @@ import { CourseInfoComponent } from './components/course-info/course-info.compon
 import { ErrorComponent } from './components/error/error.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/courses', pathMatch: 'full' },
+  { path: '', redirectTo: '/courses', pathMatch: 'full' },
   { path: 'courses', component: CoursesComponent },
   { path: 'login', component: LoginComponent },
-  // { path: 'courses/id', component: CourseInfoComponent },
+  { path: 'courses/:id', component: CourseInfoComponent },
   { path: 'courses/new', component: CourseInfoComponent },
-  // { path: '**', component: ErrorComponent },
+  { path: '**', component: ErrorComponent },
 
 ];
 

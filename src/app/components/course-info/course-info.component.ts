@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Injectable, Output, } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/utilus/global.moduls';
@@ -10,12 +11,12 @@ import { Router } from '@angular/router';
   styleUrls: ['./course-info.component.scss'],
 })
 
-@Injectable({
-  providedIn: 'root'
-})
 
-export class CourseInfoComponent {
+export class CourseInfoComponent implements OnInit {
   @Output() courseCreated = new EventEmitter<Omit<Course, 'id' | 'topRated'>>();
+
+  courseId!: string | null;
+  courseData: Course | undefined;
 
   ifAllFieldFill = true;
 
@@ -29,8 +30,28 @@ export class CourseInfoComponent {
 
   constructor(
     private courseService: CourseService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute,
   ) {}
+
+  ngOnInit() {
+    this.route.paramMap.subscribe(params => {
+      this.courseId = params.get('id');
+      if (this.courseId) {
+        const courseData = this.courseService.getItemById(this.courseId);
+
+        if (courseData) {
+          this.courseForm.patchValue({
+            title: courseData.title,
+            description: courseData.description,
+            duration: courseData.duration,
+            creationDate: courseData.creationDate,
+            authors: courseData.authors
+          });
+        }
+      }
+    });
+  }
 
   createCourse(event: Event): void {
     event.preventDefault();
@@ -39,19 +60,13 @@ export class CourseInfoComponent {
       return;
     }
 
-    const title = this.courseForm.value.title;
-    const description = this.courseForm.value.description;
-    const duration = this.courseForm.value.duration;
-    const creationDate = this.courseForm.value.creationDate;
-    const authors = this.courseForm.value.authors;
-
     const newCourse: Omit<Course, 'id' | 'topRated'> = {
-      title: title !== undefined && title !== null ? title : '',
-      description: description !== undefined && description !== null ? description : '',
-      duration: duration !== undefined && duration !== null ? duration : '',
-      creationDate: creationDate !== undefined && creationDate !== null ? creationDate : '',
-      authors: authors !== undefined && authors !== null ? authors : ''
-    }
+      title: this.courseForm.value.title ?? '',
+      description: this.courseForm.value.description ?? '',
+      duration: this.courseForm.value.duration ?? '',
+      creationDate: this.courseForm.value.creationDate ?? '',
+      authors: this.courseForm.value.authors ?? ''
+    };
     const createdCourse = this.courseService.courseCreated(newCourse);
 
     this.courseCreated.emit(createdCourse);
@@ -60,6 +75,23 @@ export class CourseInfoComponent {
 
   cancelCreating(): void {
     this.courseForm.reset();
+    this.router.navigate(['/courses']);
+  }
+
+  saveCourse(event: Event): void {
+    event.preventDefault();
+    if (this.courseId) {
+      const courseToUpdate: Omit<Course, 'id' | 'topRated'> = {
+        title: this.courseForm.value.title ?? '',
+        description: this.courseForm.value.description ?? '',
+        duration: this.courseForm.value.duration ?? '',
+        creationDate: this.courseForm.value.creationDate ?? '',
+        authors: this.courseForm.value.authors ?? ''
+      };
+      this.courseService.updateItem(this.courseId, courseToUpdate);
+    } else {
+      this.createCourse(event);
+    }
     this.router.navigate(['/courses']);
   }
 
