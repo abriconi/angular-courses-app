@@ -1,7 +1,6 @@
 <div class="coursesPage">
     <app-breadcrumps></app-breadcrumps>
-    <ng-container *ngIf="!isShowCourseInfo">
-      <app-section (showCourseInfo)="showCourseInfo(true)" (search)="handleSearch($event)"></app-section>
+      <app-section (search)="handleSearch($event)"></app-section>
       <div class="coursesWrapper">
         <ng-container *ngIf="courses.length > 0; else noData">
           <ul class="coursesList">
@@ -28,6 +27,5 @@
           </div>
         </ng-template>
       </div>
-    </ng-container>
-    <app-course-info *ngIf="isShowCourseInfo" (closeCourseInfo)="showCourseInfo(false)"></app-course-info>
+    <app-course-info></app-course-info>
 </div>

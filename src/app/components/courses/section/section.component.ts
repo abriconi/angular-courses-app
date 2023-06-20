@@ -9,7 +9,6 @@ import { Router } from '@angular/router';
 
 export class SectionComponent {
   @Output() search = new EventEmitter<string>(); // Emitting a string value
-  @Output() showCourseInfo =  new EventEmitter<boolean>();
 
   constructor(private router: Router) { }
 
@@ -17,7 +16,7 @@ export class SectionComponent {
     this.search.emit(value); // Emit the search text value
   }
 
-  addCourse(value: boolean) {
+  addCourse() {
     this.router.navigate(['/courses/new']);
   }
 }

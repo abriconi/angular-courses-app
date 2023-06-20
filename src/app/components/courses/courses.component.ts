@@ -25,7 +25,6 @@ export class CoursesComponent implements OnInit {
   @ContentChildren(HighlightDirective) appHighlight: any;
 
   courses: Course[] = [];
-  isShowCourseInfo = false;
 
   trackCourseById(_index: number, course: Course): string {
     return course.id;
@@ -63,8 +62,5 @@ export class CoursesComponent implements OnInit {
     } else {
       this.courses = this.filterPipe.transform(this.courseService.getList(), searchText);
     }
-  }
-  showCourseInfo(value: boolean) {
-    this.isShowCourseInfo = value;
   }
 }

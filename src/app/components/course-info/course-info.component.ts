@@ -2,6 +2,7 @@ import { Component, EventEmitter, Injectable, Output, } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
 import { Course } from 'src/app/utilus/global.moduls';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-course-info',
@@ -15,7 +16,6 @@ import { Course } from 'src/app/utilus/global.moduls';
 
 export class CourseInfoComponent {
   @Output() courseCreated = new EventEmitter<Omit<Course, 'id' | 'topRated'>>();
-  @Output() closeCourseInfo =  new EventEmitter<boolean>();
 
   ifAllFieldFill = true;
 
@@ -29,6 +29,7 @@ export class CourseInfoComponent {
 
   constructor(
     private courseService: CourseService,
+    private router: Router
   ) {}
 
   createCourse(event: Event): void {
@@ -55,11 +56,11 @@ export class CourseInfoComponent {
 
     this.courseCreated.emit(createdCourse);
     this.resetForm();
-    this.closeCourseInfo.emit(false);
   }
 
   cancelCreating(): void {
     this.courseForm.reset();
+    this.router.navigate(['/courses']);
   }
 
   resetForm(): void {
