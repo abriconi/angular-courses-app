@@ -8,6 +8,7 @@ import { Router } from '@angular/router';
 })
 export class ErrorComponent {
   constructor(private router: Router) { }
+
   homeReturn() {
     this.router.navigate(['/courses']);
   }
