@@ -11,6 +11,7 @@ import { SectionComponent } from './components/courses/section/section.component
 import { SharedModule } from './shared/shared.module';
 import { CourseInfoComponent } from './components/course-info/course-info.component';
 import { LoginComponent } from './components/login/login.component';
+import { ErrorComponent } from '../app/components/error/error.component';
 
 
 @NgModule({
@@ -22,6 +23,7 @@ import { LoginComponent } from './components/login/login.component';
     SectionComponent,
     CourseInfoComponent,
     LoginComponent,
+    ErrorComponent,
   ],
   imports: [
     BrowserModule,
