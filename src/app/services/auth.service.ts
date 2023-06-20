@@ -14,14 +14,12 @@ export class AuthService {
   constructor() {
     this.user$.subscribe((user) => {
       if (!user) {
-        //TODO
-        // this.logout();
+        this.logout();
         this.isAuthenticated$.next(false);
         return;
       }
 
       this.isAuthenticated$.next(true);
-      console.log(`${user.login} logged in succesfully`);
     });
 
     const token = localStorage.getItem('token');
