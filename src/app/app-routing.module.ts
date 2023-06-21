@@ -5,7 +5,7 @@ import { LoginComponent } from './components/login/login.component';
 import { CourseInfoComponent } from './components/course-info/course-info.component';
 import { CoursesLayoutComponent } from './components/courses/courses-layout/courses-layout.component';
 import { ErrorComponent } from './components/error/error.component';
-import { BreadcrumpsComponent } from './shared/components/breadcrumps/breadcrumps.component';
+import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -48,7 +48,7 @@ const routes: Routes = [
   },
   {
     path: 'breadcrumbs',
-    component: BreadcrumpsComponent,
+    component: BreadcrumbsComponent,
     canActivate: [AuthGuard],
     data: {
       requiresLogin: true,
