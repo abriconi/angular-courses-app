@@ -9,7 +9,7 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { SectionComponent } from './components/courses/section/section.component';
 import { SharedModule } from './shared/shared.module';
-import { CourseInfoComponent } from './components/course-info/course-info.component';
+import { CourseInfoModule } from './course-info-module/course-info-module.module';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from '../app/components/error/error.component';
 import { CoursesLayoutComponent } from './components/courses/courses-layout/courses-layout.component';
@@ -22,7 +22,6 @@ import { CoursesLayoutComponent } from './components/courses/courses-layout/cour
     FooterComponent,
     CoursesComponent,
     SectionComponent,
-    CourseInfoComponent,
     LoginComponent,
     ErrorComponent,
     CoursesLayoutComponent,
@@ -32,6 +31,7 @@ import { CoursesLayoutComponent } from './components/courses/courses-layout/cour
     AppRoutingModule,
     SharedModule,
     ReactiveFormsModule,
+    CourseInfoModule
   ],
   providers: [],
   bootstrap: [AppComponent]

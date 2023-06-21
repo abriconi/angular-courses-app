@@ -15,13 +15,11 @@ const routes: Routes = [
     component: CoursesComponent,
     children: [
       { path: '', component: CoursesLayoutComponent },
-      // { path: 'new', component: CourseInfoComponent },
       { path: ':id', component: CourseInfoComponent },
     ],
     canActivate: [AuthGuard],
     data: {
       requiresLogin: true,
-      breadcrumb: 'Courses'
     },
   },
   {
@@ -30,20 +28,18 @@ const routes: Routes = [
   },
   {
     path: 'courses/:id',
-    component: CourseInfoComponent,
+    loadChildren: () => import('./course-info-module/course-info-module.module').then(m => m.CourseInfoModule),
     canActivate: [AuthGuard],
     data: {
       requiresLogin: true,
-      breadcrumb: (data: any) => `data.title`
      }
   },
   {
     path: 'courses/new',
-    component: CourseInfoComponent,
+    loadChildren: () => import('./course-info-module/course-info-module.module').then(m => m.CourseInfoModule),
     canActivate: [AuthGuard],
     data: {
       requiresLogin: true,
-      breadcrumb: 'edit'
      }
   },
   {
@@ -52,11 +48,16 @@ const routes: Routes = [
     canActivate: [AuthGuard],
     data: {
       requiresLogin: true,
-      breadcrumb: 'edit'
    }
   },
-
-  { path: '**', component: ErrorComponent },
+  {
+    path: '**',
+    component: ErrorComponent,
+    canActivate: [AuthGuard],
+    data: {
+      requiresLogin: true,
+     }
+  },
 
 ];
 
