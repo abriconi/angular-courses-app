@@ -12,6 +12,7 @@ import { SharedModule } from './shared/shared.module';
 import { CourseInfoComponent } from './components/course-info/course-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from '../app/components/error/error.component';
+import { CoursesLayoutComponent } from './components/courses/courses-layout/courses-layout.component';
 
 
 @NgModule({
@@ -24,6 +25,7 @@ import { ErrorComponent } from '../app/components/error/error.component';
     CourseInfoComponent,
     LoginComponent,
     ErrorComponent,
+    CoursesLayoutComponent,
   ],
   imports: [
     BrowserModule,
