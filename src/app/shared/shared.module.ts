@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { ReactiveFormsModule } from '@angular/forms';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 
 import { BreadcrumbsComponent } from './components/breadcrumbs/breadcrumbs.component';
 import { ButtonComponent } from './components/button/button.component';
@@ -19,6 +19,7 @@ import { IfAuthenticatedDirective } from './directives/ifAuthenticated/if-authen
 import { OrderByPipe } from './pipes/orderBy.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
 import { FilterPipe } from './pipes/filter.pipe';
+import { CustomReuseStrategy } from './custom-reuse-strategy/custom-reuse-strategy';
 
 
 
@@ -62,5 +63,8 @@ import { FilterPipe } from './pipes/filter.pipe';
     DurationPipe,
     FilterPipe,
   ],
+  providers: [
+    { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
+  ]
 })
 export class SharedModule { }
