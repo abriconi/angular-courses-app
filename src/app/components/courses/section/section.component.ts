@@ -8,12 +8,12 @@ import { Router } from '@angular/router';
 })
 
 export class SectionComponent {
-  @Output() search = new EventEmitter<string>(); // Emitting a string value
+  @Output() search = new EventEmitter<string>();
 
   constructor(private router: Router) { }
 
   handleSearch(value: string):void {
-    this.search.emit(value); // Emit the search text value
+    this.search.emit(value);
   }
 
   addCourse() {

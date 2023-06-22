@@ -1,4 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { RouterTestingModule } from '@angular/router/testing';
+import { Router } from '@angular/router';
 import { CoursesItemComponent } from './courses-item.component';
 import { IconComponent } from '../icon/icon.component';
 import { ButtonComponent } from '../button/button.component';
@@ -8,9 +10,14 @@ import { ConfirmationModalComponent } from '../confirmation-modal/confirmation-m
 describe('CoursesItemComponent', () => {
   let component: CoursesItemComponent;
   let fixture: ComponentFixture<CoursesItemComponent>;
+  let router: Router;
+  let routerNavigate: jasmine.Spy;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
+      imports: [
+        RouterTestingModule,
+      ],
       declarations: [CoursesItemComponent, ButtonComponent, IconComponent, DurationPipe, ConfirmationModalComponent],
     }).compileComponents();
   });
@@ -18,6 +25,9 @@ describe('CoursesItemComponent', () => {
   beforeEach(() => {
     fixture = TestBed.createComponent(CoursesItemComponent);
     component = fixture.componentInstance;
+    router = TestBed.inject(Router);
+    routerNavigate = spyOn(router, 'navigate');
+
     fixture.detectChanges();
   });
 
@@ -25,12 +35,11 @@ describe('CoursesItemComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  it('should log the course ID when handleEdit is called', () => {
-    const consoleSpy = spyOn(console, 'log');
+  it('should navigate to the course when handleEdit is called', () => {
     const courseId = '12345';
     component.handleEdit(courseId);
 
-    expect(consoleSpy).toHaveBeenCalledWith(`Button "Edit" clicked on course ${courseId}`);
+    expect(routerNavigate).toHaveBeenCalledWith([ '/courses', courseId ]);
   });
 
 });

@@ -1,4 +1,4 @@
-import { ComponentFixture, TestBed, fakeAsync, tick } from '@angular/core/testing';
+import { ComponentFixture, TestBed, fakeAsync } from '@angular/core/testing';
 import { ErrorComponent } from './error.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
@@ -9,6 +9,7 @@ describe('ErrorComponent', () => {
   let component: ErrorComponent;
   let fixture: ComponentFixture<ErrorComponent>;
   let router: Router;
+  let routerNavigate: jasmine.Spy;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
@@ -19,7 +20,7 @@ describe('ErrorComponent', () => {
     fixture = TestBed.createComponent(ErrorComponent);
     component = fixture.componentInstance;
     router = TestBed.inject(Router);
-    spyOn(router, 'navigate');
+    routerNavigate = spyOn(router, 'navigate');
     fixture.detectChanges();
   });
 
@@ -27,14 +28,12 @@ describe('ErrorComponent', () => {
     expect(component).toBeTruthy();
   });
 
-  // it('should navigate to home on button click', fakeAsync(() => {
-  //   spyOn(component, 'homeReturn');
-  //   const button = fixture.debugElement.query(By.css('[testid="homeRedirect"]')).nativeElement;
+  it('should navigate to home on button click', fakeAsync(() => {
+    const buttonComponent = fixture.debugElement.query(By.directive(ButtonComponent));
+    const buttonElement = buttonComponent.query(By.css('button')).nativeElement;
 
-  //   button.click();
-  //   tick();
+    buttonElement.click();
 
-  //   expect(component.homeReturn).toHaveBeenCalled();
-  //   expect(router.navigate).toHaveBeenCalledWith(['/courses'], { skipLocationChange: true });
-  // }));
+    expect(routerNavigate).toHaveBeenCalledWith(['/courses']);
+  }));
 });
