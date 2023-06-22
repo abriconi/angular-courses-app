@@ -14,13 +14,12 @@ export class AuthService {
   constructor() {
     this.user$.subscribe((user) => {
       if (!user) {
+        this.logout();
         this.isAuthenticated$.next(false);
-        console.log('Loged out');
         return;
       }
 
       this.isAuthenticated$.next(true);
-      console.log(`${user.login} logged in succesfully`);
     });
 
     const token = localStorage.getItem('token');
@@ -46,8 +45,8 @@ export class AuthService {
   }
 
   logout(): void {
-    this.user$.next(null);
     this.token = null;
+    this.isAuthenticated$.next(false);
 
     localStorage.removeItem('token');
     localStorage.removeItem('user');

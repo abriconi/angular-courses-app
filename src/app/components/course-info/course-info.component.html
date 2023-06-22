@@ -1,4 +1,4 @@
-<!-- <div class="courseInfoWrapper">
+<div class="courseInfoWrapper">
   <div class="titleWrapper">
     <h1 class="heading">New course</h1>
     <p class="error-message" *ngIf="!ifAllFieldFill">
@@ -6,55 +6,46 @@
     </p>
   </div>
   <form class="courseInfoForm" [formGroup]="courseForm" (ngSubmit)="createCourse($event)">
-    <label class="fieldLabel fieldLabelLarge">
+    <app-input
+      size="fieldLabelLarge"
+      placeholder="Add title"
+      [control]="courseForm.controls['title']">
       Title:
-      <span class="requiredMark">*required</span>
-      <input
-        type="text"
-        placeholder="Add title"
-        class="inputDefault"
-        formControlName="title"
+    </app-input>
 
-      >
-    </label>
-    <label class="fieldLabel fieldLabelLarge">
+    <app-textarea
+      rows="4"
+      cols="50"
+      placeholder="Add description"
+      [control]="courseForm.controls['description']">
       Description:
-      <textarea
-        rows="4"
-        cols="50"
-        placeholder="Add description"
-        class="inputDefault"
-        formControlName="description"
-        ></textarea>
-      <span class="requiredMark">*required</span>
-    </label>
-    <label class="fieldLabel fieldLabelSmall">
-      Duration:
-      <input
-        type="text"
-        placeholder="minutes"
-        class="inputDefault"
-        formControlName="duration">
-      <span class="requiredMark">*required</span>
-    </label>
-    <label class="fieldLabel fieldLabelSmall">
+    </app-textarea>
+
+    <div class="durationWrapper">
+      <div class="durationInputWrapper">
+        <app-input
+          size="fieldLabelLarge"
+          placeholder="minutes"
+          [control]="courseForm.controls['duration']">
+          Duration:
+        </app-input>
+      </div>
+      <span class="durationModif">{{ courseForm.controls['duration'].value | duration }}</span>
+    </div>
+
+    <app-input
+      size="fieldLabelSmall"
+      placeholder="MM/DD/YYYY"
+      [control]="courseForm.controls['creationDate']">
       Date:
-      <input
-        type="date"
-        placeholder="MM/DD/YYYY"
-        class="inputDefault"
-        formControlName="creationDate">
-      <span class="requiredMark">*required</span>
-    </label>
-    <label class="fieldLabel fieldLabelMedium">
+    </app-input>
+
+    <app-input
+      size="fieldLabelMedium"
+      placeholder="Start typing"
+      [control]="courseForm.controls['authors']">
       Authors:
-      <input
-        type="text"
-        placeholder="Start typing"
-        class="inputDefault"
-        formControlName="authors">
-      <span class="requiredMark">*required</span>
-    </label>
+    </app-input>
 
     <div class="btnWrapper">
       <app-button
@@ -63,6 +54,7 @@
         size="large"
         color="tertiary"
         (click)="cancelCreating()"
+
       >Cancel
       </app-button>
       <app-button
@@ -70,8 +62,9 @@
         variant="filled"
         size="large"
         color="secondary"
+        (click)="saveCourse($event)"
       >Save
       </app-button>
     </div>
   </form>
-</div> -->
+</div>

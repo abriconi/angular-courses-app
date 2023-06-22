@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -16,7 +17,10 @@ export class LoginComponent {
 
   isError = false;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   login(event: Event): void {
     event.preventDefault();
@@ -27,12 +31,12 @@ export class LoginComponent {
 
     if (this.userForm.invalid) {
       this.isError = true;
-
       return;
     }
 
     if(login && password) {
       this.authService.login(login, password);
+      this.router.navigate(['/courses']);
     }
   }
 

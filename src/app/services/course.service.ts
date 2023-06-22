@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { Course } from './utilus/global.moduls';
-import { coursesMockedData } from './utilus/global.constans';
-import { generateId } from './utilus/helpers';
+import { Course } from '../utilus/global.moduls';
+import { coursesMockedData } from '../utilus/global.constans';
+import { generateId } from '../utilus/helpers';
 
 @Injectable({
   providedIn: 'root'
@@ -34,8 +34,17 @@ export class CourseService {
   getItemById(id: string): Course | undefined {
     return CourseService.courses.find(course => course.id === id);
   }
-  updateItem(id: string): void {
-    console.log(id);
+
+  updateItem(courseId: string, newCourseData: Omit<Course, 'id' | 'topRated'>): void {
+    const courseToUpdate = this.getItemById(courseId);
+
+    if (courseToUpdate) {
+      for (const field in newCourseData) {
+        if (field !== 'id' && field !== 'topRated') {
+          (courseToUpdate as any)[field] = (newCourseData as any)[field];
+        }
+      }
+    }
   }
 
   removeItem(id: string): void {

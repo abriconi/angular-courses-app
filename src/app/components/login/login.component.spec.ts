@@ -2,23 +2,30 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { ReactiveFormsModule } from '@angular/forms';
 import { LoginComponent } from './login.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
+import { AuthService } from 'src/app/services/auth.service';
+import { Router } from '@angular/router';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
   let fixture: ComponentFixture<LoginComponent>;
+  let authService: AuthService;
+  let router: Router;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ LoginComponent, ButtonComponent ],
+      declarations: [LoginComponent, ButtonComponent],
       imports: [ReactiveFormsModule],
-    })
-    .compileComponents();
-  });
+      providers: [
+        AuthService,
+        { provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } }
+      ]
+    }).compileComponents();
 
-  beforeEach(() => {
     fixture = TestBed.createComponent(LoginComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+    authService = TestBed.inject(AuthService);
+    router = TestBed.inject(Router);
   });
 
   it('should create', () => {
@@ -53,5 +60,26 @@ describe('LoginComponent', () => {
     fixture.detectChanges();
 
     expect(component.login).toHaveBeenCalled();
+  });
+
+  it('form invalid, when empty', () => {
+    expect(component.userForm.valid).toBeFalsy();
+  });
+
+  it('should call login method and pass form values on form submit', () => {
+    const login = component.userForm.get('login');
+    const password = component.userForm.get('password');
+    login?.setValue('user');
+    password?.setValue('password');
+
+    spyOn(authService, 'login');
+    spyOn(component, 'login').and.callThrough();
+
+    const event = new Event('submit');
+    component.login(event);
+
+    expect(component.login).toHaveBeenCalledWith(event);
+    expect(authService.login).toHaveBeenCalledWith('user', 'password');
+    expect(router.navigate).toHaveBeenCalledWith(['/courses']);
   });
 });

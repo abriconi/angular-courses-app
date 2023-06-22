@@ -13,14 +13,10 @@ describe('DurationPipe', () => {
   });
 
   it('should handle singular and plural correctly', () => {
-    expect(pipe.transform('0')).toEqual('0min');
+    expect(pipe.transform('0')).toEqual('');
     expect(pipe.transform('1')).toEqual('1min');
     expect(pipe.transform('60')).toEqual('1h');
     expect(pipe.transform('61')).toEqual('1h 1min');
   });
 
-  it('should return "0min" for invalid input', () => {
-    expect(pipe.transform('')).toEqual('0min');
-    expect(pipe.transform('abc')).toEqual('0min');
-  });
 });

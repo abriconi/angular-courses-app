@@ -1,0 +1,27 @@
+@import '../../../../styles.scss';
+
+.fieldLabel {
+  display: flex;
+  flex-direction: column;
+  position: relative;
+  gap: 10px;
+
+  .requiredMark {
+    position: absolute;
+    right: 0;
+    top: 0;
+    color: $text-description-color;
+    font-size: 14px;
+    line-height: 1.5;
+    margin: 0;
+  }
+}
+.fieldLabelLarge {
+  width: 100%;
+}
+.fieldLabelSmall {
+  width: 30%;
+}
+.fieldLabelMedium {
+  width: 50%;
+}

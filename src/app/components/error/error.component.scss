@@ -1,0 +1,36 @@
+@import '../../../styles.scss';
+
+.errorWrapper {
+  margin: 120px 250px 0 250px;
+  padding: 50px;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 25px;
+  background-color: $light-bg;
+  border: 1px solid transparent;
+  box-shadow: 5px 6px 6px $addition-color;
+  border-radius: 7px;
+
+  .errorHeadingWrapper {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 25px;
+
+    .errorHeader {
+      color: $secondary-btn-color;
+      font-size: 100px;
+      margin: 0;
+    }
+    .errorHeadingDescription {
+      margin: 0;
+      padding-bottom: 20px;
+    }
+  }
+  .errorDescription {
+    margin: 0;
+    padding-bottom: 20px;
+  }
+}

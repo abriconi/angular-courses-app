@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/auth.service';
+import { AuthService } from 'src/app/services/auth.service';
 import { UserLogin } from 'src/app/utilus/global.moduls';
-
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-header',
@@ -11,10 +11,13 @@ import { UserLogin } from 'src/app/utilus/global.moduls';
 export class HeaderComponent implements OnInit {
   user: UserLogin | null = null;
 
-  constructor(private authService: AuthService) {}
+  constructor(
+    private authService: AuthService,
+    private router: Router
+  ) {}
 
   ngOnInit(): void {
-    this.authService.user$.subscribe((user) => {
+    this.authService.user$?.subscribe((user) => {
       this.user = user;
     });
   }
@@ -22,5 +25,6 @@ export class HeaderComponent implements OnInit {
   logout(): void {
     this.authService.logout();
     this.user = null;
+    this.router.navigate(['/login']);
   }
 }

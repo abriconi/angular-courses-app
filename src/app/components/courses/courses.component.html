@@ -1,32 +1,4 @@
 <div class="coursesPage">
-    <app-breadcrumps></app-breadcrumps>
-    <!-- <app-course-info></app-course-info> -->
-    <app-section (search)="handleSearch($event)"></app-section>
-    <div class="coursesWrapper">
-      <ng-container *ngIf="courses.length > 0; else noData">
-        <ul class="coursesList">
-          <li *ngFor="let course of courses ; trackBy: trackCourseById">
-            <app-courses-item
-              [courseData]="course"
-              [appHighlight]="course.creationDate"
-              (deleteCourse)="deleteCourse(course.id)"
-            ></app-courses-item>
-          </li>
-        </ul>
-
-        <div class="coursesList">
-            <app-button
-              variant="linkSpecial"
-              [onClick]="loadMoreClick"
-            >Load more
-            </app-button>
-        </div>
-      </ng-container>
-      <ng-template #noData>
-        <div class="noDataWrapper">
-          <p>No data. Feel free to add new course</p>
-        </div>
-      </ng-template>
-
-    </div>
+  <app-breadcrumbs></app-breadcrumbs>
+  <router-outlet></router-outlet>
 </div>
