@@ -24,11 +24,13 @@ export class BreadcrumbsComponent implements OnInit {
     this.router.events
       .pipe(
         filter(e => e instanceof NavigationEnd),
-      ).subscribe(async () => {
+      ).subscribe(() => {
         const courseId = this.route.snapshot.firstChild?.paramMap.get('id');
         if(courseId) {
-          const course = await this.courseService.getItemById(courseId);
+          const course = this.courseService.getItemById(courseId);
           this.courseTitle = course?.title || null
+        } else if (!courseId) {
+          this.router.navigate(['/error'])
         }
       }
     );

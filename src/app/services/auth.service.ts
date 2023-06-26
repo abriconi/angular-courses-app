@@ -8,27 +8,10 @@ import { UserLogin } from 'src/app/utilus/global.moduls';
 export class AuthService {
   private token: null | string = null;
 
-  user$ = new BehaviorSubject<UserLogin | null>(null);
-  isAuthenticated$ = new BehaviorSubject(false);
+  userSubject = new BehaviorSubject<UserLogin | null>(null);
+  isAuthenticated$ = new BehaviorSubject<boolean>(false);
+  user$ = this.userSubject.asObservable();
 
-  constructor() {
-    this.user$.subscribe((user) => {
-      if (!user) {
-        this.logout();
-        this.isAuthenticated$.next(false);
-        return;
-      }
-
-      this.isAuthenticated$.next(true);
-    });
-
-    const token = localStorage.getItem('token');
-    const user = localStorage.getItem('user');
-    if (token && user) {
-      this.token = token;
-      this.user$.next(JSON.stringify(user) as unknown as UserLogin)
-    }
-  }
 
   login(login: string, password: string): void {
     const userData = {
@@ -37,8 +20,9 @@ export class AuthService {
       token: 'fakeToken',
     }
 
-    this.user$.next(userData);
+    this.userSubject.next(userData);
     this.token = userData.token;
+    this.isAuthenticated$.next(true);
 
     localStorage.setItem('token', userData.token);
     localStorage.setItem('user', JSON.stringify(userData));
@@ -51,5 +35,4 @@ export class AuthService {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
   }
-
 }

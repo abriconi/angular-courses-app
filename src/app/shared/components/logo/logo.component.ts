@@ -9,6 +9,4 @@ import { Router } from '@angular/router';
 export class LogoComponent {
   public coursesLink = '/courses';
 
-  constructor(private router: Router) {}
-
 }

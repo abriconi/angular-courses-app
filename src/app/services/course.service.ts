@@ -32,7 +32,7 @@ export class CourseService {
   }
 
   getItemById(id: string): Course | undefined {
-    return CourseService.courses.find(course => course.id === id);
+    return this.getList().find(course => course.id === id);
   }
 
   updateItem(courseId: string, newCourseData: Omit<Course, 'id' | 'topRated'>): void {

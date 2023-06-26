@@ -2,6 +2,8 @@ import { Component, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
 import { UserLogin } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-header',
@@ -10,6 +12,7 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   user: UserLogin | null = null;
+  private userSubscription!: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -17,9 +20,13 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.user$?.subscribe((user) => {
+    this.authService.user$.subscribe((user) => {
       this.user = user;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 
   logout(): void {
