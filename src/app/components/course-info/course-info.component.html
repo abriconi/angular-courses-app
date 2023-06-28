@@ -9,7 +9,7 @@
     <app-input
       size="fieldLabelLarge"
       placeholder="Add title"
-      [control]="courseForm.controls['title']">
+      [control]="courseForm.controls['name']">
       Title:
     </app-input>
 
@@ -26,24 +26,26 @@
         <app-input
           size="fieldLabelLarge"
           placeholder="minutes"
-          [control]="courseForm.controls['duration']">
+          [control]="courseForm.controls['length']">
           Duration:
         </app-input>
       </div>
-      <span class="durationModif">{{ courseForm.controls['duration'].value | duration }}</span>
+      <span class="durationModif">{{ courseForm.controls['length'].value | duration }}</span>
     </div>
 
     <app-input
       size="fieldLabelSmall"
       placeholder="MM/DD/YYYY"
-      [control]="courseForm.controls['creationDate']">
+      [control]="courseForm.controls['date']">
       Date:
     </app-input>
 
     <app-input
       size="fieldLabelMedium"
       placeholder="Start typing"
-      [control]="courseForm.controls['authors']">
+      [control]="courseForm.controls['authors']"
+      >
+
       Authors:
     </app-input>
 

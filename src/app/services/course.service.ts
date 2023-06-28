@@ -1,53 +1,60 @@
 import { Injectable } from '@angular/core';
-import { Course } from '../utilus/global.moduls';
-import { coursesMockedData } from '../utilus/global.constans';
+import { Authors, COURSE_MODEL } from '../utilus/global.moduls';
+import { authorsMockedData, coursesMockedData } from '../utilus/global.constans';
 import { generateId } from '../utilus/helpers';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-  static courses: Course[] = coursesMockedData;
+  static courses: COURSE_MODEL[] = coursesMockedData;
+  static authors: Authors[] = authorsMockedData
 
-  getList(): Course[] {
+  getList(): COURSE_MODEL[] {
     return CourseService.courses;
   }
-  courseCreated(newCourseData: Omit<Course, 'id' | 'topRated'>): Course {
+
+  getAuthorsList(): Authors[] {
+    return CourseService.authors;
+  }
+
+  courseCreated(newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): COURSE_MODEL {
 
     const newCourseID = generateId();
 
-    const newCourse: Course = {
+    const newCourse: COURSE_MODEL = {
       id: newCourseID,
-      topRated: false,
-      title: newCourseData.title,
-      creationDate: newCourseData.creationDate,
-      duration: newCourseData.duration,
+      isTopRated: false,
+      name: newCourseData.name,
+      date: newCourseData.date,
+      length: Number(newCourseData.length),
       description: newCourseData.description,
       authors: newCourseData.authors
     }
-
     CourseService.courses.push(newCourse);
 
     return newCourse;
   }
 
-  getItemById(id: string): Course | undefined {
-    return this.getList().find(course => course.id === id);
+  getItemById(id: number): COURSE_MODEL | undefined {
+    return this.getList().find(course => course.id === id)
   }
 
-  updateItem(courseId: string, newCourseData: Omit<Course, 'id' | 'topRated'>): void {
+  updateItem(courseId: number, newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): void {
     const courseToUpdate = this.getItemById(courseId);
 
     if (courseToUpdate) {
       for (const field in newCourseData) {
-        if (field !== 'id' && field !== 'topRated') {
+        if (field !== 'id' && field !== 'isTopRated') {
           (courseToUpdate as any)[field] = (newCourseData as any)[field];
         }
       }
     }
+    console.log('1', CourseService.courses);
+
   }
 
-  removeItem(id: string): void {
+  removeItem(id: number): void {
     const index = CourseService.courses.findIndex(course => course.id === id);
     if (index !== -1) {
       CourseService.courses.splice(index, 1);

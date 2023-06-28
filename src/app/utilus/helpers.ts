@@ -1,3 +1,4 @@
-export function generateId(): string {
-  return Math.random().toString(36).substring(2);
+export function generateId(): number {
+  return Math.floor(Math.random() * 100000);
 }
+

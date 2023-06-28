@@ -1,6 +1,6 @@
 import { Component, ContentChildren, OnInit } from '@angular/core';
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
-import { Course } from 'src/app/utilus/global.moduls';
+import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
 import { OrderByPipe } from 'src/app/shared/pipes/orderBy.pipe';
 import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
@@ -21,9 +21,9 @@ export class CoursesLayoutComponent implements OnInit{
 
   @ContentChildren(HighlightDirective) appHighlight: any;
 
-  courses: Course[] = [];
+  courses: COURSE_MODEL[] = [];
 
-  trackCourseById(_index: number, course: Course): string {
+  trackCourseById(_index: number, course: COURSE_MODEL): number {
     return course.id;
   }
 
@@ -44,7 +44,7 @@ export class CoursesLayoutComponent implements OnInit{
     console.log('Button "Load more" cliked');
   }
 
-  deleteCourse(id: string): void {
+  deleteCourse(id: number): void {
     const deletedCourse = this.courseService.getItemById(id);
 
     if (deletedCourse) {

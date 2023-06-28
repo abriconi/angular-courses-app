@@ -2,8 +2,9 @@ import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
-import { Course } from 'src/app/utilus/global.moduls';
+import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
+import { authorsMockedData } from 'src/app/utilus/global.constans';
 
 @Component({
   selector: 'app-course-info',
@@ -11,21 +12,20 @@ import { Router } from '@angular/router';
   styleUrls: ['./course-info.component.scss'],
 })
 
-
 export class CourseInfoComponent implements OnInit {
-  @Output() courseCreated = new EventEmitter<Omit<Course, 'id' | 'topRated'>>();
+  @Output() courseCreated = new EventEmitter<Omit<COURSE_MODEL, 'id' | 'isTopRated'>>();
 
-  courseId!: string | null;
-  courseData: Course | undefined;
+  courseId!: number | null;
+  courseData: COURSE_MODEL | undefined;
 
   ifAllFieldFill = true;
 
   courseForm = new FormGroup({
-    title: new FormControl('', Validators.required),
+    name: new FormControl('', Validators.required),
     description: new FormControl('', Validators.required),
-    duration: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
-    creationDate: new FormControl('', Validators.required),
-    authors: new FormControl('', Validators.required)
+    length: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
+    date: new FormControl('', Validators.required),
+    authors: new FormControl('', Validators.required),
   });
 
   constructor(
@@ -36,17 +36,18 @@ export class CourseInfoComponent implements OnInit {
 
   ngOnInit() {
     this.route.paramMap.subscribe(params => {
-      this.courseId = params.get('id');
+      this.courseId = Number(params.get('id'));
       if (this.courseId) {
-        const courseData = this.courseService.getItemById(this.courseId);
+        const courseData: COURSE_MODEL | undefined = this.courseService.getItemById(this.courseId);
 
         if (courseData) {
+          const authorNames = courseData.authors.map(author => author.name).join(', ');
           this.courseForm.patchValue({
-            title: courseData.title,
+            name: courseData.name,
             description: courseData.description,
-            duration: courseData.duration,
-            creationDate: courseData.creationDate,
-            authors: courseData.authors
+            length: courseData.length.toString(),
+            date: courseData.date,
+            authors: authorNames,
           });
         }
       }
@@ -60,14 +61,15 @@ export class CourseInfoComponent implements OnInit {
       return;
     }
 
-    const newCourse: Omit<Course, 'id' | 'topRated'> = {
-      title: this.courseForm.value.title ?? '',
+    const newCourse: Omit<COURSE_MODEL, 'id' | 'isTopRated'> = {
+      name: this.courseForm.value.name ?? '',
       description: this.courseForm.value.description ?? '',
-      duration: this.courseForm.value.duration ?? '',
-      creationDate: this.courseForm.value.creationDate ?? '',
-      authors: this.courseForm.value.authors ?? ''
+      length: Number(this.courseForm.value.length) ?? 0,
+      date: this.courseForm.value.date ?? '',
+      // authors: [this.courseForm.value.authors] ?? [],
+      authors: authorsMockedData ?? [],
     };
-    const createdCourse = this.courseService.courseCreated(newCourse);
+    const createdCourse: COURSE_MODEL = this.courseService.courseCreated(newCourse);
 
     this.courseCreated.emit(createdCourse);
     this.resetForm();
@@ -81,12 +83,13 @@ export class CourseInfoComponent implements OnInit {
   saveCourse(event: Event): void {
     event.preventDefault();
     if (this.courseId) {
-      const courseToUpdate: Omit<Course, 'id' | 'topRated'> = {
-        title: this.courseForm.value.title ?? '',
+      const courseToUpdate: Omit<COURSE_MODEL, 'id' | 'isTopRated'> = {
+        name: this.courseForm.value.name ?? '',
         description: this.courseForm.value.description ?? '',
-        duration: this.courseForm.value.duration ?? '',
-        creationDate: this.courseForm.value.creationDate ?? '',
-        authors: this.courseForm.value.authors ?? ''
+        length: Number(this.courseForm.value.length) ?? '',
+        date: this.courseForm.value.date ?? '',
+        authors: authorsMockedData
+        // authors: this.courseForm.value.authors as Authors[]
       };
       this.courseService.updateItem(this.courseId, courseToUpdate);
     } else {

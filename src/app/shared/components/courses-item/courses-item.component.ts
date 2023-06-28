@@ -1,5 +1,5 @@
 import { Component, EventEmitter, Input, Output, ChangeDetectionStrategy } from '@angular/core';
-import { type Course } from 'src/app/utilus/global.moduls';
+import { type COURSE_MODEL } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
 
 @Component({
@@ -9,14 +9,14 @@ import { Router } from '@angular/router';
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class CoursesItemComponent {
-  @Input() courseData?: Course;
-  @Output() deleteCourse: EventEmitter<string> = new EventEmitter<string>();
+  @Input() courseData?: COURSE_MODEL;
+  @Output() deleteCourse: EventEmitter<number> = new EventEmitter<number>();
 
   constructor(private router: Router) { }
 
   showConfirmationModal = false;
 
-  handleEdit(id: string): void {
+  handleEdit(id: number): void {
     this.router.navigate(['/courses', id]);
   }
 

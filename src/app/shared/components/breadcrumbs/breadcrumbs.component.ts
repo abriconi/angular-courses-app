@@ -25,12 +25,10 @@ export class BreadcrumbsComponent implements OnInit {
       .pipe(
         filter(e => e instanceof NavigationEnd),
       ).subscribe(() => {
-        const courseId = this.route.snapshot.firstChild?.paramMap.get('id');
+        const courseId = Number(this.route.snapshot.firstChild?.paramMap.get('id'));
         if(courseId) {
           const course = this.courseService.getItemById(courseId);
-          this.courseTitle = course?.title || null
-        } else if (!courseId) {
-          this.router.navigate(['/error'])
+          this.courseTitle = course?.name || null
         }
       }
     );

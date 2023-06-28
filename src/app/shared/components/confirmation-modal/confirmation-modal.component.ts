@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, Output } from '@angular/core';
 })
 export class ConfirmationModalComponent {
   @Input() courseName!: string;
-  @Input() courseId!: string;
+  @Input() courseId!: number;
   @Output() closeModal: EventEmitter<void> = new EventEmitter<void>();
   @Output() handleDelete: EventEmitter<string> = new EventEmitter<string>();
 

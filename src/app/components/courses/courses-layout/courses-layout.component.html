@@ -6,7 +6,7 @@
           <li *ngFor="let course of courses; trackBy: trackCourseById">
             <app-courses-item
               [courseData]="course"
-              [appHighlight]="course.creationDate"
+              [appHighlight]="course.date"
               (deleteCourse)="deleteCourse(course.id)"
             ></app-courses-item>
           </li>

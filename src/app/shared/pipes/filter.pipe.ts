@@ -1,18 +1,18 @@
 import { Pipe, PipeTransform } from '@angular/core';
-import { Course } from 'src/app/utilus/global.moduls';
+import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
 
 @Pipe({
   name: 'filter',
 })
 export class FilterPipe implements PipeTransform {
-  transform(courses: Course[], filterValue: string): Course[] {
+  transform(courses: COURSE_MODEL[], filterValue: string): COURSE_MODEL[] {
     if (!filterValue || filterValue.trim() === '') {
       return courses;
     }
     filterValue = filterValue.toLowerCase();
     return courses.filter((course) =>
-      course.title.toLowerCase().includes(filterValue)
+      course.name.toLowerCase().includes(filterValue)
     );
   }
 }
