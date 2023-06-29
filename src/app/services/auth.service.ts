@@ -1,6 +1,9 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject } from 'rxjs';
+import { BehaviorSubject, Observable } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { UserLogin } from 'src/app/utilus/global.moduls';
+import { Router } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
@@ -12,22 +15,31 @@ export class AuthService {
   isAuthenticated$ = new BehaviorSubject<boolean>(false);
   user$ = this.userSubject.asObservable();
 
+  constructor (
+    private http: HttpClient,
+    private router: Router,
+  ) {}
 
   login(login: string, password: string): void {
-    const userData = {
+    const loginData = {
       login: login,
       password: password,
-      token: 'fakeToken',
     }
 
-    this.userSubject.next(userData);
-    this.token = userData.token;
-    this.isAuthenticated$.next(true);
+    this.http.post<UserLogin>('http://localhost:3004/auth/login', loginData)
+      .subscribe((data) => {
+        const userData = {
+          login: login,
+          password: password,
+          token: data.token
+        };
+        this.userSubject.next(userData);
+        this.token = data.token;
+        this.isAuthenticated$.next(true);
 
-    localStorage.setItem('token', userData.token);
-    localStorage.setItem('user', JSON.stringify(userData));
+        this.router.navigate(['/courses']);
+      })
   }
-
   logout(): void {
     this.token = null;
     this.isAuthenticated$.next(false);
