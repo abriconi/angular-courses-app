@@ -11,6 +11,7 @@ export interface COURSE_MODEL {
 export interface Authors {
   id: number;
   name: string
+  lastName: string
 }
 
 export interface User {

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UserLogin } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
@@ -40,6 +40,13 @@ export class AuthService {
         this.router.navigate(['/courses']);
       })
   }
+  getUser() {
+    this.http.post('http://localhost:3004/auth/userinfo', '')
+    .subscribe((data) => {
+      console.log('getUser', data); //TODO
+    })
+  }
+  
   logout(): void {
     this.token = null;
     this.isAuthenticated$.next(false);

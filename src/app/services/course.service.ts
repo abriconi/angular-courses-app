@@ -1,17 +1,31 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { Authors, COURSE_MODEL } from '../utilus/global.moduls';
-import { authorsMockedData, coursesMockedData } from '../utilus/global.constans';
+import { authorsMockedData } from '../utilus/global.constans';
 import { generateId } from '../utilus/helpers';
+import { BehaviorSubject } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CourseService {
-  static courses: COURSE_MODEL[] = coursesMockedData;
+  static courses: COURSE_MODEL[] = [];
+
+  coursesSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
+  courses$ = this.coursesSubject.asObservable();
+
   static authors: Authors[] = authorsMockedData
 
-  getList(): COURSE_MODEL[] {
-    return CourseService.courses;
+  constructor (
+    private http: HttpClient,
+  ) {}
+
+  getList(): void {
+    this.http.get<COURSE_MODEL[]>('http://localhost:3004/courses')
+    .subscribe((data) => {
+      const coursesData = data;
+      this.coursesSubject.next(coursesData);
+    });
   }
 
   getAuthorsList(): Authors[] {
@@ -31,13 +45,16 @@ export class CourseService {
       description: newCourseData.description,
       authors: newCourseData.authors
     }
-    CourseService.courses.push(newCourse);
+    // this.courses$.push(newCourse)
+    // CourseService.courses.push(newCourse);
 
     return newCourse;
   }
 
   getItemById(id: number): COURSE_MODEL | undefined {
-    return this.getList().find(course => course.id === id)
+    return ;
+    // return this.getList().find(course => course.id === id)
+    // return CourseService.courses.find(course => course.id === id)
   }
 
   updateItem(courseId: number, newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): void {

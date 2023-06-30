@@ -21,7 +21,7 @@ export class CoursesLayoutComponent implements OnInit{
 
   @ContentChildren(HighlightDirective) appHighlight: any;
 
-  courses: COURSE_MODEL[] = [];
+  courses: COURSE_MODEL[] | [] = [];
 
   trackCourseById(_index: number, course: COURSE_MODEL): number {
     return course.id;
@@ -35,8 +35,11 @@ export class CoursesLayoutComponent implements OnInit{
     this.getCourses();
   }
 
-  private getCourses(): void {
-    this.courses = this.courseService.getList();
+  getCourses(): void {
+    this.courseService.getList();
+    this.courseService.courses$.subscribe((courses) => {
+      this.courses = courses;
+    });
     this.sortCoursesByCreationDate();
   }
 
@@ -54,10 +57,10 @@ export class CoursesLayoutComponent implements OnInit{
     }
   }
   handleSearch(searchText: string) {
-    if (searchText.trim() === '') {
-      this.courses = this.courseService.getList();
-    } else {
-      this.courses = this.filterPipe.transform(this.courseService.getList(), searchText);
-    }
+    // if (searchText.trim() === '') {
+    //   this.courses = this.courseService.getList();
+    // } else {
+    //   this.courses = this.filterPipe.transform(this.courseService.getList(), searchText);
+    // }
   }
 }

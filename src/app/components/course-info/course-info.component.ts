@@ -5,6 +5,7 @@ import { CourseService } from 'src/app/services/course.service';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
 import { authorsMockedData } from 'src/app/utilus/global.constans';
+import { transformDate } from 'src/app/utilus/helpers';
 
 @Component({
   selector: 'app-course-info',
@@ -46,7 +47,7 @@ export class CourseInfoComponent implements OnInit {
             name: courseData.name,
             description: courseData.description,
             length: courseData.length.toString(),
-            date: courseData.date,
+            date: transformDate(courseData.date),
             authors: authorNames,
           });
         }
@@ -60,13 +61,11 @@ export class CourseInfoComponent implements OnInit {
       this.ifAllFieldFill = false;
       return;
     }
-
     const newCourse: Omit<COURSE_MODEL, 'id' | 'isTopRated'> = {
       name: this.courseForm.value.name ?? '',
       description: this.courseForm.value.description ?? '',
       length: Number(this.courseForm.value.length) ?? 0,
       date: this.courseForm.value.date ?? '',
-      // authors: [this.courseForm.value.authors] ?? [],
       authors: authorsMockedData ?? [],
     };
     const createdCourse: COURSE_MODEL = this.courseService.courseCreated(newCourse);
