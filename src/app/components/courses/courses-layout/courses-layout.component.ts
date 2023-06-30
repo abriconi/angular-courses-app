@@ -10,7 +10,7 @@ import { CourseService } from 'src/app/services/course.service';
   selector: 'app-courses-layout',
   templateUrl: './courses-layout.component.html',
   styleUrls: ['./courses-layout.component.scss'],
-  providers: [OrderByPipe, FilterPipe],
+  providers: [FilterPipe, OrderByPipe],
 })
 export class CoursesLayoutComponent implements OnInit{
   constructor(
@@ -22,6 +22,7 @@ export class CoursesLayoutComponent implements OnInit{
   @ContentChildren(HighlightDirective) appHighlight: any;
 
   courses: COURSE_MODEL[] | [] = [];
+  private currentPage = 1
 
   trackCourseById(_index: number, course: COURSE_MODEL): number {
     return course.id;
@@ -36,15 +37,16 @@ export class CoursesLayoutComponent implements OnInit{
   }
 
   getCourses(): void {
-    this.courseService.getList();
+    this.courseService.displayCourses(1, 3);
     this.courseService.courses$.subscribe((courses) => {
       this.courses = courses;
     });
     this.sortCoursesByCreationDate();
   }
 
-  loadMoreClick():void {
-    console.log('Button "Load more" cliked');
+  loadMoreClick = (): void => {
+    this.currentPage = this.currentPage + 1
+    this.courseService.displayCourses(this.currentPage, 3);
   }
 
   deleteCourse(id: number): void {
