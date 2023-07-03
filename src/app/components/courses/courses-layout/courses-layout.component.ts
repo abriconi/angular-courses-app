@@ -44,13 +44,7 @@ export class CoursesLayoutComponent implements OnInit{
   }
 
   deleteCourse(id: number): void {
-    const deletedCourse = this.courseService.getItemById(id);
-
-    if (deletedCourse) {
-      this.courseService.removeItem(id);
-    } else {
-      console.log(`Course with ID ${id} not found.`);
-    }
+    this.courseService.removeItem(id);
   }
 
   handleSearch(searchText: string) {

@@ -11,12 +11,16 @@ import { BehaviorSubject } from 'rxjs';
 
 export class CourseService {
 
+  private pageNumber!: number;
+  private textFragment!: string | undefined;
+
   static coursesList: COURSE_MODEL[] = [];
+  static authors: Authors[] = authorsMockedData;
 
   coursesSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
   courses$ = this.coursesSubject.asObservable();
 
-  static authors: Authors[] = authorsMockedData;
+
 
   constructor (
     private http: HttpClient,
@@ -28,6 +32,9 @@ export class CourseService {
     textFragment?: string
     ): void {
 
+    this.pageNumber = pageNumber;
+    this.textFragment = textFragment;
+
     const amount = pageNumber * pageSize;
 
     this.http.get<COURSE_MODEL[]>(
@@ -35,7 +42,15 @@ export class CourseService {
       ).subscribe((data) => {
         const coursesData = data;
         this.coursesSubject.next(coursesData);
-      });
+      }
+    );
+  }
+
+  removeItem(id: number): void {
+    this.http.delete<COURSE_MODEL>(`http://localhost:3004/courses/${id}`)
+    .subscribe(() => {
+      this.getList(this.pageNumber, 3, this.textFragment)
+    })
   }
 
   getAuthorsList(): Authors[] {
@@ -79,10 +94,5 @@ export class CourseService {
 
   }
 
-  removeItem(id: number): void {
-  //   const index = CourseService.courses.findIndex(course => course.id === id);
-  //   if (index !== -1) {
-  //     CourseService.courses.splice(index, 1);
-  //   }
-  }
+
 }
