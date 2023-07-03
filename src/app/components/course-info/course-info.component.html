@@ -35,7 +35,7 @@
 
     <app-input
       size="fieldLabelSmall"
-      placeholder="MM/DD/YYYY"
+      type="date"
       [control]="courseForm.controls['date']">
       Date:
     </app-input>
@@ -64,7 +64,7 @@
         variant="filled"
         size="large"
         color="secondary"
-        (click)="saveCourse($event)"
+        (click)="createCourse($event)"
       >Save
       </app-button>
     </div>

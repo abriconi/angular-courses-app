@@ -2,7 +2,7 @@
   <ng-content></ng-content>
   <span class="requiredMark">*required</span>
   <input
-    type="text"
+    [type]="type"
     [placeholder]="placeholder"
     class="inputDefault"
     [formControl]="control"

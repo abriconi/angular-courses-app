@@ -20,8 +20,6 @@ export class CourseService {
   coursesSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
   courses$ = this.coursesSubject.asObservable();
 
-
-
   constructor (
     private http: HttpClient,
   ) {}
@@ -71,7 +69,14 @@ export class CourseService {
       authors: newCourseData.authors
     }
 
+    this.http.post<COURSE_MODEL>('http://localhost:3004/courses', newCourse)
+    .subscribe((createdCourse) => {
+      this.getList(this.pageNumber, 3, this.textFragment);
+      console.log('Course created successfully:', createdCourse);
+    })
+
     return newCourse;
+
   }
 
   getItemById(id: number): COURSE_MODEL | undefined {
