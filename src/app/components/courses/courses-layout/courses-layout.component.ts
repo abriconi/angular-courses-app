@@ -37,7 +37,7 @@ export class CoursesLayoutComponent implements OnInit{
   }
 
   getCourses(): void {
-    this.courseService.displayCourses(1, 3);
+    this.courseService.getList(1, 3);
     this.courseService.courses$.subscribe((courses) => {
       this.courses = courses;
     });
@@ -46,7 +46,7 @@ export class CoursesLayoutComponent implements OnInit{
 
   loadMoreClick = (): void => {
     this.currentPage = this.currentPage + 1
-    this.courseService.displayCourses(this.currentPage, 3);
+    this.courseService.getList(this.currentPage, 3);
   }
 
   deleteCourse(id: number): void {
@@ -59,6 +59,8 @@ export class CoursesLayoutComponent implements OnInit{
     }
   }
   handleSearch(searchText: string) {
+    this.courseService.searchCourse(searchText, this.currentPage, 3);
+
     // if (searchText.trim() === '') {
     //   this.courses = this.courseService.getList();
     // } else {

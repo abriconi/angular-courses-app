@@ -4,7 +4,6 @@ import { Authors, COURSE_MODEL } from '../utilus/global.moduls';
 import { authorsMockedData } from '../utilus/global.constans';
 import { generateId } from '../utilus/helpers';
 import { BehaviorSubject } from 'rxjs';
-import { OrderByPipe } from '../shared/pipes/orderBy.pipe';
 
 @Injectable({
   providedIn: 'root',
@@ -14,46 +13,39 @@ export class CourseService {
 
   static coursesList: COURSE_MODEL[] = [];
 
-  coursesListSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
-  coursesList$ = this.coursesListSubject.asObservable();
-
   coursesSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
   courses$ = this.coursesSubject.asObservable();
 
+  // coursesListSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
+  // coursesList$ = this.coursesListSubject.asObservable();
+
   static authors: Authors[] = authorsMockedData;
-  private pageSize = 3;
-  private pageNumber = 1
 
   constructor (
     private http: HttpClient,
-    // private orderByPipe: OrderByPipe,
   ) {}
-//TODO
-  getList(): void {
-    this.http.get<COURSE_MODEL[]>('http://localhost:3004/courses')
+
+  getList(pageNumber: number, pageSize: number): void {
+    const amount = pageNumber * pageSize
+    this.http.get<COURSE_MODEL[]>(`http://localhost:3004/courses?start=0&count=${amount}`)
     .subscribe((data) => {
-      // const coursesData = this.sortCoursesByCreationDate(data);
       const coursesData = data;
-      this.coursesListSubject.next(coursesData);
+      this.coursesSubject.next(coursesData);
     });
   }
-  // private sortCoursesByCreationDate(courses: COURSE_MODEL[] | []): COURSE_MODEL[] | [] {
-  //   return this.orderByPipe.transform(courses);
-  // }
 
-  displayCourses(pageNumber: number, pageSize: number) {
-    this.pageNumber = pageNumber;
-    this.pageSize = pageSize;
-    this.getList();
-    const startIndex = (this.pageNumber - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
+  searchCourse(textFragment: string, pageNumber: number, pageSize: number) {
+    const amount = pageNumber * pageSize
+    this.http.get<COURSE_MODEL[]>(`http://localhost:3004/courses?textFragment=${textFragment}&start=0&count=${amount}`)
+    .subscribe((data) => {
+      console.log(data);
 
-    this.coursesList$.subscribe((coursesList) => {
-      if (coursesList.length > 0) {
-        const displayedCourses = coursesList.slice(0, endIndex);
-        this.coursesSubject.next(displayedCourses);
-      }
-    });
+      const coursesData = data;
+      this.coursesSubject.next(coursesData);
+    })
+
+    // this.getList(pageNumber, pageSize);
+
   }
 
   getAuthorsList(): Authors[] {
