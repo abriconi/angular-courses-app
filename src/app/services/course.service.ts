@@ -16,36 +16,26 @@ export class CourseService {
   coursesSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
   courses$ = this.coursesSubject.asObservable();
 
-  // coursesListSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
-  // coursesList$ = this.coursesListSubject.asObservable();
-
   static authors: Authors[] = authorsMockedData;
 
   constructor (
     private http: HttpClient,
   ) {}
 
-  getList(pageNumber: number, pageSize: number): void {
-    const amount = pageNumber * pageSize
-    this.http.get<COURSE_MODEL[]>(`http://localhost:3004/courses?start=0&count=${amount}`)
-    .subscribe((data) => {
-      const coursesData = data;
-      this.coursesSubject.next(coursesData);
-    });
-  }
+  getList(
+    pageNumber: number,
+    pageSize: number,
+    textFragment?: string
+    ): void {
 
-  searchCourse(textFragment: string, pageNumber: number, pageSize: number) {
-    const amount = pageNumber * pageSize
-    this.http.get<COURSE_MODEL[]>(`http://localhost:3004/courses?textFragment=${textFragment}&start=0&count=${amount}`)
-    .subscribe((data) => {
-      console.log(data);
+    const amount = pageNumber * pageSize;
 
-      const coursesData = data;
-      this.coursesSubject.next(coursesData);
-    })
-
-    // this.getList(pageNumber, pageSize);
-
+    this.http.get<COURSE_MODEL[]>(
+      `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`
+      ).subscribe((data) => {
+        const coursesData = data;
+        this.coursesSubject.next(coursesData);
+      });
   }
 
   getAuthorsList(): Authors[] {
@@ -65,8 +55,6 @@ export class CourseService {
       description: newCourseData.description,
       authors: newCourseData.authors
     }
-    // this.courses$.push(newCourse)
-    // CourseService.courses.push(newCourse);
 
     return newCourse;
   }

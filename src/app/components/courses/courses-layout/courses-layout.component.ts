@@ -14,8 +14,6 @@ import { CourseService } from 'src/app/services/course.service';
 })
 export class CoursesLayoutComponent implements OnInit{
   constructor(
-    private orderByPipe: OrderByPipe,
-    private filterPipe: FilterPipe,
     private courseService: CourseService,
   ) { }
 
@@ -23,13 +21,10 @@ export class CoursesLayoutComponent implements OnInit{
 
   courses: COURSE_MODEL[] | [] = [];
   private currentPage = 1
+  private searchText = '';
 
   trackCourseById(_index: number, course: COURSE_MODEL): number {
     return course.id;
-  }
-
-  private sortCoursesByCreationDate(): void {
-    this.courses = this.orderByPipe.transform(this.courses);
   }
 
   ngOnInit(): void {
@@ -41,12 +36,11 @@ export class CoursesLayoutComponent implements OnInit{
     this.courseService.courses$.subscribe((courses) => {
       this.courses = courses;
     });
-    this.sortCoursesByCreationDate();
   }
 
   loadMoreClick = (): void => {
     this.currentPage = this.currentPage + 1
-    this.courseService.getList(this.currentPage, 3);
+    this.courseService.getList(this.currentPage, 3, this.searchText);
   }
 
   deleteCourse(id: number): void {
@@ -58,13 +52,10 @@ export class CoursesLayoutComponent implements OnInit{
       console.log(`Course with ID ${id} not found.`);
     }
   }
-  handleSearch(searchText: string) {
-    this.courseService.searchCourse(searchText, this.currentPage, 3);
 
-    // if (searchText.trim() === '') {
-    //   this.courses = this.courseService.getList();
-    // } else {
-    //   this.courses = this.filterPipe.transform(this.courseService.getList(), searchText);
-    // }
+  handleSearch(searchText: string) {
+    this.currentPage = 1;
+    this.searchText = searchText;
+    this.courseService.getList(this.currentPage, 3, searchText);
   }
 }
