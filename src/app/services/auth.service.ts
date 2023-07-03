@@ -9,16 +9,21 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private token: null | string = null;
+  token: null | string = localStorage.getItem('token');
 
   userSubject = new BehaviorSubject<UserLogin | null>(null);
-  isAuthenticated$ = new BehaviorSubject<boolean>(false);
+  isAuthenticated$ = this.token ? new BehaviorSubject<boolean>(true) : new BehaviorSubject<boolean>(false);
   user$ = this.userSubject.asObservable();
 
   constructor (
     private http: HttpClient,
     private router: Router,
   ) {}
+
+  isLoggedIn(): boolean {
+    this.token = localStorage.getItem('token');
+    return this.token? true : false;
+  }
 
   login(login: string, password: string): void {
     const loginData = {
@@ -33,9 +38,9 @@ export class AuthService {
           password: password,
           token: data.token
         };
-        this.userSubject.next(userData);
-        this.token = data.token;
         this.isAuthenticated$.next(true);
+        localStorage.setItem('token', data.token);
+        this.userSubject.next(userData);
 
         this.router.navigate(['/courses']);
       })
@@ -44,7 +49,6 @@ export class AuthService {
     this.token = null;
     this.isAuthenticated$.next(false);
 
-    localStorage.removeItem('token');
-    localStorage.removeItem('user');
+    localStorage.removeItem('token');;
   }
 }
