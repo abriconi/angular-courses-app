@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -10,10 +10,11 @@ import { FooterComponent } from './components/footer/footer.component';
 import { CoursesComponent } from './components/courses/courses.component';
 import { SectionComponent } from './components/courses/section/section.component';
 import { SharedModule } from './shared/shared.module';
-import { CourseInfoModule } from './course-info-module/course-info-module.module';
+import { CourseInfoComponent } from './components/course-info/course-info.component';
 import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from '../app/components/error/error.component';
 import { CoursesLayoutComponent } from './components/courses/courses-layout/courses-layout.component';
+import { AuthInterceptor } from './interceptors/auth-interceptor';
 
 
 @NgModule({
@@ -26,6 +27,7 @@ import { CoursesLayoutComponent } from './components/courses/courses-layout/cour
     LoginComponent,
     ErrorComponent,
     CoursesLayoutComponent,
+    CourseInfoComponent
   ],
   imports: [
     BrowserModule,
@@ -33,9 +35,13 @@ import { CoursesLayoutComponent } from './components/courses/courses-layout/cour
     HttpClientModule,
     SharedModule,
     ReactiveFormsModule,
-    CourseInfoModule
   ],
-  providers: [],
+  providers: [
+    {
+    provide: HTTP_INTERCEPTORS,
+    useClass: AuthInterceptor,
+    multi: true,
+  },],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

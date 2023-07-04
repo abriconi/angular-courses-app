@@ -40,18 +40,21 @@ export class CourseInfoComponent implements OnInit {
     this.route.paramMap.subscribe(params => {
       this.courseId = Number(params.get('id'));
       if (this.courseId) {
-        const courseData: COURSE_MODEL | undefined = this.courseService.getItemById(this.courseId);
-
-        if (courseData) {
-          const authorNames = courseData.authors.map(author => author.name).join(', ');
-          this.courseForm.patchValue({
-            name: courseData.name,
-            description: courseData.description,
-            length: courseData.length.toString(),
-            date: transformDate(courseData.date),
-            authors: authorNames,
-          });
-        }
+        this.courseService.getItemById(this.courseId)
+        this.courseService.course$.subscribe(
+          (courseData: COURSE_MODEL | null) => {
+            if (courseData) {
+              const authorNames = courseData.authors.map(author => author.name).join(', ');
+              this.courseForm.patchValue({
+                name: courseData.name,
+                description: courseData.description,
+                length: courseData.length.toString(),
+                date: transformDate(courseData.date),
+                authors: authorNames,
+              });
+            }
+          }
+        )
       }
     });
   }

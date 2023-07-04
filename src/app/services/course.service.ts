@@ -20,6 +20,10 @@ export class CourseService {
   coursesSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
   courses$ = this.coursesSubject.asObservable();
 
+  courseSubject = new BehaviorSubject<COURSE_MODEL | null>(null);
+  course$ = this.courseSubject.asObservable();
+
+
   constructor (
     private http: HttpClient,
   ) {}
@@ -70,19 +74,19 @@ export class CourseService {
     }
 
     this.http.post<COURSE_MODEL>('http://localhost:3004/courses', newCourse)
-    .subscribe((createdCourse) => {
+    .subscribe(() => {
       this.getList(this.pageNumber, 3, this.textFragment);
-      console.log('Course created successfully:', createdCourse);
     })
 
     return newCourse;
 
   }
 
-  getItemById(id: number): COURSE_MODEL | undefined {
-    return ;
-    // return this.getList().find(course => course.id === id)
-    // return CourseService.courses.find(course => course.id === id)
+  getItemById(id: number): void {
+    this.http.get<COURSE_MODEL>(`http://localhost:3004/courses/${id}`)
+    .subscribe((data) => {
+      this.courseSubject.next(data);
+    })
   }
 
   updateItem(courseId: number, newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): void {

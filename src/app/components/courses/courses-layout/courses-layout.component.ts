@@ -2,15 +2,15 @@ import { Component, ContentChildren, OnInit } from '@angular/core';
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
-import { OrderByPipe } from 'src/app/shared/pipes/orderBy.pipe';
-import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
+// import { OrderByPipe } from 'src/app/shared/pipes/orderBy.pipe';
+// import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
 import { CourseService } from 'src/app/services/course.service';
 
 @Component({
   selector: 'app-courses-layout',
   templateUrl: './courses-layout.component.html',
   styleUrls: ['./courses-layout.component.scss'],
-  providers: [FilterPipe, OrderByPipe],
+  // providers: [FilterPipe],
 })
 export class CoursesLayoutComponent implements OnInit{
   constructor(
