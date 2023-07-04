@@ -2,15 +2,10 @@
   <nav class="navigation">
       <app-logo></app-logo>
       <div class="nav-btn-wrapper" *appIfAuthenticated="true">
-          <app-button
-              variant="text"
-              color="light"
-              size="small"
-              testID="loginButton"
-          >
-              <app-icon icon="person"></app-icon>
-              {{ user?.login }}
-          </app-button>
+          <div class="userLogin">
+            <app-icon icon="person"></app-icon>
+            {{ user?.login }}
+          </div>
 
           <app-button
               variant="text"

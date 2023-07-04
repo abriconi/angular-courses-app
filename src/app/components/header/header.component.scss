@@ -1,28 +1,36 @@
 @import './../../../styles.scss';
 .header {
-    background-color: $dark-bg;
+  background-color: $dark-bg;
+  display: flex;
+  flex-direction: row;
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 60px;
+
+  .navigation {
     display: flex;
     flex-direction: row;
-    position: fixed;
-    top: 0;
-    left: 0;
+    align-items: center;
+    justify-content: space-between;
     width: 100%;
-    height: 60px;
+    padding: 12px $wrapper;
 
-    .navigation {
+    .nav-btn-wrapper {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      gap: 15px;
+
+      .userLogin {
         display: flex;
         flex-direction: row;
+        gap: 10px;
+        color: $light-bg;
+        font-size: 12px;
         align-items: center;
-        justify-content: space-between;
-        width: 100%;
-        padding: 12px $wrapper;
-
-        .nav-btn-wrapper {
-            display: flex;
-            flex-direction: row;
-            width: 18%;
-        }
-
-
+      }
     }
+  }
 }
