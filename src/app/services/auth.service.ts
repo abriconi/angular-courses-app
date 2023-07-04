@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UserLogin } from 'src/app/utilus/global.moduls';
+import { User, UserLogin } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
 
 
@@ -11,7 +11,7 @@ import { Router } from '@angular/router';
 export class AuthService {
   token: null | string = localStorage.getItem('token');
 
-  userSubject = new BehaviorSubject<UserLogin | null>(null);
+  userSubject = new BehaviorSubject<User | null>(null);
   isAuthenticated$ = this.token ? new BehaviorSubject<boolean>(true) : new BehaviorSubject<boolean>(false);
   user$ = this.userSubject.asObservable();
 
@@ -40,15 +40,27 @@ export class AuthService {
         };
         this.isAuthenticated$.next(true);
         localStorage.setItem('token', data.token);
-        this.userSubject.next(userData);
+        localStorage.setItem('user', userData.login);
 
         this.router.navigate(['/courses']);
       })
   }
+  getUser() {
+    const token = localStorage.getItem('token');
+
+    const body ={
+      token: token
+    };
+
+    this.http.post<User | null>('http://localhost:3004/auth/userinfo', body)
+      .subscribe((data) => {
+        this.userSubject.next(data);
+      });
+  }
   logout(): void {
     this.token = null;
     this.isAuthenticated$.next(false);
-
-    localStorage.removeItem('token');;
+    localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 }
