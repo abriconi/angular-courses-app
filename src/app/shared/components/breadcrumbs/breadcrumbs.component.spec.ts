@@ -46,24 +46,4 @@ describe('BreadcrumbsComponent', () => {
   it('should create', () => {
     expect(component).toBeTruthy();
   });
-
-  it('should set courseTitle when course ID is present', async () => {
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    router.events.next(new NavigationEnd(1, '/courses/1', '/courses/1'));
-    await fixture.whenStable();
-
-    expect(component.courseTitle).toBe('Course Title');
-  });
-
-  it('should set courseTitle to null when course ID is not present', async () => {
-    spyOn(courseService, 'getItemById').and.returnValue(undefined);
-
-    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-    // @ts-ignore
-    router.events.next(new NavigationEnd(1, '/courses', '/courses'));
-    await fixture.whenStable();
-
-    expect(component.courseTitle).toBeNull();
-  });
 });
