@@ -8,7 +8,7 @@ import { Router } from '@angular/router';
 @Injectable({
   providedIn: 'root'
 })
-export class AuthService {
+export class AuthService{
   token: null | string = localStorage.getItem('token');
 
   userSubject = new BehaviorSubject<User | null>(null);
@@ -18,7 +18,11 @@ export class AuthService {
   constructor (
     private http: HttpClient,
     private router: Router,
-  ) {}
+  ) {
+    if(this.isAuthenticated$) {
+      this.getUser();
+    }
+  }
 
   isLoggedIn(): boolean {
     this.token = localStorage.getItem('token');
@@ -41,6 +45,8 @@ export class AuthService {
         this.isAuthenticated$.next(true);
         localStorage.setItem('token', data.token);
         localStorage.setItem('user', userData.login);
+
+        this.getUser();
 
         this.router.navigate(['/courses']);
       })

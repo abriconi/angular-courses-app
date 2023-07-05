@@ -20,7 +20,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.authService.getUser();
     this.userSubscription = this.authService.user$.subscribe((user) => {
       this.user = user;
     });
