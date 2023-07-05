@@ -33,7 +33,7 @@ export class LoginComponent {
     }
 
     if(login && password) {
-      this.authService.login(login, password)
+      this.authService.login(login, password);
     }
   }
 

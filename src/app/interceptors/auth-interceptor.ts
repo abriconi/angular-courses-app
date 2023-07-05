@@ -13,17 +13,13 @@ export class AuthInterceptor implements HttpInterceptor {
     request: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    // Retrieve the authorization token from storage (e.g., local storage)
-    const token = localStorage.getItem('auth_token');
-
-    // Clone the request and add the authorization header
+    const token = localStorage.getItem('token');
     const authReq = request.clone({
       setHeaders: {
         Authorization: `Bearer ${token}`,
       },
     });
 
-    // Pass the modified request to the next interceptor or the HTTP handler
     return next.handle(authReq);
   }
 }
