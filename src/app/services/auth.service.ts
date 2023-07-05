@@ -3,6 +3,7 @@ import { BehaviorSubject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { User, UserLogin } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
+import { LoadService } from './load.service';
 
 
 @Injectable({
@@ -18,6 +19,7 @@ export class AuthService{
   constructor (
     private http: HttpClient,
     private router: Router,
+    private loadService: LoadService,
   ) {
     if(this.isAuthenticated$) {
       this.getUser();
@@ -34,6 +36,12 @@ export class AuthService{
       login: login,
       password: password,
     }
+
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader()
+    }, 1000);
 
     this.http.post<UserLogin>('http://localhost:3004/auth/login', loginData)
       .subscribe((data) => {
@@ -64,6 +72,12 @@ export class AuthService{
       });
   }
   logout(): void {
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader()
+    }, 1000);
+    
     this.token = null;
     this.isAuthenticated$.next(false);
     localStorage.removeItem('token');
