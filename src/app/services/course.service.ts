@@ -49,10 +49,8 @@ export class CourseService {
   }
 
   removeItem(id: number): void {
-    this.http.delete<COURSE_MODEL>(`http://localhost:3004/courses/${id}`)
-    .subscribe(() => {
-      this.getList(this.pageNumber, 3, this.textFragment)
-    })
+    this.http.delete<COURSE_MODEL>(`http://localhost:3004/courses/${id}`).subscribe();
+    this.getList(this.pageNumber, 3, this.textFragment)
   }
 
   getAuthorsList(): Authors[] {
