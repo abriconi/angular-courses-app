@@ -1,22 +1,24 @@
 import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from '../services/auth.service';
-
 
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
   let authService: AuthService;
+  let router: Router;
 
   beforeEach(() => {
     const canActivateStub = () => ({ canActivate: () => true });
 
     TestBed.configureTestingModule({
-        providers: [
-          AuthService,
-          { provide: AuthGuard, useValue: canActivateStub}
-        ]
+      imports:[HttpClientTestingModule],
+      providers: [
+        AuthService,
+        { provide: AuthGuard, useValue: canActivateStub}
+      ]
     });
 
   });
