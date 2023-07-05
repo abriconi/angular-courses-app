@@ -4,6 +4,7 @@ import { Authors, COURSE_MODEL } from '../utilus/global.moduls';
 import { authorsMockedData } from '../utilus/global.constans';
 import { generateId } from '../utilus/helpers';
 import { BehaviorSubject } from 'rxjs';
+import { LoadService } from './load.service';
 
 @Injectable({
   providedIn: 'root',
@@ -26,6 +27,7 @@ export class CourseService {
 
   constructor (
     private http: HttpClient,
+    private loadService: LoadService
   ) {}
 
   getList(
@@ -39,6 +41,12 @@ export class CourseService {
 
     const amount = pageNumber * pageSize;
 
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000)
+
     this.http.get<COURSE_MODEL[]>(
       `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`
       ).subscribe((data) => {
@@ -49,6 +57,12 @@ export class CourseService {
   }
 
   removeItem(id: number): void {
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000);
+
     this.http.delete<COURSE_MODEL>(`http://localhost:3004/courses/${id}`).subscribe();
     this.getList(this.pageNumber, 3, this.textFragment)
   }
@@ -58,6 +72,7 @@ export class CourseService {
   }
 
   courseCreated(newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): COURSE_MODEL {
+    this.loadService.showLoader();
 
     const newCourseID = generateId();
 
@@ -71,6 +86,10 @@ export class CourseService {
       authors: newCourseData.authors
     }
 
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000);
+
     this.http.post<COURSE_MODEL>('http://localhost:3004/courses', newCourse)
     .subscribe(() => {
       this.getList(this.pageNumber, 3, this.textFragment);
@@ -81,6 +100,12 @@ export class CourseService {
   }
 
   getItemById(id: number): void {
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000);
+
     this.http.get<COURSE_MODEL>(`http://localhost:3004/courses/${id}`)
     .subscribe((data) => {
       this.courseSubject.next(data);
@@ -88,6 +113,12 @@ export class CourseService {
   }
 
   updateItem(courseId: number, newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): void {
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000);
+    
     // const courseToUpdate = this.getItemById(courseId);
 
     // if (courseToUpdate) {

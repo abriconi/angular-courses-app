@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
+import { AfterViewInit } from '@angular/core';
 import { AuthService } from './services/auth.service';
 import { LoadService } from './services/load.service';
 
@@ -8,7 +9,7 @@ import { LoadService } from './services/load.service';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit {
+export class AppComponent implements OnInit,  AfterViewInit {
 
   public isAuthenticated$!: Observable<boolean>
   isLoading = false;
@@ -19,6 +20,9 @@ export class AppComponent implements OnInit {
 
   public ngOnInit(): void {
     this.isAuthenticated$ = this.authService.isAuthenticated$.asObservable();
+
+  }
+  ngAfterViewInit(): void {
     this.loadService.loader$.subscribe(isLoading => {
       this.isLoading = isLoading;
     });
