@@ -27,7 +27,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     LoginComponent,
     ErrorComponent,
     CoursesLayoutComponent,
-    CourseInfoComponent
+    CourseInfoComponent,
   ],
   imports: [
     BrowserModule,
