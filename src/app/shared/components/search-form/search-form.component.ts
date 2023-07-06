@@ -13,12 +13,4 @@ export class SearchFormComponent {
     searchText: new FormControl(''),
   });
 
-  handleSearch(event: Event) {
-    event.preventDefault();
-
-    if (this.searchForm.valid) {
-      const searchText = this.searchForm.value.searchText;
-      this.search.emit(searchText);
-    }
-  }
 }
