@@ -15,6 +15,7 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from '../app/components/error/error.component';
 import { CoursesLayoutComponent } from './components/courses/courses-layout/courses-layout.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
+import { StoreModule } from '@ngrx/store';
 
 
 @NgModule({
@@ -35,6 +36,7 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
     HttpClientModule,
     SharedModule,
     ReactiveFormsModule,
+    StoreModule.forRoot({}, {}),
   ],
   providers: [
     {
