@@ -3,18 +3,20 @@ import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/ro
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthGuard } from './auth.guard';
 import { AuthService } from '../services/auth.service';
-import { BehaviorSubject, of, take } from 'rxjs';
-
+import { BehaviorSubject, of } from 'rxjs';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
   let authService: AuthService;
   let router: Router;
+  let routerNavigateSpy: jasmine.Spy;
 
   beforeEach(() => {
+    routerNavigateSpy = jasmine.createSpy('navigate');
+
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthService, AuthGuard, { provide: Router, useValue: {} }]
+      providers: [AuthService, AuthGuard, { provide: Router, useValue: {navigate: routerNavigateSpy} }]
     });
 
     guard = TestBed.inject(AuthGuard);
@@ -26,49 +28,34 @@ describe('AuthGuard', () => {
     expect(guard).toBeTruthy();
   });
 
-  // describe('canActivate', () => {
-  //   it('returns false when requiresLogin is true and isAuthenticated$ is false', (done) => {
-  //     const route = { data: { requiresLogin: true } } as unknown as ActivatedRouteSnapshot;
-  //     const state = { url: 'test' } as RouterStateSnapshot;
+  describe('canActivate', () => {
+    it('returns false when requiresLogin is true and isAuthenticated$ is false', (done) => {
+      const route = { data: { requiresLogin: true } } as unknown as ActivatedRouteSnapshot;
+      const state = { url: 'test' } as RouterStateSnapshot;
 
-  //     const isAuthenticatedSubject = new BehaviorSubject<boolean>(false);
-  //     spyOnProperty(authService, 'isAuthenticated$', 'get').and.returnValue(isAuthenticatedSubject);
-  //     const navigateSpy = spyOn(router, 'navigate');
+     authService.isAuthenticated$ = new BehaviorSubject<boolean>(false);
 
-  //     guard.canActivate(route, state).subscribe((canActivate) => {
-  //       expect(canActivate).toBe(false);
-  //       expect(navigateSpy).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: state.url } });
-  //       done();
-  //     });
+      guard.canActivate(route, state).subscribe((canActivate) => {
+        expect(canActivate).toBe(false);
+        expect(router.navigate).toHaveBeenCalledWith(['/login'], { queryParams: { returnUrl: state.url } });
+        done();
+      });
 
-  //     isAuthenticatedSubject.next(false);
-  //   });
+    });
 
-    // it('returns true when requiresLogin is true and isAuthenticated$ is true', (done) => {
-    //   const route = { data: { requiresLogin: true } } as unknown as ActivatedRouteSnapshot;
-    //   const state = { url: 'test' } as RouterStateSnapshot;
 
-    //   spyOnProperty(authService, 'isAuthenticated$').and.returnValue(of(true));
-    //   const navigateSpy = spyOn(router, 'navigate');
+    it('returns true when requiresLogin is true and isAuthenticated$ is true', (done) => {
+      const route = { data: { requiresLogin: true } } as unknown as ActivatedRouteSnapshot;
+      const state = { url: 'test' } as RouterStateSnapshot;
 
-    //   guard.canActivate(route, state).subscribe((canActivate) => {
-    //     expect(canActivate).toBe(true);
-    //     expect(navigateSpy).not.toHaveBeenCalled();
-    //     done();
-    //   });
-    // });
+      authService.isAuthenticated$ = new BehaviorSubject<boolean>(true);
 
-    // it('returns true when requiresLogin is false', (done) => {
-    //   const route = { data: { requiresLogin: false } } as unknown as ActivatedRouteSnapshot;
-    //   const state = { url: 'test' } as RouterStateSnapshot;
+      guard.canActivate(route, state).subscribe((canActivate) => {
+        expect(canActivate).toBe(true);
+        expect(router.navigate).not.toHaveBeenCalled();
+        done();
+      });
+    });
 
-    //   const navigateSpy = spyOn(router, 'navigate');
-
-    //   guard.canActivate(route, state).subscribe((canActivate) => {
-    //     expect(canActivate).toBe(true);
-    //     expect(navigateSpy).not.toHaveBeenCalled();
-    //     done();
-    //   });
-    // });
-  // });
+  });
 });
