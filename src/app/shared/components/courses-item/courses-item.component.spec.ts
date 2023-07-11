@@ -36,10 +36,25 @@ describe('CoursesItemComponent', () => {
   });
 
   it('should navigate to the course when handleEdit is called', () => {
-    const courseId = '12345';
+    const courseId = 12345;
     component.handleEdit(courseId);
 
     expect(routerNavigate).toHaveBeenCalledWith([ '/courses', courseId ]);
   });
+
+  it('should close the confirmation modal when closeModal is called', () => {
+    component.showConfirmationModal = true;
+    component.closeModal();
+
+    expect(component.showConfirmationModal).toBeFalsy();
+  });
+
+  it('should show the confirmation modal when showModal is called', () => {
+    component.showConfirmationModal = false;
+    component.showModal();
+
+    expect(component.showConfirmationModal).toBeTruthy();
+  });
+
 
 });

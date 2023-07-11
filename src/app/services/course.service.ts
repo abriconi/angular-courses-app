@@ -1,56 +1,136 @@
 import { Injectable } from '@angular/core';
-import { Course } from '../utilus/global.moduls';
-import { coursesMockedData } from '../utilus/global.constans';
+import { HttpClient } from '@angular/common/http';
+import { Authors, COURSE_MODEL } from '../utilus/global.moduls';
+import { authorsMockedData } from '../utilus/global.constans';
 import { generateId } from '../utilus/helpers';
+import { BehaviorSubject } from 'rxjs';
+import { LoadService } from './load.service';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
-export class CourseService {
-  static courses: Course[] = coursesMockedData;
 
-  getList(): Course[] {
-    return CourseService.courses;
+export class CourseService {
+
+  private pageNumber!: number;
+  private textFragment!: string | undefined;
+
+  static coursesList: COURSE_MODEL[] = [];
+  static authors: Authors[] = authorsMockedData;
+
+  coursesSubject = new BehaviorSubject<COURSE_MODEL[] | []>([]);
+  courses$ = this.coursesSubject.asObservable();
+
+  courseSubject = new BehaviorSubject<COURSE_MODEL | null>(null);
+  course$ = this.courseSubject.asObservable();
+
+
+  constructor (
+    private http: HttpClient,
+    private loadService: LoadService
+  ) {}
+
+  getList(
+    pageNumber: number,
+    pageSize: number,
+    textFragment?: string
+    ): void {
+
+    this.pageNumber = pageNumber;
+    this.textFragment = textFragment;
+
+    const amount = pageNumber * pageSize;
+
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000)
+
+    this.http.get<COURSE_MODEL[]>(
+      `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`
+      ).subscribe((data) => {
+        const coursesData = data;
+        this.coursesSubject.next(coursesData);
+      }
+    );
   }
-  courseCreated(newCourseData: Omit<Course, 'id' | 'topRated'>): Course {
+
+  removeItem(id: number): void {
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000);
+
+    this.http.delete<COURSE_MODEL>(`http://localhost:3004/courses/${id}`).subscribe();
+    this.getList(this.pageNumber, 3, this.textFragment)
+  }
+
+  getAuthorsList(): Authors[] {
+    return CourseService.authors;
+  }
+
+  courseCreated(newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): COURSE_MODEL {
+    this.loadService.showLoader();
 
     const newCourseID = generateId();
 
-    const newCourse: Course = {
+    const newCourse: COURSE_MODEL = {
       id: newCourseID,
-      topRated: false,
-      title: newCourseData.title,
-      creationDate: newCourseData.creationDate,
-      duration: newCourseData.duration,
+      isTopRated: false,
+      name: newCourseData.name,
+      date: newCourseData.date,
+      length: Number(newCourseData.length),
       description: newCourseData.description,
       authors: newCourseData.authors
     }
 
-    CourseService.courses.push(newCourse);
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000);
+
+    this.http.post<COURSE_MODEL>('http://localhost:3004/courses', newCourse)
+    .subscribe(() => {
+      this.getList(this.pageNumber, 3, this.textFragment);
+    })
 
     return newCourse;
+
   }
 
-  getItemById(id: string): Course | undefined {
-    return CourseService.courses.find(course => course.id === id);
+  getItemById(id: number): void {
+    this.loadService.showLoader();
+
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000);
+
+    this.http.get<COURSE_MODEL>(`http://localhost:3004/courses/${id}`)
+    .subscribe((data) => {
+      this.courseSubject.next(data);
+    })
   }
 
-  updateItem(courseId: string, newCourseData: Omit<Course, 'id' | 'topRated'>): void {
-    const courseToUpdate = this.getItemById(courseId);
+  updateItem(courseId: number, newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): void {
+    this.loadService.showLoader();
 
-    if (courseToUpdate) {
-      for (const field in newCourseData) {
-        if (field !== 'id' && field !== 'topRated') {
-          (courseToUpdate as any)[field] = (newCourseData as any)[field];
-        }
-      }
-    }
+    setTimeout(() => {
+      this.loadService.hideLoader();
+    }, 1000);
+    
+    // const courseToUpdate = this.getItemById(courseId);
+
+    // if (courseToUpdate) {
+    //   for (const field in newCourseData) {
+    //     if (field !== 'id' && field !== 'isTopRated') {
+    //       (courseToUpdate as any)[field] = (newCourseData as any)[field];
+    //     }
+    //   }
+    // }
+    // console.log('1', CourseService.courses);
+
   }
 
-  removeItem(id: string): void {
-    const index = CourseService.courses.findIndex(course => course.id === id);
-    if (index !== -1) {
-      CourseService.courses.splice(index, 1);
-    }
-  }
+
 }

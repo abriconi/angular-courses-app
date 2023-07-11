@@ -1,15 +1,20 @@
-import { Pipe, PipeTransform } from '@angular/core';
-import { Course } from 'src/app/utilus/global.moduls';
+// import { Pipe, PipeTransform } from '@angular/core';
+// import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
-@Pipe({
-  name: 'orderBy',
-})
-export class OrderByPipe implements PipeTransform {
-  transform(courses: Course[]): Course[] {
-    return courses.sort((a, b) => {
-      const dateA = new Date(a.creationDate);
-      const dateB = new Date(b.creationDate);
-      return dateA.getTime() - dateB.getTime();
-    });
-  }
-}
+// @Pipe({
+//   name: 'orderBy',
+// })
+// export class OrderByPipe implements PipeTransform {
+//   transform(courses: COURSE_MODEL[] | []): COURSE_MODEL[] | [] {
+//     if(courses.length > 0) {
+//       return courses.sort((a, b) => {
+//         const dateA = new Date(a.date);
+//         const dateB = new Date(b.date);
+//         return dateA.getTime() - dateB.getTime();
+//       });
+//     } else {
+//       return [];
+//     }
+
+//   }
+// }

@@ -1,11 +1,17 @@
-export interface Course {
-    id: string;
-    title: string;
-    topRated: boolean;
-    creationDate: string;
-    duration: string;
-    description: string;
-    authors?: string;
+export interface COURSE_MODEL {
+  id: number;
+  name: string;
+  date: string;
+  length: number;
+  description: string;
+  authors: Authors[];
+  isTopRated: boolean;
+}
+
+export interface Authors {
+  id: number;
+  name: string
+  lastName: string
 }
 
 export interface User {
@@ -26,3 +32,5 @@ export interface UserLogin {
   login: string;
   password: string;
 }
+
+

@@ -5,7 +5,6 @@ import { LoginComponent } from './components/login/login.component';
 import { CourseInfoComponent } from './components/course-info/course-info.component';
 import { CoursesLayoutComponent } from './components/courses/courses-layout/courses-layout.component';
 import { ErrorComponent } from './components/error/error.component';
-import { BreadcrumbsComponent } from './shared/components/breadcrumbs/breadcrumbs.component';
 import { AuthGuard } from './guards/auth.guard';
 
 const routes: Routes = [
@@ -16,6 +15,7 @@ const routes: Routes = [
     children: [
       { path: '', component: CoursesLayoutComponent },
       { path: ':id', component: CourseInfoComponent },
+      { path: 'new', component: CourseInfoComponent }
     ],
     canActivate: [AuthGuard],
     data: {
@@ -25,30 +25,6 @@ const routes: Routes = [
   {
     path: 'login',
     component: LoginComponent
-  },
-  {
-    path: 'courses/:id',
-    loadChildren: () => import('./course-info-module/course-info-module.module').then(m => m.CourseInfoModule),
-    canActivate: [AuthGuard],
-    data: {
-      requiresLogin: true,
-     }
-  },
-  {
-    path: 'courses/new',
-    loadChildren: () => import('./course-info-module/course-info-module.module').then(m => m.CourseInfoModule),
-    canActivate: [AuthGuard],
-    data: {
-      requiresLogin: true,
-     }
-  },
-  {
-    path: 'breadcrumbs',
-    component: BreadcrumbsComponent,
-    canActivate: [AuthGuard],
-    data: {
-      requiresLogin: true,
-   }
   },
   {
     path: '**',

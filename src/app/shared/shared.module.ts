@@ -12,13 +12,14 @@ import { SearchFormComponent } from './components/search-form/search-form.compon
 import { ConfirmationModalComponent } from './components/confirmation-modal/confirmation-modal.component';
 import { InputComponent }  from './components/input/input.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
+import { LoadingBlockComponent } from './loading-block/loading-block.component';
 
 import { HighlightDirective } from './directives/highlight/highlight.directive';
 import { IfAuthenticatedDirective } from './directives/ifAuthenticated/if-authenticated.directive';
 
-import { OrderByPipe } from './pipes/orderBy.pipe';
+// import { OrderByPipe } from './pipes/orderBy.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
-import { FilterPipe } from './pipes/filter.pipe';
+// import { FilterPipe } from './pipes/filter.pipe';
 import { CustomReuseStrategy } from './custom-reuse-strategy/custom-reuse-strategy';
 
 
@@ -34,11 +35,12 @@ import { CustomReuseStrategy } from './custom-reuse-strategy/custom-reuse-strate
     ConfirmationModalComponent,
     InputComponent,
     TextareaComponent,
+    LoadingBlockComponent,
     HighlightDirective,
     IfAuthenticatedDirective,
-    OrderByPipe,
+    // OrderByPipe,
     DurationPipe,
-    FilterPipe,
+    // FilterPipe,
 
   ],
   imports: [
@@ -57,11 +59,12 @@ import { CustomReuseStrategy } from './custom-reuse-strategy/custom-reuse-strate
     ConfirmationModalComponent,
     InputComponent,
     TextareaComponent,
+    LoadingBlockComponent,
     HighlightDirective,
     IfAuthenticatedDirective,
-    OrderByPipe,
+    // OrderByPipe,
     DurationPipe,
-    FilterPipe,
+    // FilterPipe,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }

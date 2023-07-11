@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from 'src/app/services/auth.service';
-import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -19,10 +18,9 @@ export class LoginComponent {
 
   constructor(
     private authService: AuthService,
-    private router: Router
   ) {}
 
-  login(event: Event): void {
+  async login(event: Event): Promise<void> {
     event.preventDefault();
 
     const login = this.userForm.value.login;
@@ -36,7 +34,6 @@ export class LoginComponent {
 
     if(login && password) {
       this.authService.login(login, password);
-      this.router.navigate(['/courses']);
     }
   }
 

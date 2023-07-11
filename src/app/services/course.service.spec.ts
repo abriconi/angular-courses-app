@@ -1,53 +1,38 @@
 import { TestBed } from '@angular/core/testing';
+import { HttpClientTestingModule, HttpTestingController } from '@angular/common/http/testing';
 import { CourseService } from './course.service';
-import { coursesMockedData } from '../utilus/global.constans';
 
 describe('CourseService', () => {
-  let service: CourseService;
+  let courseService: CourseService;
+  let httpMock: HttpTestingController;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(CourseService);
+    TestBed.configureTestingModule({
+      imports: [HttpClientTestingModule],
+      providers: [CourseService]
+    });
+    courseService = TestBed.inject(CourseService);
+    httpMock = TestBed.inject(HttpTestingController);
   });
 
-  it('should return the list of courses', () => {
-    const courses = service.getList();
-    expect(courses).toEqual(coursesMockedData);
+  afterEach(() => {
+    httpMock.verify();
   });
 
-  it('should create a new course', () => {
-    const newCourseData = {
-      title: 'Test Title',
-      description: 'Test Description',
-      duration: '60',
-      creationDate: '2023-06-16',
-      authors: 'John Doe',
-    };
+  const pageNumber = 1;
+  const pageSize = 3;
+  const textFragment = undefined;
 
-    const createdCourse = service.courseCreated(newCourseData);
+  it('should call getList method with default values', () => {
+    courseService.getList(pageNumber, pageSize, textFragment);
+    const req = httpMock.expectOne(
+      `http://localhost:3004/courses?textFragment=&sort=date&start=0&count=${pageNumber * pageSize}`
+    );
+    expect(req.request.method).toBe('GET');
+    req.flush([]);
 
-    expect(createdCourse.title).toBe('Test Title');
-    expect(createdCourse.description).toBe('Test Description');
-    expect(createdCourse.duration).toBe('60');
-    expect(createdCourse.creationDate).toBe('2023-06-16');
-    expect(createdCourse.authors).toBe('John Doe');
-    expect(createdCourse.topRated).toBe(false);
-
-    const courses = service.getList();
-
-    expect(courses.find(course => course.id === createdCourse.id)).toBeTruthy();
-  });
-
-  it('should retrieve a course by ID', () => {
-    const courseId = coursesMockedData[0].id;
-    const course = service.getItemById(courseId);
-    expect(course).toEqual(coursesMockedData[0]);
-  });
-
-  it('should remove a course', () => {
-    const courseId = coursesMockedData[0].id;
-    service.removeItem(courseId);
-    const courses = service.getList();
-    expect(courses.find(course => course.id === courseId)).toBeFalsy();
+    courseService.courses$.subscribe((courses) => {
+      expect(courses).toEqual([]);
+    });
   });
 });

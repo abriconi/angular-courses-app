@@ -4,22 +4,22 @@
       *ngIf="showConfirmationModal"
       (closeModal)="closeModal()"
       (handleDelete)="deleteCourse.emit(courseData.id)"
-      [courseName]="courseData.title"
+      [courseName]="courseData.name"
       [courseId]="courseData.id"
     ></app-confirmation-modal>
   </ng-container>
     <div class="header">
       <div class="headingWrapper">
-        <h1 class="heading">{{ courseData.title | uppercase }}</h1>
-        <app-icon icon="star_rate" *ngIf="courseData.topRated" variant="rate"></app-icon></div>
+        <h1 class="heading">{{ courseData.name | uppercase }}</h1>
+        <app-icon icon="star_rate" *ngIf="courseData.isTopRated" variant="rate"></app-icon></div>
       <div class="infoWrapper">
           <div class="infoItem">
               <app-icon icon="schedule"></app-icon>
-              <p>{{ courseData.duration | duration }}</p>
+              <p>{{ courseData.length.toString() | duration }}</p>
           </div>
           <div class="infoItem">
               <app-icon icon="calendar_today"></app-icon>
-              <p>{{ courseData.creationDate | date: 'dd MMM, yyyy' }}</p>
+              <p>{{ courseData.date | date: 'dd MMM, yyyy' }}</p>
           </div>
       </div>
     </div>

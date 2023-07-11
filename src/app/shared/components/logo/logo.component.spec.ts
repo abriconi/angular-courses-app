@@ -2,7 +2,7 @@ import { ComponentFixture, fakeAsync, TestBed } from '@angular/core/testing';
 import { RouterTestingModule } from '@angular/router/testing';
 import { Router } from '@angular/router';
 import { NO_ERRORS_SCHEMA } from '@angular/core';
-import { AuthGuard } from 'src/app/guards/auth.guard';
+import { AuthGuard } from '../../../guards/auth.guard';
 import { LogoComponent } from './logo.component';
 
 

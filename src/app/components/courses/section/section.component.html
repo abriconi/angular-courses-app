@@ -1,5 +1,5 @@
 <div class="searchPanel">
-  <app-search-form (search)="handleSearch($event)"></app-search-form>
+  <app-search-form (keyup)="searchInput.next($event)"></app-search-form>
 </div>
 <div class="addCourse">
   <app-button

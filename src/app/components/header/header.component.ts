@@ -1,15 +1,18 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { AuthService } from 'src/app/services/auth.service';
-import { UserLogin } from 'src/app/utilus/global.moduls';
+import { User } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+
 
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit {
-  user: UserLogin | null = null;
+export class HeaderComponent implements OnInit, OnDestroy {
+  user!: User | null;
+  private userSubscription!: Subscription;
 
   constructor(
     private authService: AuthService,
@@ -17,9 +20,13 @@ export class HeaderComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.authService.user$?.subscribe((user) => {
+    this.userSubscription = this.authService.user$.subscribe((user) => {
       this.user = user;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription.unsubscribe();
   }
 
   logout(): void {

@@ -4,6 +4,7 @@ import { LoginComponent } from './login.component';
 import { ButtonComponent } from '../../shared/components/button/button.component';
 import { AuthService } from 'src/app/services/auth.service';
 import { Router } from '@angular/router';
+import { HttpClientTestingModule } from '@angular/common/http/testing';
 
 describe('LoginComponent', () => {
   let component: LoginComponent;
@@ -14,7 +15,7 @@ describe('LoginComponent', () => {
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [LoginComponent, ButtonComponent],
-      imports: [ReactiveFormsModule],
+      imports: [ReactiveFormsModule, HttpClientTestingModule],
       providers: [
         AuthService,
         { provide: Router, useClass: class { navigate = jasmine.createSpy('navigate'); } }
@@ -29,7 +30,7 @@ describe('LoginComponent', () => {
   });
 
   it('should create', () => {
-    expect(component).toBeTruthy();
+    expect(component).toBeDefined();
   });
 
   it('should initialize userForm with empty fields', () => {
@@ -69,8 +70,8 @@ describe('LoginComponent', () => {
   it('should call login method and pass form values on form submit', () => {
     const login = component.userForm.get('login');
     const password = component.userForm.get('password');
-    login?.setValue('user');
-    password?.setValue('password');
+    login?.setValue('flastname');
+    password?.setValue('flastname');
 
     spyOn(authService, 'login');
     spyOn(component, 'login').and.callThrough();
@@ -79,7 +80,6 @@ describe('LoginComponent', () => {
     component.login(event);
 
     expect(component.login).toHaveBeenCalledWith(event);
-    expect(authService.login).toHaveBeenCalledWith('user', 'password');
-    expect(router.navigate).toHaveBeenCalledWith(['/courses']);
+    expect(authService.login).toHaveBeenCalledWith('flastname', 'flastname');
   });
 });
