@@ -74,31 +74,19 @@ export class CourseInfoComponent implements OnInit {
       authors: authorsMockedData ?? [],
     };
 
-    this.courseService.courseCreated(newCourse);
-    this.resetForm();
-    this.router.navigate(['/courses']);
+    if(this.courseId) {
+      this.courseService.updateItem(this.courseId, newCourse);
+      this.resetForm();
+      this.router.navigate(['/courses']);
+    } else {
+      this.courseService.courseCreated(newCourse);
+      this.resetForm();
+      this.router.navigate(['/courses']);
+    }
   }
 
   cancelCreating(): void {
     this.courseForm.reset();
-    this.router.navigate(['/courses']);
-  }
-
-  saveCourse(event: Event): void {
-    event.preventDefault();
-    if (this.courseId) {
-      const courseToUpdate: Omit<COURSE_MODEL, 'id' | 'isTopRated'> = {
-        name: this.courseForm.value.name ?? '',
-        description: this.courseForm.value.description ?? '',
-        length: Number(this.courseForm.value.length) ?? '',
-        date: this.courseForm.value.date ?? '',
-        authors: authorsMockedData
-        // authors: this.courseForm.value.authors as Authors[]
-      };
-      this.courseService.updateItem(this.courseId, courseToUpdate);
-    } else {
-      this.createCourse(event);
-    }
     this.router.navigate(['/courses']);
   }
 

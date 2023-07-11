@@ -115,22 +115,20 @@ export class CourseService {
   updateItem(courseId: number, newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): void {
     this.loadService.showLoader();
 
-    setTimeout(() => {
-      this.loadService.hideLoader();
-    }, 1000);
-    
-    // const courseToUpdate = this.getItemById(courseId);
+    const updatedCourse: COURSE_MODEL = {
+      id: courseId,
+      isTopRated: false,
+      name: newCourseData.name,
+      date: newCourseData.date,
+      length: Number(newCourseData.length),
+      description: newCourseData.description,
+      authors: newCourseData.authors
+    }
 
-    // if (courseToUpdate) {
-    //   for (const field in newCourseData) {
-    //     if (field !== 'id' && field !== 'isTopRated') {
-    //       (courseToUpdate as any)[field] = (newCourseData as any)[field];
-    //     }
-    //   }
-    // }
-    // console.log('1', CourseService.courses);
-
+    this.http.patch<COURSE_MODEL>(`http://localhost:3004/courses/${courseId}`, updatedCourse)
+      .subscribe(() => {
+        this.getList(this.pageNumber, 3, this.textFragment);
+        this.loadService.hideLoader();
+      });
   }
-
-
 }
