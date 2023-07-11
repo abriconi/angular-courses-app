@@ -1,10 +1,11 @@
-import { Component, ContentChildren, OnInit } from '@angular/core';
+import { Component, ContentChildren, OnDestroy, OnInit } from '@angular/core';
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
 // import { OrderByPipe } from 'src/app/shared/pipes/orderBy.pipe';
 // import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
 import { CourseService } from 'src/app/services/course.service';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-courses-layout',
@@ -12,7 +13,10 @@ import { CourseService } from 'src/app/services/course.service';
   styleUrls: ['./courses-layout.component.scss'],
   // providers: [FilterPipe],
 })
-export class CoursesLayoutComponent implements OnInit{
+export class CoursesLayoutComponent implements OnInit, OnDestroy {
+
+  coursesSubscripton!: Subscription;
+
   constructor(
     private courseService: CourseService,
   ) { }
@@ -33,7 +37,7 @@ export class CoursesLayoutComponent implements OnInit{
 
   getCourses(): void {
     this.courseService.getList(1, 3);
-    this.courseService.courses$.subscribe((courses) => {
+    this.coursesSubscripton = this.courseService.courses$.subscribe((courses) => {
       this.courses = courses;
     });
   }
@@ -51,5 +55,9 @@ export class CoursesLayoutComponent implements OnInit{
     this.currentPage = 1;
     this.searchText = searchText;
     this.courseService.getList(this.currentPage, 3, searchText);
+  }
+//TODO
+  ngOnDestroy(): void {
+    this.coursesSubscripton.unsubscribe();
   }
 }

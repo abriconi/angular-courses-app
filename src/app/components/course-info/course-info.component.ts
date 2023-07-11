@@ -1,4 +1,4 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { Component, EventEmitter, OnDestroy, OnInit, Output } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CourseService } from 'src/app/services/course.service';
@@ -7,6 +7,7 @@ import { Router } from '@angular/router';
 import { authorsMockedData } from 'src/app/utilus/global.constans';
 import { transformDate } from 'src/app/utilus/helpers';
 import { formatDateToServer } from 'src/app/utilus/helpers';
+import { Subscription } from 'rxjs';
 
 @Component({
   selector: 'app-course-info',
@@ -14,11 +15,12 @@ import { formatDateToServer } from 'src/app/utilus/helpers';
   styleUrls: ['./course-info.component.scss'],
 })
 
-export class CourseInfoComponent implements OnInit {
+export class CourseInfoComponent implements OnInit, OnDestroy {
   @Output() courseCreated = new EventEmitter<Omit<COURSE_MODEL, 'id' | 'isTopRated'>>();
 
   courseId!: number | null;
   courseData: COURSE_MODEL | undefined;
+  idSubscribtion!: Subscription;
 
   ifAllFieldFill = true;
 
@@ -37,7 +39,7 @@ export class CourseInfoComponent implements OnInit {
   ) {}
 
   ngOnInit() {
-    this.route.paramMap.subscribe(params => {
+    this.idSubscribtion = this.route.paramMap.subscribe(params => {
       this.courseId = Number(params.get('id'));
       if (this.courseId) {
         this.courseService.getItemById(this.courseId)
@@ -57,6 +59,11 @@ export class CourseInfoComponent implements OnInit {
         )
       }
     });
+  }
+
+  // TODO is correct unsubscribe?
+  ngOnDestroy(): void {
+    this.idSubscribtion.unsubscribe();
   }
 
   createCourse(event: Event): void {
@@ -94,4 +101,5 @@ export class CourseInfoComponent implements OnInit {
     this.courseForm.reset();
     this.ifAllFieldFill = true;
   }
+
 }
