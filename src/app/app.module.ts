@@ -2,6 +2,8 @@ import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
+import { EffectsModule } from '@ngrx/effects';
+import { StoreModule } from '@ngrx/store';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
@@ -15,8 +17,8 @@ import { LoginComponent } from './components/login/login.component';
 import { ErrorComponent } from '../app/components/error/error.component';
 import { CoursesLayoutComponent } from './components/courses/courses-layout/courses-layout.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
-import { StoreModule } from '@ngrx/store';
-
+import { AuthEffects } from './store/auth/auth.effects';
+import { authReducer } from './store/auth/auth.reducer';
 
 @NgModule({
   declarations: [
@@ -35,8 +37,9 @@ import { StoreModule } from '@ngrx/store';
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
+    EffectsModule.forRoot([AuthEffects]),
     ReactiveFormsModule,
-    StoreModule.forRoot({}, {}),
+    StoreModule.forRoot({ auth: authReducer })
   ],
   providers: [
     {

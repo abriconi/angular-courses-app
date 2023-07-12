@@ -3,7 +3,7 @@ import { HttpClient } from '@angular/common/http';
 import { Authors, COURSE_MODEL } from '../utilus/global.moduls';
 import { authorsMockedData } from '../utilus/global.constans';
 import { generateId } from '../utilus/helpers';
-import { BehaviorSubject, catchError, throwError } from 'rxjs';
+import { BehaviorSubject, catchError } from 'rxjs';
 import { LoadService } from './load.service';
 
 @Injectable({

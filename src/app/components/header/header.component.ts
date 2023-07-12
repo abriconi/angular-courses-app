@@ -1,8 +1,10 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Store } from '@ngrx/store';
 import { User } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
+import { selectUser } from '../../store/auth/auth.selectors';
+import { logout } from '../../store/auth/auth.actions';
 
 
 @Component({
@@ -15,12 +17,12 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private userSubscription!: Subscription;
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private store: Store,
   ) {}
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.user$.subscribe((user) => {
+    this.userSubscription = this.store.select((selectUser)).subscribe((user) => {
       this.user = user;
     });
   }
@@ -30,7 +32,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
   }
 
   logout(): void {
-    this.authService.logout();
+    this.store.dispatch(logout());
     this.user = null;
     this.router.navigate(['/login']);
   }

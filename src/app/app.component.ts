@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
 import { AfterViewInit } from '@angular/core';
-import { AuthService } from './services/auth.service';
 import { LoadService } from './services/load.service';
+import { Store } from '@ngrx/store';
+import { selectIsAuthenticated } from './store/auth/auth.selectors';
 
 @Component({
   selector: 'app-root',
@@ -17,15 +18,14 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
   isLoading = false;
 
   constructor(
-    private authService: AuthService,
     private loadService: LoadService,
+    private store: Store,
     ) {}
 
   public ngOnInit(): void {
-    this.isAuthenticated$ = this.authService.isAuthenticated$.asObservable();
-
+    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
   }
-  //TODO is correct unsubscribe and subscribe?
+
   ngAfterViewInit(): void {
     this.loadingSubscription = this.loadService.loader$.subscribe(isLoading => {
       this.isLoading = isLoading;
