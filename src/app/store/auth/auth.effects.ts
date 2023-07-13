@@ -77,7 +77,6 @@ export class AuthEffects {
 
   constructor(
     private actions$: Actions,
-    private store: Store,
     private router: Router,
   ) {}
 }

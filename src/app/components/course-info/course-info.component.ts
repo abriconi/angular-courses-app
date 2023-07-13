@@ -73,19 +73,28 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
       return;
     }
 
-    const newCourse: Omit<COURSE_MODEL, 'id' | 'isTopRated'> = {
-      name: this.courseForm.value.name ?? '',
-      description: this.courseForm.value.description ?? '',
-      length: Number(this.courseForm.value.length) ?? 0,
-      date: formatDateToServer(this.courseForm.value.date) ?? '',
-      authors: authorsMockedData ?? [],
-    };
-
     if(this.courseId) {
+      const newCourse: COURSE_MODEL = {
+        id: this.courseId,
+        name: this.courseForm.value.name ?? '',
+        description: this.courseForm.value.description ?? '',
+        length: Number(this.courseForm.value.length) ?? 0,
+        date: formatDateToServer(this.courseForm.value.date) ?? '',
+        authors: authorsMockedData ?? [],
+        isTopRated: Math.random() >= 0.5,
+      }
       this.courseService.updateItem(this.courseId, newCourse);
       this.resetForm();
       this.router.navigate(['/courses']);
     } else {
+      const newCourse: Omit<COURSE_MODEL, 'id'> = {
+        name: this.courseForm.value.name ?? '',
+        description: this.courseForm.value.description ?? '',
+        length: Number(this.courseForm.value.length) ?? 0,
+        date: formatDateToServer(this.courseForm.value.date) ?? '',
+        authors: authorsMockedData ?? [],
+        isTopRated: Math.random() >= 0.5,
+      }
       this.courseService.courseCreated(newCourse);
       this.resetForm();
       this.router.navigate(['/courses']);

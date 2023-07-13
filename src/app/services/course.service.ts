@@ -80,7 +80,7 @@ export class CourseService {
 
     const newCourse: COURSE_MODEL = {
       id: newCourseID,
-      isTopRated: false,
+      isTopRated: Math.random() >= 0.5,
       name: newCourseData.name,
       date: newCourseData.date,
       length: Number(newCourseData.length),
@@ -106,7 +106,7 @@ export class CourseService {
     })
   }
 
-  updateItem(courseId: number, newCourseData: Omit<COURSE_MODEL, 'id' | 'isTopRated'>): void {
+  updateItem(courseId: number, newCourseData: Omit<COURSE_MODEL, 'id'>): void {
     this.loadService.showLoader();
 
     const updatedCourse: COURSE_MODEL = {
