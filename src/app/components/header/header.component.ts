@@ -1,7 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Store } from '@ngrx/store';
 import { User } from 'src/app/utilus/global.moduls';
-import { Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { selectUser } from '../../store/auth/auth.selectors';
 import { logout } from '../../store/auth/auth.actions';
@@ -17,7 +16,6 @@ export class HeaderComponent implements OnInit, OnDestroy {
   private userSubscription!: Subscription;
 
   constructor(
-    private router: Router,
     private store: Store,
   ) {}
 
@@ -33,7 +31,5 @@ export class HeaderComponent implements OnInit, OnDestroy {
 
   logout(): void {
     this.store.dispatch(logout());
-    this.user = null;
-    this.router.navigate(['/login']);
   }
 }

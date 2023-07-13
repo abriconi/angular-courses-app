@@ -4,6 +4,7 @@ import { AfterViewInit } from '@angular/core';
 import { LoadService } from './services/load.service';
 import { Store } from '@ngrx/store';
 import { selectIsAuthenticated } from './store/auth/auth.selectors';
+import { getUser } from './store/auth/auth.actions';
 
 @Component({
   selector: 'app-root',
@@ -24,6 +25,11 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
 
   public ngOnInit(): void {
     this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
+
+    const token  = localStorage.getItem('token');
+    if(token) {
+      this.store.dispatch(getUser({ token }));
+    }
   }
 
   ngAfterViewInit(): void {

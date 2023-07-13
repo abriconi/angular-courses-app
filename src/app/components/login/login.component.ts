@@ -1,7 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Store } from '@ngrx/store';
-import { Router } from '@angular/router';
 import { login as loginAction } from '../../store/auth/auth.actions';
 
 @Component({
@@ -20,9 +19,7 @@ export class LoginComponent {
 
   constructor(
     private store: Store<any>,
-    private router: Router
   ) {}
-
 
   login(event: Event): void {
     event.preventDefault();
@@ -36,9 +33,8 @@ export class LoginComponent {
       return;
     }
 
-    if(login && password) {
+    if (login && password) {
       this.store.dispatch(loginAction({ login, password }));
-      this.router.navigate(['/courses']);
     }
   }
 

@@ -4,7 +4,9 @@ import { User, UserLogin } from 'src/app/utilus/global.moduls';
 export enum AuthActionTypes {
   Login = '[Auth] Login',
   LoginSuccess = '[Auth] Login Success',
-  LoginFail = '[Auth API] Login Fail'
+  LoginFail = '[Auth API] Login Fail',
+  Logout = '[Auth] Logout',
+  LogoutSuccess = '[Auth] Logout Success',
 }
 
 export enum GetUserActionTypes {
@@ -43,5 +45,12 @@ export const getUserFailure = createAction(
   props<{ error: string }>()
 );
 
-export const logout = createAction('[Auth] Logout');
+export const logout = createAction(
+  AuthActionTypes.Logout
+);
+
+export const logoutSuccess = createAction(
+  AuthActionTypes.LogoutSuccess
+);
+
 export const setToken = createAction('[Auth] Set Token', props<{ token: string | null }>());

@@ -1,6 +1,6 @@
-import { Directive, Input, OnDestroy, TemplateRef, ViewContainerRef } from '@angular/core';
+import { Directive, Input, OnDestroy, OnInit, TemplateRef, ViewContainerRef } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { selectIsAuthenticated } from '../../../store/auth/auth.selectors';
 
@@ -8,6 +8,7 @@ import { selectIsAuthenticated } from '../../../store/auth/auth.selectors';
   selector: '[appIfAuthenticated]'
 })
 export class IfAuthenticatedDirective implements OnDestroy {
+  private isAuthenticated$!: Subscription;
   private isAuthenticated = false;
   private condition = false;
   private destroy$ = new Subject<void>();
@@ -17,14 +18,15 @@ export class IfAuthenticatedDirective implements OnDestroy {
     private viewContainer: ViewContainerRef,
     private store: Store
   ) {
-    this.store.select(selectIsAuthenticated).pipe( takeUntil(this.destroy$)).subscribe(isAuthenticated => {
+    this.isAuthenticated$ = this.store.select((selectIsAuthenticated)).subscribe((isAuthenticated) => {
       this.isAuthenticated = isAuthenticated;
       this.handleDisplay();
-    })
+    });
   }
   ngOnDestroy() {
     this.destroy$.next();
     this.destroy$.complete();
+    this.isAuthenticated$.unsubscribe;
   }
 
   @Input() set appIfAuthenticated(condition: boolean) {

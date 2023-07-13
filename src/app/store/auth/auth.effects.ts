@@ -1,19 +1,19 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
-import { of } from 'rxjs';
-import { catchError, concatMap, map, mergeMap, withLatestFrom } from 'rxjs/operators';
-import { loginSuccess, loginFailure, logout, AuthActionTypes, GetUserActionTypes, getUserSuccess, getUserFailure, getUser, setToken } from './auth.actions';
+import { noop, of } from 'rxjs';
+import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
+import { loginSuccess, loginFailure, AuthActionTypes, GetUserActionTypes, getUserSuccess, getUserFailure, getUser, logoutSuccess } from './auth.actions';
 import { ajax } from 'rxjs/ajax';
 import { UserLogin, User } from 'src/app/utilus/global.moduls';
-import { select, Store } from '@ngrx/store';
-import { selectToken } from './auth.selectors';
+import {  Store } from '@ngrx/store';
+import { Router } from '@angular/router';
+
 
 @Injectable()
 export class AuthEffects {
-  login$ = createEffect(() =>
-    { console.log('login$ method from authEffects was called');
 
-      return this.actions$.pipe(
+  login$ = createEffect((): any =>
+    { return this.actions$.pipe(
       ofType(AuthActionTypes.Login),
       mergeMap(({ login, password }) =>
         ajax({
@@ -26,34 +26,32 @@ export class AuthEffects {
         }).pipe(
           map(({ response }) => {
             const data = response as { token: string; user: UserLogin }
-
-            localStorage.setItem('token', data.token);
-            return loginSuccess(data);
+            const token = data.token;
+            localStorage.setItem('token', token);
+            return data;
           }),
-          catchError((error) => of(loginFailure({ error: error.message })))
         )
       ),
-      withLatestFrom(this.store.pipe(select(selectToken))),
-      concatMap(([action, token]) => {
-        if (token) {
-          return of(getUser({ token }));
-        }
-        return of(getUserFailure({ error: 'Token is null' }));
-      })
+      concatMap((data: any): any => {
+        return of(
+          loginSuccess(data),
+          data.token ? getUser({ token: data.token }) : noop,
+          this.router.navigate(['/courses']),
+        );
+      }),
+      catchError((error) => of(loginFailure({ error: error.message })))
     )
     });
 
-  logout$ = createEffect(() =>
+  logout$ = createEffect((): any =>
     { return this.actions$.pipe(
-      ofType(logout),
+      ofType(AuthActionTypes.Logout),
       mergeMap(() => {
         localStorage.removeItem('token');
-        return of(logout());
-      }),
-      concatMap(() => {
-        return of(setToken({ token: null }));
-      }),
-      catchError((error) => of(loginFailure({ error: error.message })))
+        return of(
+          logoutSuccess(),
+          this.router.navigate(['/login']),);
+      })
     ) }
   );
 
@@ -68,18 +66,18 @@ export class AuthEffects {
           headers: {
             'Content-Type': 'application/json'
           }
-    }).pipe(
-      map(({ response }) => {
-        const data = response as {user: User};
-        return getUserSuccess(data)
-      }),
-      catchError((error) => of(getUserFailure({ error: error.message })))
-    ))
+    })),
+    concatMap(({ response }: any) => {
+      const data = response as {user: User};
+      return of(getUserSuccess(data));
+    }),
+    catchError((error) => of(getUserFailure({ error: error.message })))
   )
   })
 
   constructor(
     private actions$: Actions,
     private store: Store,
+    private router: Router,
   ) {}
 }
