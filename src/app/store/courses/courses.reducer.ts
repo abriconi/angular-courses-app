@@ -18,7 +18,7 @@ export interface CourseState {
   error: string | null;
 }
 export interface CoursesListState {
-  coursesList: COURSE_MODEL[] | [];
+  courses: COURSE_MODEL[] | [];
   error: string | null;
 }
 
@@ -28,21 +28,22 @@ const initialCourseState: CourseState = {
 };
 
 const initialCoursesListState: CoursesListState = {
-  coursesList: [],
+  courses: [],
   error: null,
 }
 
 export const coursesReducer = createReducer(
   initialCoursesListState,
-  on(getCoursesSuccess, (state, { courses } ): any => {
+  on(getCoursesSuccess, (state, { type, courses }): any => {
     return {
       ...state,
       courses,
       error: null,
     }
   }),
-  on(getCoursesFail, (state, { error } ): any => ({
+  on(getCoursesFail, (state, { error }): any => ({
     ...state,
+    courses: [],
     error
   })),
 );

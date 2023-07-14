@@ -29,24 +29,19 @@ export class CoursesEffects {
     { return this.actions$.pipe(
       ofType(GetCoursesActionTypes.GetCourses),
       mergeMap(({ amount, textFragment }) =>
-        ajax({
-          url: `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`,
-          method: 'GET',
-          body: { amount, textFragment },
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).pipe(
-          map(({ response }) => {
-            const data  = response as {courses: COURSE_MODEL[] }
-            return data;
-          }),
-        )
-      ),
-      concatMap((data): any => {
-        return of(
-          getCoursesSuccess(data),
-        );
+      ajax({
+        url: `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`,
+        method: 'GET',
+        body: { amount, textFragment },
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })),
+      concatMap(({ response }: any) => {
+        const data  = response as COURSE_MODEL[]
+        console.log('data', data);
+
+        return of(getCoursesSuccess({ courses: data }));
       }),
       catchError((error) => of(getCoursesFail({ error: error.message })))
     )

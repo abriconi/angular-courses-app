@@ -19,7 +19,10 @@ import { ErrorComponent } from '../app/components/error/error.component';
 import { CoursesLayoutComponent } from './components/courses/courses-layout/courses-layout.component';
 import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AuthEffects } from './store/auth/auth.effects';
+import { CoursesEffects } from './store/courses/courses.effects';
 import { authReducer } from './store/auth/auth.reducer';
+import { coursesReducer } from './store/courses/courses.reducer';
+import { courseReducer } from './store/courses/courses.reducer';
 
 @NgModule({
   declarations: [
@@ -38,9 +41,13 @@ import { authReducer } from './store/auth/auth.reducer';
     AppRoutingModule,
     HttpClientModule,
     SharedModule,
-    EffectsModule.forRoot([AuthEffects]),
+    EffectsModule.forRoot([AuthEffects, CoursesEffects]),
     ReactiveFormsModule,
-    StoreModule.forRoot({ auth: authReducer }),
+    StoreModule.forRoot({
+      auth: authReducer,
+      courses: coursesReducer,
+      course: courseReducer
+    }),
     StoreDevtoolsModule.instrument(),
   ],
   providers: [

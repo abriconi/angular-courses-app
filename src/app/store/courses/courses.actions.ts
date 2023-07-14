@@ -2,48 +2,47 @@ import { createAction, props } from '@ngrx/store';
 import { COURSE_MODEL, Authors } from 'src/app/utilus/global.moduls';
 
 export enum GetCoursesActionTypes {
-  GetCourses = 'Get Courses',
-  GetCoursesSuccess = 'Get Courses Success',
-  GetCoursesFail = 'Get Courses Fail',
+  GetCourses = '[Courses] Get Courses',
+  GetCoursesSuccess = '[Courses] Get Courses Success',
+  GetCoursesFail = '[Courses] Get Courses Fail',
 }
 
 export enum DeleteCourseActionTypes {
-  DeleteCourse = 'Delete Course',
-  DeleteCourseuccess = 'Delete Course Success',
-  DeleteCourseFail = 'Delete Course Fail',
+  DeleteCourse = '[Course] Delete Course',
+  DeleteCourseuccess = '[Course] Delete Course Success',
+  DeleteCourseFail = '[Course] Delete Course Fail',
 }
 
 export enum CreateCourseActionTypes {
-  CreateCourse = 'Create Course',
-  CreateCoursesSuccess = 'Create Course Success',
-  CreateCourseFail = 'Create Course Fail',
+  CreateCourse = '[Course] Create Course',
+  CreateCoursesSuccess = '[Course] Create Course Success',
+  CreateCourseFail = '[Course] Create Course Fail',
 }
 
 export enum GetCourseActionTypes {
-  GetCourse = 'Get Course',
-  GetCourseSuccess = 'Get Course Success',
-  GetCourseFail = 'Get Course Fail',
+  GetCourse = '[Course] Get Course',
+  GetCourseSuccess = '[Course] Get Course Success',
+  GetCourseFail = '[Course] Get Course Fail',
 }
 
 export enum UpdateCourseActionTypes {
-  UpdateCourse = 'Update Course',
-  UpdateUpdateCourseSuccess = 'Update Course Success',
-  UpdateUpdateCourseFail = 'Update Course Fail',
+  UpdateCourse = '[Course] Update Course',
+  UpdateUpdateCourseSuccess = '[Course] Update Course Success',
+  UpdateUpdateCourseFail = '[Course] Update Course Fail',
 }
 
 export const getCourses = createAction(
   GetCoursesActionTypes.GetCourses,
   props<{ amount: number, textFragment: string }>()
-  // props<{ pageNumber: number, pageSize: number, textFragment: string }>()
 );
 
 export const getCoursesSuccess = createAction(
   GetCoursesActionTypes.GetCoursesSuccess,
-  props<{ courses: COURSE_MODEL[] }>()
+  props<{courses: COURSE_MODEL[]}>()
 );
 
 export const getCoursesFail = createAction(
-  GetCoursesActionTypes.GetCoursesSuccess,
+  GetCoursesActionTypes.GetCoursesFail,
   props<{ error: string }>()
 );
 

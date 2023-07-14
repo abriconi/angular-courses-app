@@ -1,50 +1,53 @@
 import { Component, ContentChildren, OnDestroy, OnInit } from '@angular/core';
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
-
-// import { OrderByPipe } from 'src/app/shared/pipes/orderBy.pipe';
-// import { FilterPipe } from 'src/app/shared/pipes/filter.pipe';
 import { CourseService } from 'src/app/services/course.service';
 import { Subscription } from 'rxjs';
+import { Store, select } from '@ngrx/store';
+import { getCourses as getCoursesAction } from '../../../store/courses/courses.actions';
+import { selectCoursesList } from 'src/app/store/courses/courses.selectors';
 
 @Component({
   selector: 'app-courses-layout',
   templateUrl: './courses-layout.component.html',
   styleUrls: ['./courses-layout.component.scss'],
-  // providers: [FilterPipe],
 })
-export class CoursesLayoutComponent implements OnInit, OnDestroy {
+export class CoursesLayoutComponent implements OnInit  {
 
   coursesSubscripton!: Subscription;
 
   constructor(
     private courseService: CourseService,
+    private store: Store,
   ) { }
 
   @ContentChildren(HighlightDirective) appHighlight: any;
 
-  courses: COURSE_MODEL[] | [] = [];
-  private currentPage = 1
+  courses!: COURSE_MODEL[] | [];
+  private currentPage = 1;
   private searchText = '';
+  private pageSize = 3;
 
   trackCourseById(_index: number, course: COURSE_MODEL): number {
     return course.id;
   }
 
   ngOnInit(): void {
+    this.store.select((selectCoursesList)).subscribe((courses) => {
+      this.courses = courses;
+    });
     this.getCourses();
   }
 
-  getCourses(): void {
-    this.courseService.getList(1, 3);
-    this.coursesSubscripton = this.courseService.courses$.subscribe((courses) => {
-      this.courses = courses;
-    });
+    getCourses(): void {
+    const amount = this.pageSize * this.currentPage;
+    this.store.dispatch(getCoursesAction({ amount: amount, textFragment: this.searchText }));
   }
 
   loadMoreClick = (): void => {
     this.currentPage = this.currentPage + 1
-    this.courseService.getList(this.currentPage, 3, this.searchText);
+    const amount = this.pageSize * this.currentPage
+    this.store.dispatch(getCoursesAction({ amount: amount, textFragment: this.searchText }));
   }
 
   deleteCourse(id: number): void {
@@ -57,7 +60,7 @@ export class CoursesLayoutComponent implements OnInit, OnDestroy {
     this.courseService.getList(this.currentPage, 3, searchText);
   }
 //TODO
-  ngOnDestroy(): void {
-    this.coursesSubscripton.unsubscribe();
-  }
+  // ngOnDestroy(): void {
+  //   // this.coursesSubscripton.unsubscribe();
+  // }
 }

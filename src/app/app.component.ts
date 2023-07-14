@@ -11,12 +11,12 @@ import { getUser } from './store/auth/auth.actions';
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
+export class AppComponent implements OnInit {
 
   public isAuthenticated$!: Observable<boolean>;
   private loadingSubscription!: Subscription;
 
-  isLoading = false;
+  isLoading$ = this.loadService.loader$;
 
   constructor(
     private loadService: LoadService,
@@ -32,13 +32,17 @@ export class AppComponent implements OnInit, AfterViewInit, OnDestroy {
     }
   }
 
-  ngAfterViewInit(): void {
-    this.loadingSubscription = this.loadService.loader$.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    });
-  }
-  ngOnDestroy(): void {
-    this.loadingSubscription.unsubscribe();
-  }
+  // ngAfterViewInit(): void {
+  //   setTimeout(() => {
+  //     this.loadingSubscription = this.loadService.loader$.subscribe(
+  //       isLoading => {
+  //         this.isLoading = isLoading;
+  //       }
+  //     );
+  //   }, 0);
+  // }
+  // ngOnDestroy(): void {
+  //   this.loadingSubscription.unsubscribe();
+  // }
 
 }
