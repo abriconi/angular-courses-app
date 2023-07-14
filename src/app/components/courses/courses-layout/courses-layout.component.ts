@@ -3,7 +3,7 @@ import { HighlightDirective } from 'src/app/shared/directives/highlight/highligh
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 import { CourseService } from 'src/app/services/course.service';
 import { Subscription } from 'rxjs';
-import { Store, select } from '@ngrx/store';
+import { Store } from '@ngrx/store';
 import { getCourses as getCoursesAction } from '../../../store/courses/courses.actions';
 import { selectCoursesList } from 'src/app/store/courses/courses.selectors';
 
@@ -56,8 +56,9 @@ export class CoursesLayoutComponent implements OnInit  {
 
   handleSearch(searchText: string) {
     this.currentPage = 1;
+    const amount = this.pageSize * this.currentPage
     this.searchText = searchText;
-    this.courseService.getList(this.currentPage, 3, searchText);
+    this.store.dispatch(getCoursesAction({ amount: amount, textFragment: this.searchText }));
   }
 //TODO
   // ngOnDestroy(): void {

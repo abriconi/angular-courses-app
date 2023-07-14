@@ -30,42 +30,42 @@ export class CourseService {
     private loadService: LoadService
   ) {}
 
-  getList(
-    pageNumber: number,
-    pageSize: number,
-    textFragment?: string
-    ): void {
+  // getList(
+  //   pageNumber: number,
+  //   pageSize: number,
+  //   textFragment?: string
+  //   ): void {
 
-    this.pageNumber = pageNumber;
-    this.textFragment = textFragment;
+  //   this.pageNumber = pageNumber;
+  //   this.textFragment = textFragment;
 
-    const amount = pageNumber * pageSize;
+  //   const amount = pageNumber * pageSize;
 
-    this.loadService.showLoader();
+  //   this.loadService.showLoader();
 
-    setTimeout(() => {
-      this.loadService.hideLoader();
-    }, 1000)
+  //   setTimeout(() => {
+  //     this.loadService.hideLoader();
+  //   }, 1000)
 
-    this.http.get<COURSE_MODEL[]>(
-      `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`
-      ) // TODO
-      .pipe(catchError((error) => {
-        console.log(error);
-        throw new Error (error);
+  //   this.http.get<COURSE_MODEL[]>(
+  //     `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`
+  //     ) // TODO
+  //     .pipe(catchError((error) => {
+  //       console.log(error);
+  //       throw new Error (error);
 
-      }))
-      .subscribe((data) => {
-        this.coursesSubject.next(data);
-        }
-      );
-  }
+  //     }))
+  //     .subscribe((data) => {
+  //       this.coursesSubject.next(data);
+  //       }
+  //     );
+  // }
 
   removeItem(id: number): void {
     this.loadService.showLoader();
 
     this.http.delete<COURSE_MODEL>(`http://localhost:3004/courses/${id}`).subscribe();
-    this.getList(this.pageNumber, 3, this.textFragment);
+    // this.getList(this.pageNumber, 3, this.textFragment);
     this.loadService.hideLoader();
   }
 
@@ -90,7 +90,7 @@ export class CourseService {
 
     this.http.post<COURSE_MODEL>('http://localhost:3004/courses', newCourse)
     .subscribe(() => {
-      this.getList(this.pageNumber, 3, this.textFragment);
+      // this.getList(this.pageNumber, 3, this.textFragment);
       this.loadService.hideLoader();
     })
 
@@ -121,7 +121,7 @@ export class CourseService {
 
     this.http.patch<COURSE_MODEL>(`http://localhost:3004/courses/${courseId}`, updatedCourse)
       .subscribe(() => {
-        this.getList(this.pageNumber, 3, this.textFragment);
+        // this.getList(this.pageNumber, 3, this.textFragment);
         this.loadService.hideLoader();
       });
   }
