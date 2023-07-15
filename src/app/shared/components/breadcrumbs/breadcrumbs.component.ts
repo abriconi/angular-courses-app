@@ -1,7 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
-import { CourseService } from 'src/app/services/course.service';
-import { filter, Subscription, switchMap } from 'rxjs';
+import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { filter, Subscription } from 'rxjs';
+import { selectCourse } from 'src/app/store/courses/courses.selectors';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -12,13 +13,12 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   public coursesLink = '/courses';
   public courseTitle: string | null = null;
-  private courseId!: number | null;
   paramsSubscription!: Subscription;
+  courseSubscription!: Subscription;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private courseService: CourseService,
+    private store: Store
   ) { }
 
     ngOnInit() {
@@ -33,8 +33,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
           const courseId = isNaN(Number(urlParam)) ? null : Number(urlParam);
 
           if(courseId) {
-            this.courseService.getItemById(Number(courseId))
-            this.courseService.course$.subscribe((course) => {
+              this.courseSubscription = this.store.select((selectCourse)).subscribe((course) => {
               this.courseTitle = course?.name || null;
             })
           } else {
@@ -45,6 +44,7 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     }
     ngOnDestroy(): void {
       this.paramsSubscription.unsubscribe();
+      this.courseSubscription.unsubscribe();
     }
 
 }

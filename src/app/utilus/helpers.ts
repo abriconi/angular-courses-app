@@ -4,9 +4,7 @@ export function generateId(): number {
 
 export function transformDate(date: string | null | undefined): string | null {
   if (date) {
-    const dateCreation = date.split('/');
-    const formattedDate = `${dateCreation[2]}-${dateCreation[1]}-${dateCreation[0]}`;
-    return formattedDate;
+    return new Date(date).toISOString().split('T')[0];
   }
   return null;
 }
@@ -15,7 +13,6 @@ export function formatDateToServer(date: string | null | undefined): string {
   if (date) {
     const dateCreation = date.split('-');
     const formattedDate = `${dateCreation[1]}/${dateCreation[2]}/${dateCreation[0]}`;
-    console.log('dateCreation', dateCreation);
 
     return formattedDate;
   } else {
@@ -25,7 +22,6 @@ export function formatDateToServer(date: string | null | undefined): string {
       day: '2-digit',
       year: 'numeric'
     });
-    console.log('formattedDate', formattedDate);
 
     return formattedDate;
   }

@@ -1,10 +1,9 @@
 import { Component, ContentChildren, OnDestroy, OnInit } from '@angular/core';
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
-import { CourseService } from 'src/app/services/course.service';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { getCourses as getCoursesAction } from '../../../store/courses/courses.actions';
+import { deleteCourse as deleteCourseAction, getCourses as getCoursesAction } from '../../../store/courses/courses.actions';
 import { selectCoursesList } from 'src/app/store/courses/courses.selectors';
 
 @Component({
@@ -12,12 +11,11 @@ import { selectCoursesList } from 'src/app/store/courses/courses.selectors';
   templateUrl: './courses-layout.component.html',
   styleUrls: ['./courses-layout.component.scss'],
 })
-export class CoursesLayoutComponent implements OnInit  {
+export class CoursesLayoutComponent implements OnInit, OnDestroy  {
 
   coursesSubscripton!: Subscription;
 
   constructor(
-    private courseService: CourseService,
     private store: Store,
   ) { }
 
@@ -33,13 +31,13 @@ export class CoursesLayoutComponent implements OnInit  {
   }
 
   ngOnInit(): void {
-    this.store.select((selectCoursesList)).subscribe((courses) => {
+    this.coursesSubscripton = this.store.select((selectCoursesList)).subscribe((courses) => {
       this.courses = courses;
     });
     this.getCourses();
   }
 
-    getCourses(): void {
+  getCourses(): void {
     const amount = this.pageSize * this.currentPage;
     this.store.dispatch(getCoursesAction({ amount: amount, textFragment: this.searchText }));
   }
@@ -51,7 +49,8 @@ export class CoursesLayoutComponent implements OnInit  {
   }
 
   deleteCourse(id: number): void {
-    this.courseService.removeItem(id);
+    this.store.dispatch(deleteCourseAction({ id }));
+    this.getCourses();
   }
 
   handleSearch(searchText: string) {
@@ -60,8 +59,8 @@ export class CoursesLayoutComponent implements OnInit  {
     this.searchText = searchText;
     this.store.dispatch(getCoursesAction({ amount: amount, textFragment: this.searchText }));
   }
-//TODO
-  // ngOnDestroy(): void {
-  //   // this.coursesSubscripton.unsubscribe();
-  // }
+
+  ngOnDestroy(): void {
+    this.coursesSubscripton.unsubscribe();
+  }
 }

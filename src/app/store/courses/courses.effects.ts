@@ -39,8 +39,6 @@ export class CoursesEffects {
       })),
       concatMap(({ response }: any) => {
         const data  = response as COURSE_MODEL[]
-        console.log('data', data);
-
         return of(getCoursesSuccess({ courses: data }));
       }),
       catchError((error) => of(getCoursesFail({ error: error.message })))
@@ -50,11 +48,11 @@ export class CoursesEffects {
   updateCourse$ = createEffect((): any =>
     { return this.actions$.pipe(
       ofType(UpdateCourseActionTypes.UpdateCourse),
-      mergeMap(({ id, newCourse }) =>
-        ajax({
+      mergeMap(({ id, courseData }) => {
+        return ajax({
           url: `http://localhost:3004/courses/${id}`,
           method: 'PATCH',
-          body: { newCourse },
+          body: { ...courseData as object },
           headers: {
             'Content-Type': 'application/json'
           }
@@ -64,7 +62,7 @@ export class CoursesEffects {
             return data;
           }),
         )
-      ),
+      }),
       concatMap((data): any => {
         return of(
           updateCourseSuccess(data),
@@ -105,10 +103,11 @@ export class CoursesEffects {
   {
     return this.actions$.pipe(
     ofType(CreateCourseActionTypes.CreateCourse),
-    mergeMap(() =>
-      ajax({
+    mergeMap(({ newCourse }) => {
+      return ajax({
         url: 'http://localhost:3004/courses',
         method: 'POST',
+        body: newCourse ,
         headers: {
           'Content-Type': 'application/json'
         }
@@ -118,6 +117,7 @@ export class CoursesEffects {
           return data;
         }),
       )
+    }
     ),
     concatMap((data): any => {
       return of(
@@ -129,18 +129,18 @@ export class CoursesEffects {
   });
 
   deleteCourse$ = createEffect((): any =>
-  { return this.actions$.pipe(
+  {
+    return this.actions$.pipe(
     ofType(DeleteCourseActionTypes.DeleteCourse),
-    mergeMap(({ id }) =>
-      ajax({
+    mergeMap(({ id }) => {
+      return ajax({
         url: `http://localhost:3004/courses/${id}`,
         method: 'DELETE',
         body: { id },
         headers: {
           'Content-Type': 'application/json'
         }
-      })
-      //add getCourses$
+      })}
     ),
     concatMap((): any => {
       return of(

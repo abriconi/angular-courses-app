@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { COURSE_MODEL, Authors } from 'src/app/utilus/global.moduls';
+import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
 export enum GetCoursesActionTypes {
   GetCourses = '[Courses] Get Courses',
@@ -9,7 +9,7 @@ export enum GetCoursesActionTypes {
 
 export enum DeleteCourseActionTypes {
   DeleteCourse = '[Course] Delete Course',
-  DeleteCourseuccess = '[Course] Delete Course Success',
+  DeleteCourseSuccess = '[Course] Delete Course Success',
   DeleteCourseFail = '[Course] Delete Course Fail',
 }
 
@@ -52,7 +52,7 @@ export const deleteCourse = createAction(
 );
 
 export const deleteCourseSuccess = createAction(
-  DeleteCourseActionTypes.DeleteCourse,
+  DeleteCourseActionTypes.DeleteCourseSuccess,
 );
 
 export const deleteCourseFail = createAction(
@@ -62,7 +62,7 @@ export const deleteCourseFail = createAction(
 
 export const createCourse = createAction(
   CreateCourseActionTypes.CreateCourse,
-  props<{ newCourse: Omit<COURSE_MODEL, 'id'> }>()
+  props<{ newCourse: COURSE_MODEL }>()
 );
 
 export const createCourseSuccess = createAction(
@@ -92,7 +92,7 @@ export const getCourseFail = createAction(
 
 export const updateCourse = createAction(
   UpdateCourseActionTypes.UpdateCourse,
-  props<{ id: number, courseData: Omit<COURSE_MODEL, 'id'> }>()
+  props<{ id: number, courseData: Partial<COURSE_MODEL> }>()
 );
 
 export const updateCourseSuccess = createAction(

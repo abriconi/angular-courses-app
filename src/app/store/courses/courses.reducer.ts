@@ -60,7 +60,7 @@ export const courseReducer = createReducer(
       error
     }
   }),
-  on(createCourseSuccess, (state, { course }): any => {
+  on(createCourseSuccess, (state, course ): any => {
     return {
       ...state,
       course: course,
@@ -73,7 +73,8 @@ export const courseReducer = createReducer(
       error
     }
   }),
-  on(getCourseSuccess, (state, { course }): any => {
+  on(getCourseSuccess, (state, course): any => {
+
     return {
       ...state,
       course: course,
