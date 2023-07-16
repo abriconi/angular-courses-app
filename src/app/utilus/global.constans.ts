@@ -2,17 +2,17 @@
 
   export const authorsMockedData: Authors[]  = [
     {
-      id: 1,
+      id: '1',
       name:' author test 1',
       lastName: 'author'
     },
     {
-      id: 2,
+      id: '2',
       name:' author test 2',
       lastName: 'author'
     },
     {
-      id: 3,
+      id: '3',
       name:' author test 3',
       lastName: 'author'
     },
@@ -27,7 +27,7 @@
     "date": "2017-09-28T04:39:24+00:00",
     "authors": [
       {
-        "id": 1370,
+        "id": '1370',
         "name": "Polly",
         "lastName": "Sosa"
       }
@@ -42,17 +42,17 @@
     "date": "2016-05-31T02:02:36+00:00",
     "authors": [
       {
-        "id": 8413,
+        "id": '8413',
         "name": "Greta",
         "lastName": "Richardson"
       },
       {
-        "id": 7458,
+        "id": '7458',
         "name": "Deana",
         "lastName": "Bruce"
       },
       {
-        "id": 5508,
+        "id": '5508',
         "name": "Patsy",
         "lastName": "Bright"
       }
@@ -67,12 +67,12 @@
       "date": "2017-03-25T12:57:37+00:00",
       "authors": [
         {
-          "id": 3618,
+          "id": '3618',
           "name": "Laura",
           "lastName": "Kirby"
         },
         {
-          "id": 9064,
+          "id": '9064',
           "name": "Quinn",
           "lastName": "Cain"
         }

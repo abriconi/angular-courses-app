@@ -1,10 +1,12 @@
 import { createReducer, on } from '@ngrx/store';
-import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
+import { Authors, COURSE_MODEL } from 'src/app/utilus/global.moduls';
 import {
   createCourseFail,
   createCourseSuccess,
   deleteCourseFail,
   deleteCourseSuccess,
+  getAuthorsFail,
+  getAuthorsSuccess,
   getCourseFail,
   getCoursesFail,
   getCoursesSuccess,
@@ -22,6 +24,11 @@ export interface CoursesListState {
   error: string | null;
 }
 
+export interface AuthorsState {
+  authors: Authors[] | null;
+  error: string | null;
+}
+
 const initialCourseState: CourseState = {
   course: null,
   error: null,
@@ -29,6 +36,11 @@ const initialCourseState: CourseState = {
 
 const initialCoursesListState: CoursesListState = {
   courses: [],
+  error: null,
+}
+
+const initialAuthorsState: AuthorsState = {
+  authors: [],
   error: null,
 }
 
@@ -44,6 +56,22 @@ export const coursesReducer = createReducer(
   on(getCoursesFail, (state, { error }): any => ({
     ...state,
     courses: [],
+    error
+  })),
+);
+
+export const authorsReducer = createReducer(
+  initialAuthorsState,
+  on(getAuthorsSuccess, (state, { authors }): any => {
+    return {
+      ...state,
+      authors,
+      error: null,
+    }
+  }),
+  on(getAuthorsFail, (state, { error }): any => ({
+    ...state,
+    authors: [],
     error
   })),
 );

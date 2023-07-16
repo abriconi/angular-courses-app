@@ -13,8 +13,8 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   public coursesLink = '/courses';
   public courseTitle: string | null = null;
-  paramsSubscription!: Subscription;
-  courseSubscription!: Subscription;
+  paramsSubscription!: Subscription | undefined;
+  courseSubscription!: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -43,8 +43,12 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
       )
     }
     ngOnDestroy(): void {
-      this.paramsSubscription.unsubscribe();
-      this.courseSubscription.unsubscribe();
+      if (this.paramsSubscription) {
+        this.paramsSubscription.unsubscribe();
+      }
+      if (this.courseSubscription) {
+        this.courseSubscription.unsubscribe();
+      }
     }
 
 }

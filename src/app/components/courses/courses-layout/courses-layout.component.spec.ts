@@ -2,9 +2,11 @@ import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { SectionComponent } from '../section/section.component';
 import { SharedModule } from '../../../shared/shared.module';
-import { CourseService } from 'src/app/services/course.service';
 import { CoursesLayoutComponent } from './courses-layout.component';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
+import { provideMockStore, MockStore } from '@ngrx/store/testing';
+import { getCourses as getCoursesAction } from '../../../store/courses/courses.actions';
+import { NO_ERRORS_SCHEMA } from '@angular/core';
 
 const coursesMockedData: COURSE_MODEL[] = [
   {
@@ -15,7 +17,7 @@ const coursesMockedData: COURSE_MODEL[] = [
     "date": "2017-09-28T04:39:24+00:00",
     "authors": [
       {
-        "id": 1370,
+        "id": '1370',
         "name": "Polly",
         "lastName": "Sosa"
       }
@@ -30,17 +32,17 @@ const coursesMockedData: COURSE_MODEL[] = [
     "date": "2016-05-31T02:02:36+00:00",
     "authors": [
       {
-        "id": 8413,
+        "id": '8413',
         "name": "Greta",
         "lastName": "Richardson"
       },
       {
-        "id": 7458,
+        "id": '7458',
         "name": "Deana",
         "lastName": "Bruce"
       },
       {
-        "id": 5508,
+        "id": '5508',
         "name": "Patsy",
         "lastName": "Bright"
       }
@@ -55,12 +57,12 @@ const coursesMockedData: COURSE_MODEL[] = [
       "date": "2017-03-25T12:57:37+00:00",
       "authors": [
         {
-          "id": 3618,
+          "id": '3618',
           "name": "Laura",
           "lastName": "Kirby"
         },
         {
-          "id": 9064,
+          "id": '9064',
           "name": "Quinn",
           "lastName": "Cain"
         }
@@ -72,22 +74,22 @@ const coursesMockedData: COURSE_MODEL[] = [
 describe('CoursesLayoutComponent', () => {
   let component: CoursesLayoutComponent;
   let fixture: ComponentFixture<CoursesLayoutComponent>;
-  let courseService: CourseService;
+  let store: MockStore;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
       declarations: [ CoursesLayoutComponent, SectionComponent ],
       imports: [SharedModule, HttpClientTestingModule],
       providers: [
-        { provide: 'coursesMockedData', useValue: coursesMockedData },
-        { provide: CourseService, useClass: CourseService },
-      ]
+        provideMockStore({initialState: { courses: { courses: coursesMockedData } } } as any),
+      ],
+      schemas: [NO_ERRORS_SCHEMA]
     })
     .compileComponents();
 
     fixture = TestBed.createComponent(CoursesLayoutComponent);
     component = fixture.componentInstance;
-    courseService = TestBed.inject(CourseService);
+    store = TestBed.inject(MockStore);
     fixture.detectChanges();
   });
 
@@ -104,19 +106,25 @@ describe('CoursesLayoutComponent', () => {
   });
 
   it('should load more courses when loadMoreClick is called', () => {
-    const pageNumber = component['currentPage'] + 1;
     const searchText = component['searchText'];
-    spyOn(courseService, 'getList');
+
+    spyOn(store, 'dispatch');
     component.loadMoreClick();
-    expect(courseService.getList).toHaveBeenCalledWith(pageNumber, 3, searchText);
+
+    expect(store.dispatch).toHaveBeenCalledWith(getCoursesAction({
+      amount: 6, textFragment: searchText
+    }));
   });
 
   it('should call getList method of courseService with the correct arguments on handleSearch', () => {
-    spyOn(courseService, 'getList');
+    spyOn(store, 'dispatch');
+
     const searchText = 'test search';
 
     component.handleSearch(searchText);
 
-    expect(courseService.getList).toHaveBeenCalledWith(1, 3, searchText);
+    expect(store.dispatch).toHaveBeenCalledWith(getCoursesAction({
+      amount: 3, textFragment: searchText
+    }));
   });
 });

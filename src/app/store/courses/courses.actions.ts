@@ -1,5 +1,5 @@
 import { createAction, props } from '@ngrx/store';
-import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
+import { COURSE_MODEL, Authors } from 'src/app/utilus/global.moduls';
 
 export enum GetCoursesActionTypes {
   GetCourses = '[Courses] Get Courses',
@@ -19,10 +19,12 @@ export enum CreateCourseActionTypes {
   CreateCourseFail = '[Course] Create Course Fail',
 }
 
+
 export enum GetCourseActionTypes {
   GetCourse = '[Course] Get Course',
   GetCourseSuccess = '[Course] Get Course Success',
   GetCourseFail = '[Course] Get Course Fail',
+  GetAuthors = "GetAuthors"
 }
 
 export enum UpdateCourseActionTypes {
@@ -30,6 +32,26 @@ export enum UpdateCourseActionTypes {
   UpdateUpdateCourseSuccess = '[Course] Update Course Success',
   UpdateUpdateCourseFail = '[Course] Update Course Fail',
 }
+
+export enum GetAuthorsActionTypes {
+  GetAuthors = '[Authors] Get Authors',
+  GetAuthorsSuccess = '[Authors] Get Authors Success',
+  GetAuthorsFail = '[Authors] Get Authors Fail',
+}
+
+export const getAuthors = createAction(
+  GetAuthorsActionTypes.GetAuthors,
+);
+
+export const getAuthorsSuccess = createAction(
+  GetAuthorsActionTypes.GetAuthorsSuccess,
+  props<{authors: Authors[]}>()
+);
+
+export const getAuthorsFail = createAction(
+  GetAuthorsActionTypes.GetAuthorsFail,
+  props<{error: string}>()
+);
 
 export const getCourses = createAction(
   GetCoursesActionTypes.GetCourses,
@@ -62,7 +84,7 @@ export const deleteCourseFail = createAction(
 
 export const createCourse = createAction(
   CreateCourseActionTypes.CreateCourse,
-  props<{ newCourse: COURSE_MODEL }>()
+  props<{ newCourse: Omit<COURSE_MODEL, 'id'> }>()
 );
 
 export const createCourseSuccess = createAction(

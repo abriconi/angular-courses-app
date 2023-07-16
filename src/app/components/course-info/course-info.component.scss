@@ -1,7 +1,7 @@
 @import '../../../styles.scss';
 
 .courseInfoWrapper {
-  margin: 100px 250px;
+  margin: 100px auto;
   padding: 20px;
   box-sizing: border-box;
   display: flex;
@@ -12,6 +12,7 @@
   border: 1px solid transparent;
   box-shadow: 5px 6px 6px $addition-color;
   border-radius: 7px;
+  max-width: 600px;
 
   .titleWrapper {
     display: flex;
@@ -49,6 +50,12 @@
       flex-direction: row;
       gap: 15px;
       width: 30%;
+    }
+  }
+
+  ::ng-deep {
+    .multiselect-dropdown * {
+      box-sizing: border-box;
     }
   }
 }

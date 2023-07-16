@@ -3,13 +3,11 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
-import { authorsMockedData } from 'src/app/utilus/global.constans';
 import { generateId, transformDate } from 'src/app/utilus/helpers';
-import { formatDateToServer } from 'src/app/utilus/helpers';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
-import { createCourse, getCourse, updateCourse } from 'src/app/store/courses/courses.actions';
-import { selectCourse } from 'src/app/store/courses/courses.selectors';
+import { createCourse, getAuthors, getCourse, updateCourse } from 'src/app/store/courses/courses.actions';
+import { selectAuthors, selectCourse } from 'src/app/store/courses/courses.selectors';
 
 @Component({
   selector: 'app-course-info',
@@ -23,6 +21,9 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   courseId!: number | null;
   courseData!: COURSE_MODEL | null;
   idSubscribtion!: Subscription;
+  authorsSubscription!: Subscription;
+  dropdownList: { item_id: string; item_text: string }[] = [];
+  dropdownSettings = {};
 
   ifAllFieldFill = true;
 
@@ -33,7 +34,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     description: new FormControl('', Validators.required),
     length: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
     date: new FormControl('', Validators.required),
-    authors: new FormControl('', Validators.required),
+    authors: new FormControl([], Validators.required),
   });
 
   constructor(
@@ -43,6 +44,22 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit() {
+    this.dropdownSettings = {
+      singleSelection: false,
+      idField: 'item_id',
+      textField: 'item_text',
+      selectAllText: 'Select All',
+      unSelectAllText: 'UnSelect All',
+      allowSearchFilter: true,
+      enableCheckAll: false,
+    };
+
+    this.store.dispatch(getAuthors());
+
+    this.authorsSubscription  = this.store.select((selectAuthors)).subscribe((authors) => {
+      this.dropdownList = (authors || []).map(({ id, name }) => ({ item_id: id, item_text: name }));
+    });
+
     this.idSubscribtion = this.route.paramMap.subscribe(params => {
       this.courseId = Number(params.get('id'));
       if (this.courseId) {
@@ -50,14 +67,15 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         this.store.select((selectCourse)).subscribe((course) => {
           this.courseData = course;
           if (this.courseData) {
-            const authorNames = this.courseData.authors.map(author => author.name).join(', ');
-
             this.courseFormInitialValue = {
               name: this.courseData.name,
               description: this.courseData.description,
               length: this.courseData.length.toString(),
               date: transformDate(this.courseData.date),
-              authors: authorNames,
+              authors: this.courseData.authors.map(author => ({
+                item_id: author.id.toString(),
+                item_text: author.name,
+              })),
             }
 
             this.courseForm.patchValue(this.courseFormInitialValue);
@@ -69,6 +87,7 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     this.idSubscribtion.unsubscribe();
+    this.authorsSubscription.unsubscribe();
   }
 
   getDirtyValues() {
@@ -100,20 +119,29 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
         return;
       }
 
+      if (updatedCourseFields.authors) {
+        updatedCourseFields.authors = updatedCourseFields.authors.map((author: any) => ({
+          id: author.item_id,
+          name: author.item_text,
+        }))
+      }
+
       this.store.dispatch(updateCourse({ id: this.courseId, courseData: updatedCourseFields }));
       this.resetForm();
       this.router.navigate(['/courses']);
     } else {
-      const newCourse: COURSE_MODEL = {
-        id: generateId(),
+      const newCourse: Omit<COURSE_MODEL, 'id'> = {
         name: this.courseForm.value.name ?? '',
         description: this.courseForm.value.description ?? '',
         length: Number(this.courseForm.value.length) ?? 0,
-        date: formatDateToServer(this.courseForm.value.date) ?? '',
-        authors: authorsMockedData ?? [],
-        isTopRated: Math.random() >= 0.5,
+        date: transformDate(this.courseForm.value.date) ?? '',
+        authors: this.courseForm.value.authors?.map((author: any) => ({
+          id: author.item_id,
+          name: author.item_text,
+        })) ?? [],
       }
-      this.store.dispatch(createCourse({ newCourse: newCourse  }));
+
+      this.store.dispatch(createCourse({ newCourse  }));
       this.resetForm();
       this.router.navigate(['/courses']);
     }

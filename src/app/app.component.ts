@@ -31,18 +31,4 @@ export class AppComponent implements OnInit {
       this.store.dispatch(getUser({ token }));
     }
   }
-
-  // ngAfterViewInit(): void {
-  //   setTimeout(() => {
-  //     this.loadingSubscription = this.loadService.loader$.subscribe(
-  //       isLoading => {
-  //         this.isLoading = isLoading;
-  //       }
-  //     );
-  //   }, 0);
-  // }
-  // ngOnDestroy(): void {
-  //   this.loadingSubscription.unsubscribe();
-  // }
-
 }

@@ -9,6 +9,8 @@ import {
   DeleteCourseActionTypes,
   deleteCourseFail,
   deleteCourseSuccess,
+  GetAuthorsActionTypes,
+  getAuthorsSuccess,
   GetCourseActionTypes,
   getCourseFail,
   GetCoursesActionTypes,
@@ -20,7 +22,7 @@ import {
   updateCourseSuccess
 } from './courses.actions';
 import { ajax } from 'rxjs/ajax';
-import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
+import { Authors, COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
 @Injectable()
 export class CoursesEffects {
@@ -149,6 +151,25 @@ export class CoursesEffects {
     }),
     catchError((error) => of(deleteCourseFail({ error: error.message })))
   )
+  });
+
+  getAuthors$ = createEffect((): any =>
+    { return this.actions$.pipe(
+      ofType(GetAuthorsActionTypes.GetAuthors),
+      mergeMap(() =>
+      ajax({
+        url: 'http://localhost:3004/authors',
+        method: 'GET',
+        headers: {
+          'Content-Type': 'application/json'
+        }
+      })),
+      concatMap(({ response }: any) => {
+        const data  = response as Authors[]
+        return of(getAuthorsSuccess({ authors: data }));
+      }),
+      catchError((error) => of(getCoursesFail({ error: error.message })))
+    )
   });
 
 

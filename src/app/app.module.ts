@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientModule,HTTP_INTERCEPTORS } from '@angular/common/http';
 import { EffectsModule } from '@ngrx/effects';
 import { StoreModule } from '@ngrx/store';
@@ -21,8 +21,9 @@ import { AuthInterceptor } from './interceptors/auth-interceptor';
 import { AuthEffects } from './store/auth/auth.effects';
 import { CoursesEffects } from './store/courses/courses.effects';
 import { authReducer } from './store/auth/auth.reducer';
-import { coursesReducer } from './store/courses/courses.reducer';
+import { authorsReducer, coursesReducer } from './store/courses/courses.reducer';
 import { courseReducer } from './store/courses/courses.reducer';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
 
 @NgModule({
   declarations: [
@@ -43,10 +44,13 @@ import { courseReducer } from './store/courses/courses.reducer';
     SharedModule,
     EffectsModule.forRoot([AuthEffects, CoursesEffects]),
     ReactiveFormsModule,
+    FormsModule,
+    NgMultiSelectDropDownModule.forRoot(),
     StoreModule.forRoot({
       auth: authReducer,
       courses: coursesReducer,
-      course: courseReducer
+      course: courseReducer,
+      authors: authorsReducer,
     }),
     StoreDevtoolsModule.instrument(),
   ],

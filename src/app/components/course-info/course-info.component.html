@@ -40,14 +40,13 @@
       Date:
     </app-input>
 
-    <app-input
-      size="fieldLabelMedium"
-      placeholder="Start typing"
-      [control]="courseForm.controls['authors']"
-      >
-
-      Authors:
-    </app-input>
+    <ng-multiselect-dropdown
+      [placeholder]="'Start typing'"
+      [settings]="dropdownSettings"
+      [data]="dropdownList"
+      [formControl]="courseForm.controls['authors']"
+    >
+    </ng-multiselect-dropdown>
 
     <div class="btnWrapper">
       <app-button
