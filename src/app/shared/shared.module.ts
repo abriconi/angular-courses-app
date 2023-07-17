@@ -16,10 +16,7 @@ import { LoadingBlockComponent } from './loading-block/loading-block.component';
 
 import { HighlightDirective } from './directives/highlight/highlight.directive';
 import { IfAuthenticatedDirective } from './directives/ifAuthenticated/if-authenticated.directive';
-
-// import { OrderByPipe } from './pipes/orderBy.pipe';
 import { DurationPipe } from './pipes/duration.pipe';
-// import { FilterPipe } from './pipes/filter.pipe';
 import { CustomReuseStrategy } from './custom-reuse-strategy/custom-reuse-strategy';
 
 
@@ -38,9 +35,7 @@ import { CustomReuseStrategy } from './custom-reuse-strategy/custom-reuse-strate
     LoadingBlockComponent,
     HighlightDirective,
     IfAuthenticatedDirective,
-    // OrderByPipe,
     DurationPipe,
-    // FilterPipe,
 
   ],
   imports: [
@@ -62,9 +57,7 @@ import { CustomReuseStrategy } from './custom-reuse-strategy/custom-reuse-strate
     LoadingBlockComponent,
     HighlightDirective,
     IfAuthenticatedDirective,
-    // OrderByPipe,
     DurationPipe,
-    // FilterPipe,
   ],
   providers: [
     { provide: RouteReuseStrategy, useClass: CustomReuseStrategy }
