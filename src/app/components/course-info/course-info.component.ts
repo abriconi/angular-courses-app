@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
-import { generateId, transformDate } from 'src/app/utilus/helpers';
+import { transformDate } from 'src/app/utilus/helpers';
 import { Subscription } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { createCourse, getAuthors, getCourse, updateCourse } from 'src/app/store/courses/courses.actions';
@@ -26,12 +26,18 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   dropdownSettings = {};
 
   ifAllFieldFill = true;
+  private errorMessageEnum = {
+    name: '* Please check Title field, max length 50 symbols',
+    description: '* Please check Description field, max length 500 symbols',
+    emptyFiels: '* Please fill all field',
+  }
+  errorMessage = '';
 
   courseFormInitialValue: any = null;
 
   courseForm = new FormGroup({
-    name: new FormControl('', Validators.required),
-    description: new FormControl('', Validators.required),
+    name: new FormControl('', [Validators.required, Validators.maxLength(50)]),
+    description: new FormControl('', [Validators.required, Validators.maxLength(500)]),
     length: new FormControl('', [Validators.required, Validators.pattern('^[0-9]+$')]),
     date: new FormControl('', Validators.required),
     authors: new FormControl([], Validators.required),
@@ -107,9 +113,21 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
 
   createCourse(event: Event): void {
     event.preventDefault();
+
     if (this.courseForm.invalid) {
+
       this.ifAllFieldFill = false;
-      return;
+
+      if (this.courseForm.controls.name.invalid) {
+        this.errorMessage = this.errorMessageEnum.name;
+        return;
+      } else if (this.courseForm.controls.description.invalid) {
+        this.errorMessage = this.errorMessageEnum.description;
+        return;
+      } else {
+        this.errorMessage = this.errorMessageEnum.emptyFiels;
+        return;
+      }
     }
 
     if (this.courseId) {

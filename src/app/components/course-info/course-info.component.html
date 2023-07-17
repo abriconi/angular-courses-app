@@ -2,7 +2,7 @@
   <div class="titleWrapper">
     <h1 class="heading">New course</h1>
     <p class="error-message" *ngIf="!ifAllFieldFill">
-      * Please fill all fields.
+      {{ errorMessage }}
     </p>
   </div>
   <form class="courseInfoForm" [formGroup]="courseForm" (ngSubmit)="createCourse($event)">
