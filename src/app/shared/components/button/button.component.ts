@@ -13,4 +13,5 @@ export class ButtonComponent {
   @Input() icon?: string;
   @Input() onClick?: () => void | undefined;
   @Input() testID?: string = '';
+  @Input() disabled?: boolean = false;
 }

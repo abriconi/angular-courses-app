@@ -2,7 +2,7 @@
   <div class="titleWrapper">
     <h1 class="heading">New course</h1>
     <p class="error-message" *ngIf="!ifAllFieldFill">
-      {{ errorMessage }}
+      Please, fill all fields
     </p>
   </div>
   <form class="courseInfoForm" [formGroup]="courseForm" (ngSubmit)="createCourse($event)">
@@ -53,7 +53,7 @@
         type="button"
         variant="filled"
         size="large"
-        color="tertiary"
+        color="primary"
         (click)="cancelCreating()"
 
       >Cancel
@@ -63,7 +63,7 @@
         variant="filled"
         size="large"
         color="secondary"
-        (click)="createCourse($event)"
+        [disabled]="courseForm.invalid"
       >Save
       </app-button>
     </div>

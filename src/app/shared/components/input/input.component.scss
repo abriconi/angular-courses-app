@@ -12,14 +12,20 @@
   gap: 10px;
   width: 100%;
 
-  .requiredMark {
+  .mark {
     position: absolute;
     right: 0;
     top: 0;
-    color: $text-description-color;
+
     font-size: 14px;
     line-height: 1.5;
     margin: 0;
+  }
+  .required {
+    color: $text-description-color;
+  }
+  .error {
+    color: $text-error-color;
   }
 }
 .fieldLabelLarge {

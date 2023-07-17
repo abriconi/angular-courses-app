@@ -26,12 +26,6 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
   dropdownSettings = {};
 
   ifAllFieldFill = true;
-  private errorMessageEnum = {
-    name: '* Please check Title field, max length 50 symbols',
-    description: '* Please check Description field, max length 500 symbols',
-    emptyFiels: '* Please fill all field',
-  }
-  errorMessage = '';
 
   courseFormInitialValue: any = null;
 
@@ -115,19 +109,8 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
     event.preventDefault();
 
     if (this.courseForm.invalid) {
-
       this.ifAllFieldFill = false;
-
-      if (this.courseForm.controls.name.invalid) {
-        this.errorMessage = this.errorMessageEnum.name;
-        return;
-      } else if (this.courseForm.controls.description.invalid) {
-        this.errorMessage = this.errorMessageEnum.description;
-        return;
-      } else {
-        this.errorMessage = this.errorMessageEnum.emptyFiels;
-        return;
-      }
+      return;
     }
 
     if (this.courseId) {

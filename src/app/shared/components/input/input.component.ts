@@ -11,5 +11,5 @@ export class InputComponent {
   @Input() size?: 'fieldLabelLarge' | 'fieldLabelSmall' | 'fieldLabelMedium' | '' = '';
   @Input() placeholder?: string;
   @Input() control!: FormControl;
-  @Input() type?: 'date' | 'text' = 'text'
+  @Input() type?: 'date' | 'text' = 'text';
 }
