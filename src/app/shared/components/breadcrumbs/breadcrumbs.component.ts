@@ -1,9 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, of, Subscription, switchAll, switchMap } from 'rxjs';
+import { filter, of, Subscription, switchMap } from 'rxjs';
 import { selectCourse } from 'src/app/store/courses/courses.selectors';
-import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -15,7 +14,6 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
   public coursesLink = '/courses';
   public courseTitle: string | null = null;
   paramsSubscription!: Subscription | undefined;
-  courseSubscription!: Subscription | undefined;
 
   constructor(
     private router: Router,
@@ -42,9 +40,6 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
     ngOnDestroy(): void {
       if (this.paramsSubscription) {
         this.paramsSubscription.unsubscribe();
-      }
-      if (this.courseSubscription) {
-        this.courseSubscription.unsubscribe();
       }
     }
 

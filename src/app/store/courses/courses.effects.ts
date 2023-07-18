@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
-import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
+import { catchError, map, mergeMap } from 'rxjs/operators';
 import { HttpClient } from '@angular/common/http';
 import {
   CreateCourseActionTypes,
@@ -22,24 +22,22 @@ import {
   updateCourseFail,
   updateCourseSuccess
 } from './courses.actions';
-import { ajax } from 'rxjs/ajax';
 import { Authors, COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
 @Injectable()
 export class CoursesEffects {
-
   getCourses$ = createEffect(() =>
-    { return this.actions$.pipe(
-      ofType(GetCoursesActionTypes.GetCourses),
-      mergeMap(({ amount, textFragment }) =>
+  { return this.actions$.pipe(
+    ofType(GetCoursesActionTypes.GetCourses),
+    mergeMap(({ amount, textFragment }) =>
       this.http.get<COURSE_MODEL[]>(
         `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`
-      )),
-      concatMap((data: COURSE_MODEL[]) => {
-        return of(getCoursesSuccess({ courses: data }));
-      }),
-      catchError((error) => of(getCoursesFail({ error: error.message })))
-    ) }
+      ).pipe(
+        map((data) => getCoursesSuccess({ courses: data })),
+        catchError((error) => of(getCoursesFail({ error: error.message })))
+      )
+    )
+  ) }
   );
 
   updateCourse$ = createEffect(() =>
@@ -79,7 +77,7 @@ export class CoursesEffects {
       )
     ),
     map((data) => createCourseSuccess(data)),
-    catchError((error) => of(getCourseFail({error: error.message})))
+    catchError((error) => of(createCourseFail({error: error.message})))
     ) }
   );
 
