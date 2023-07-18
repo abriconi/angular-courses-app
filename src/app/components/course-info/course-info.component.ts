@@ -64,23 +64,24 @@ export class CourseInfoComponent implements OnInit, OnDestroy {
       this.courseId = Number(params.get('id'));
       if (this.courseId) {
         this.store.dispatch(getCourse({ id: this.courseId }));
-        this.store.select((selectCourse)).subscribe((course) => {
-          this.courseData = course;
-          if (this.courseData) {
-            this.courseFormInitialValue = {
-              name: this.courseData.name,
-              description: this.courseData.description,
-              length: this.courseData.length.toString(),
-              date: transformDate(this.courseData.date),
-              authors: this.courseData.authors.map(author => ({
-                item_id: author.id.toString(),
-                item_text: author.name,
-              })),
-            }
 
-            this.courseForm.patchValue(this.courseFormInitialValue);
-          }
-        });
+      }
+    });
+    this.store.select((selectCourse)).subscribe((course) => {
+      this.courseData = course;
+      if (this.courseData) {
+        this.courseFormInitialValue = {
+          name: this.courseData.name,
+          description: this.courseData.description,
+          length: this.courseData.length.toString(),
+          date: transformDate(this.courseData.date),
+          authors: this.courseData.authors.map(author => ({
+            item_id: author.id.toString(),
+            item_text: author.name,
+          })),
+        }
+
+        this.courseForm.patchValue(this.courseFormInitialValue);
       }
     });
   }
