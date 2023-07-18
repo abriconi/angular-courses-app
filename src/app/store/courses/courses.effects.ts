@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { of } from 'rxjs';
 import { catchError, concatMap, map, mergeMap } from 'rxjs/operators';
+import { HttpClient } from '@angular/common/http';
 import {
   CreateCourseActionTypes,
   createCourseFail,
@@ -27,147 +28,86 @@ import { Authors, COURSE_MODEL } from 'src/app/utilus/global.moduls';
 @Injectable()
 export class CoursesEffects {
 
-  getCourses$ = createEffect((): any =>
+  getCourses$ = createEffect(() =>
     { return this.actions$.pipe(
       ofType(GetCoursesActionTypes.GetCourses),
       mergeMap(({ amount, textFragment }) =>
-      ajax({
-        url: `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`,
-        method: 'GET',
-        body: { amount, textFragment },
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })),
-      concatMap(({ response }: any) => {
-        const data  = response as COURSE_MODEL[]
+      this.http.get<COURSE_MODEL[]>(
+        `http://localhost:3004/courses?textFragment=${textFragment || ''}&sort=date&start=0&count=${amount}`
+      )),
+      concatMap((data: COURSE_MODEL[]) => {
         return of(getCoursesSuccess({ courses: data }));
       }),
       catchError((error) => of(getCoursesFail({ error: error.message })))
-    )
-  });
+    ) }
+  );
 
-  updateCourse$ = createEffect((): any =>
+  updateCourse$ = createEffect(() =>
     { return this.actions$.pipe(
       ofType(UpdateCourseActionTypes.UpdateCourse),
-      mergeMap(({ id, courseData }) => {
-        return ajax({
-          url: `http://localhost:3004/courses/${id}`,
-          method: 'PATCH',
-          body: { ...courseData as object },
-          headers: {
-            'Content-Type': 'application/json'
-          }
-        }).pipe(
-          map(({ response }) => {
-            const data  = response as {course: COURSE_MODEL }
-            return data;
-          }),
+      mergeMap(({ id, courseData }) =>
+        this.http.patch<{ course: COURSE_MODEL }>(
+          `http://localhost:3004/courses/${id}`,
+          courseData
         )
-      }),
-      concatMap((data): any => {
-        return of(
-          updateCourseSuccess(data),
-        );
-      }),
+      ),
+      map((data) => updateCourseSuccess(data)),
       catchError((error) => of(updateCourseFail({ error: error.message })))
     )
   });
 
-  getCourse$ = createEffect((): any =>
+  getCourse$ = createEffect(() =>
   { return this.actions$.pipe(
     ofType(GetCourseActionTypes.GetCourse),
     mergeMap(({ id }) =>
-      ajax({
-        url: `http://localhost:3004/courses/${id}`,
-        method: 'GET',
-        body: { id },
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).pipe(
-        map(({ response }) => {
-          const data  = response as {course: COURSE_MODEL }
-          return data;
-        }),
+      this.http.get<{course: COURSE_MODEL}>(
+        `http://localhost:3004/courses/${id}`
       )
     ),
-    concatMap((data): any => {
-      return of(
-        getCourseSuccess(data),
-      );
-    }),
-    catchError((error) => of(getCourseFail({ error: error.message })))
-  )
+    map((data) => getCourseSuccess(data)),
+    catchError((error) => of(getCourseFail({error: error.message})))
+    )
   });
 
-  createCourse$ = createEffect((): any =>
-  {
-    return this.actions$.pipe(
+  createCourse$ = createEffect(() =>
+  { return this.actions$.pipe(
     ofType(CreateCourseActionTypes.CreateCourse),
-    mergeMap(({ newCourse }) => {
-      return ajax({
-        url: 'http://localhost:3004/courses',
-        method: 'POST',
-        body: newCourse ,
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      }).pipe(
-        map(({ response }) => {
-          const data  = response as {course: COURSE_MODEL }
-          return data;
-        }),
+    mergeMap(({ newCourse }) =>
+      this.http.post<{course: COURSE_MODEL}>(
+        'http://localhost:3004/courses',
+        newCourse
       )
-    }
     ),
-    concatMap((data): any => {
-      return of(
-        createCourseSuccess(data),
-      );
-    }),
-    catchError((error) => of(createCourseFail({ error: error.message })))
-  )
-  });
+    map((data) => createCourseSuccess(data)),
+    catchError((error) => of(getCourseFail({error: error.message})))
+    ) }
+  );
 
-  deleteCourse$ = createEffect((): any =>
+
+  deleteCourse$ = createEffect(() =>
   {
     return this.actions$.pipe(
     ofType(DeleteCourseActionTypes.DeleteCourse),
-    mergeMap(({ id }) => {
-      return ajax({
-        url: `http://localhost:3004/courses/${id}`,
-        method: 'DELETE',
-        body: { id },
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })}
+    mergeMap(({ id }) =>
+      this.http.delete<{course: COURSE_MODEL}>(
+        `http://localhost:3004/courses/${id}`,
+        id
+      )
     ),
-    concatMap((): any => {
-      return of(
-        deleteCourseSuccess(),
-      );
-    }),
+    map(() => deleteCourseSuccess()),
     catchError((error) => of(deleteCourseFail({ error: error.message })))
   )
   });
 
-  getAuthors$ = createEffect((): any =>
+  getAuthors$ = createEffect(() =>
     { return this.actions$.pipe(
       ofType(GetAuthorsActionTypes.GetAuthors),
       mergeMap(() =>
-      ajax({
-        url: 'http://localhost:3004/authors',
-        method: 'GET',
-        headers: {
-          'Content-Type': 'application/json'
-        }
-      })),
-      concatMap(({ response }: any) => {
-        const data  = response as Authors[]
-        return of(getAuthorsSuccess({ authors: data }));
-      }),
+        this.http.get<Authors[]>(
+          'http://localhost:3004/authors'
+          )
+      ),
+      map((data) => getAuthorsSuccess({ authors: data })),
       catchError((error) => of(getCoursesFail({ error: error.message })))
     )
   });
@@ -175,5 +115,6 @@ export class CoursesEffects {
 
   constructor(
     private actions$: Actions,
+    private http: HttpClient
   ) {}
 }
