@@ -1,8 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Store } from '@ngrx/store';
-import { filter, Subscription } from 'rxjs';
+import { filter, of, Subscription, switchAll, switchMap } from 'rxjs';
 import { selectCourse } from 'src/app/store/courses/courses.selectors';
+import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
 
 @Component({
   selector: 'app-breadcrumbs',
@@ -26,19 +27,15 @@ export class BreadcrumbsComponent implements OnInit, OnDestroy {
         .pipe(filter((e: any) => {
           const event = e?.routerEvent || e;
           return event instanceof NavigationEnd;
-        }))
-        .subscribe(() => {
-
+        }),
+        switchMap(() => {
           const urlParam = window.location.pathname.split('/').pop();
           const courseId = isNaN(Number(urlParam)) ? null : Number(urlParam);
 
-          if(courseId) {
-              this.courseSubscription = this.store.select((selectCourse)).subscribe((course) => {
-              this.courseTitle = course?.name || null;
-            })
-          } else {
-            this.courseTitle = '';
-          }
+          return courseId ? this.store.select(selectCourse) : of(null);
+        }))
+        .subscribe((course): void => {
+          this.courseTitle = course? course.name : '';
         }
       )
     }
