@@ -4,7 +4,7 @@
       <div class="nav-btn-wrapper" *appIfAuthenticated="true">
           <div class="userLogin">
             <app-icon icon="person"></app-icon>
-            {{ user?.login }}
+            {{ (user$ | async)?.login }}
           </div>
 
           <app-button
