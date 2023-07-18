@@ -5,13 +5,13 @@ export interface COURSE_MODEL {
   length: number;
   description: string;
   authors: Authors[];
-  isTopRated: boolean;
+  isTopRated?: boolean;
 }
 
 export interface Authors {
-  id: number;
+  id: string;
   name: string
-  lastName: string
+  lastName?: string
 }
 
 export interface User {

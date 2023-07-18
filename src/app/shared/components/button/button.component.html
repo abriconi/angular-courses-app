@@ -1,9 +1,12 @@
 <button
   class="btnDefault"
+  [class.disabled]="disabled"
+  [disabled]="disabled"
   [type]="type"
   [ngClass]="[variant, size, color, testID]"
   [class.icon] = "!!icon"
   (click)="onClick && onClick()"
+
 >
   <app-icon *ngIf="icon" [icon]="icon"></app-icon>
   <ng-content></ng-content>

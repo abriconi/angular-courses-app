@@ -3,6 +3,7 @@ import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CoursesComponent } from './courses.component';
 import { RouterTestingModule } from '@angular/router/testing';
 import { BreadcrumbsComponent } from '../../shared/components/breadcrumbs/breadcrumbs.component';
+import { StoreModule } from '@ngrx/store';
 
 describe('CoursesComponent', () => {
   let component: CoursesComponent;
@@ -10,7 +11,11 @@ describe('CoursesComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [RouterTestingModule, HttpClientTestingModule],
+      imports: [
+        RouterTestingModule,
+        HttpClientTestingModule,
+        StoreModule.forRoot({})
+      ],
       declarations: [CoursesComponent, BreadcrumbsComponent],
     }).compileComponents();
   });
@@ -19,6 +24,14 @@ describe('CoursesComponent', () => {
     fixture = TestBed.createComponent(CoursesComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
+  });
+
+  afterEach(() => {
+    try {
+      fixture.destroy();
+    } catch (error) {
+      console.error(error);
+    }
   });
 
   it('should create', () => {

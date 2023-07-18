@@ -2,7 +2,7 @@
   <div class="titleWrapper">
     <h1 class="heading">New course</h1>
     <p class="error-message" *ngIf="!ifAllFieldFill">
-      * Please fill all fields.
+      Please, fill all fields
     </p>
   </div>
   <form class="courseInfoForm" [formGroup]="courseForm" (ngSubmit)="createCourse($event)">
@@ -40,21 +40,20 @@
       Date:
     </app-input>
 
-    <app-input
-      size="fieldLabelMedium"
-      placeholder="Start typing"
-      [control]="courseForm.controls['authors']"
-      >
-
-      Authors:
-    </app-input>
+    <ng-multiselect-dropdown
+      [placeholder]="'Start typing'"
+      [settings]="dropdownSettings"
+      [data]="dropdownList"
+      [formControl]="courseForm.controls['authors']"
+    >
+    </ng-multiselect-dropdown>
 
     <div class="btnWrapper">
       <app-button
         type="button"
         variant="filled"
         size="large"
-        color="tertiary"
+        color="primary"
         (click)="cancelCreating()"
 
       >Cancel
@@ -64,7 +63,7 @@
         variant="filled"
         size="large"
         color="secondary"
-        (click)="createCourse($event)"
+        [disabled]="courseForm.invalid"
       >Save
       </app-button>
     </div>

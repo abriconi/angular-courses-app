@@ -1,46 +1,46 @@
-import { Component, OnInit } from '@angular/core';
-import { ActivatedRoute, NavigationEnd, ParamMap, Router } from '@angular/router';
-import { CourseService } from 'src/app/services/course.service';
-import { filter, switchMap } from 'rxjs';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Store } from '@ngrx/store';
+import { filter, of, Subscription, switchMap } from 'rxjs';
+import { selectCourse } from 'src/app/store/courses/courses.selectors';
 
 @Component({
   selector: 'app-breadcrumbs',
   templateUrl: './breadcrumbs.component.html',
   styleUrls: ['./breadcrumbs.component.scss']
 })
-export class BreadcrumbsComponent implements OnInit {
+export class BreadcrumbsComponent implements OnInit, OnDestroy {
 
   public coursesLink = '/courses';
   public courseTitle: string | null = null;
-  private courseId!: number | null;
+  paramsSubscription!: Subscription | undefined;
 
   constructor(
     private router: Router,
-    private route: ActivatedRoute,
-    private courseService: CourseService,
+    private store: Store
   ) { }
 
     ngOnInit() {
-      this.router.events
+      this.paramsSubscription = this.router.events
         .pipe(filter((e: any) => {
           const event = e?.routerEvent || e;
           return event instanceof NavigationEnd;
-        }))
-        .subscribe(() => {
-
+        }),
+        switchMap(() => {
           const urlParam = window.location.pathname.split('/').pop();
           const courseId = isNaN(Number(urlParam)) ? null : Number(urlParam);
 
-          if(courseId) {
-            this.courseService.getItemById(Number(courseId))
-            this.courseService.course$.subscribe((course) => {
-              this.courseTitle = course?.name || null;
-            })
-          } else {
-            this.courseTitle = '';
-          }
+          return courseId ? this.store.select(selectCourse) : of(null);
+        }))
+        .subscribe((course): void => {
+          this.courseTitle = course? course.name : '';
         }
       )
+    }
+    ngOnDestroy(): void {
+      if (this.paramsSubscription) {
+        this.paramsSubscription.unsubscribe();
+      }
     }
 
 }

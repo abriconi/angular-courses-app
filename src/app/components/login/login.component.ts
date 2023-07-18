@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { AuthService } from 'src/app/services/auth.service';
+import { Store } from '@ngrx/store';
+import { login as loginAction } from '../../store/auth/auth.actions';
 
 @Component({
   selector: 'app-login',
@@ -17,10 +18,10 @@ export class LoginComponent {
   isError = false;
 
   constructor(
-    private authService: AuthService,
+    private store: Store<any>,
   ) {}
 
-  async login(event: Event): Promise<void> {
+  login(event: Event): void {
     event.preventDefault();
 
     const login = this.userForm.value.login;
@@ -32,8 +33,8 @@ export class LoginComponent {
       return;
     }
 
-    if(login && password) {
-      this.authService.login(login, password);
+    if (login && password) {
+      this.store.dispatch(loginAction({ login, password }));
     }
   }
 

@@ -1,6 +1,7 @@
 <label class="fieldLabel" [ngClass]="[size]">
   <ng-content></ng-content>
-  <span class="requiredMark">*required</span>
+  <span class="mark error" *ngIf="control.hasError('maxlength')">Too long title field, max length 50 symbols</span>
+  <span class="mark required" *ngIf="!control.hasError('maxlength')">* required</span>
   <input
     [type]="type"
     [placeholder]="placeholder"

@@ -1,31 +1,32 @@
 import { Component, OnInit } from '@angular/core';
 import { Observable } from 'rxjs';
-import { AfterViewInit } from '@angular/core';
-import { AuthService } from './services/auth.service';
 import { LoadService } from './services/load.service';
+import { Store } from '@ngrx/store';
+import { selectIsAuthenticated } from './store/auth/auth.selectors';
+import { getUser } from './store/auth/auth.actions';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
   styleUrls: ['./app.component.scss']
 })
-export class AppComponent implements OnInit,  AfterViewInit {
+export class AppComponent implements OnInit {
 
-  public isAuthenticated$!: Observable<boolean>
-  isLoading = false;
+  public isAuthenticated$!: Observable<boolean>;
+
+  isLoading$ = this.loadService.loader$;
+
   constructor(
-    private authService: AuthService,
     private loadService: LoadService,
+    private store: Store,
     ) {}
 
   public ngOnInit(): void {
-    this.isAuthenticated$ = this.authService.isAuthenticated$.asObservable();
+    this.isAuthenticated$ = this.store.select(selectIsAuthenticated);
 
+    const token  = localStorage.getItem('token');
+    if(token) {
+      this.store.dispatch(getUser({ token }));
+    }
   }
-  ngAfterViewInit(): void {
-    this.loadService.loader$.subscribe(isLoading => {
-      this.isLoading = isLoading;
-    });
-  }
-
 }

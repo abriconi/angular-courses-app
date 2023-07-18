@@ -1,6 +1,6 @@
-import { Component , Output, EventEmitter} from '@angular/core';
+import { Component , Output, EventEmitter, OnInit, OnDestroy} from '@angular/core';
 import { Router } from '@angular/router';
-import { Subject } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
 
 @Component({
@@ -9,21 +9,26 @@ import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
   styleUrls: ['./section.component.scss'],
 })
 
-export class SectionComponent {
+export class SectionComponent implements OnInit, OnDestroy {
   @Output() search = new EventEmitter<string>();
 
   searchInput: Subject<Event> = new Subject<Event>();
+  searchtextSubscription!: Subscription;
 
   constructor(private router: Router) {}
 
   ngOnInit() {
-    this.searchInput.pipe(
+    this.searchtextSubscription = this.searchInput.pipe(
       debounceTime(300),
       distinctUntilChanged()
     ).subscribe(e => {
       this.handleSearch(e);
     });
   }
+
+    ngOnDestroy(): void {
+      this.searchtextSubscription.unsubscribe();
+    }
 
   handleSearch(e: Event) {
     const value: string = (e.target as HTMLTextAreaElement).value;

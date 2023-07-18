@@ -1,8 +1,9 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { AuthService } from 'src/app/services/auth.service';
+import { Component, OnInit } from '@angular/core';
+import { Store } from '@ngrx/store';
 import { User } from 'src/app/utilus/global.moduls';
-import { Router } from '@angular/router';
-import { Subscription } from 'rxjs';
+import { Observable, of } from 'rxjs';
+import { selectUser } from '../../store/auth/auth.selectors';
+import { logout } from '../../store/auth/auth.actions';
 
 
 @Component({
@@ -10,28 +11,20 @@ import { Subscription } from 'rxjs';
   templateUrl: './header.component.html',
   styleUrls: ['./header.component.scss']
 })
-export class HeaderComponent implements OnInit, OnDestroy {
-  user!: User | null;
-  private userSubscription!: Subscription;
+export class HeaderComponent implements OnInit {
+  user$:Observable<User | null> = of(null);
 
   constructor(
-    private authService: AuthService,
-    private router: Router
+    private store: Store,
   ) {}
 
   ngOnInit(): void {
-    this.userSubscription = this.authService.user$.subscribe((user) => {
-      this.user = user;
-    });
-  }
-
-  ngOnDestroy(): void {
-    this.userSubscription.unsubscribe();
+    this.user$ = this.store.select((selectUser))
   }
 
   logout(): void {
-    this.authService.logout();
-    this.user = null;
-    this.router.navigate(['/login']);
+    this.store.dispatch(logout());
   }
 }
+
+

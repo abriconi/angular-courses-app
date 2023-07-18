@@ -1,5 +1,5 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormControl, ReactiveFormsModule } from '@angular/forms';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { CourseInfoComponent } from './course-info.component';
 import { InputComponent } from '../../shared/components/input/input.component';
@@ -7,18 +7,24 @@ import { ButtonComponent } from '../../shared/components/button/button.component
 import { TextareaComponent } from '../../shared/components/textarea/textarea.component';
 import { ActivatedRoute, Router } from '@angular/router';
 import { DurationPipe } from '../../shared/pipes/duration.pipe';
-import { CourseService } from 'src/app/services/course.service';
+import { Store } from '@ngrx/store';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
+import { createCourse } from 'src/app/store/courses/courses.actions';
 import { of } from 'rxjs';
-import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
+import { NgMultiSelectDropDownModule } from 'ng-multiselect-dropdown';
+
 
 describe('CourseInfoComponent', () => {
   let component: CourseInfoComponent;
   let fixture: ComponentFixture<CourseInfoComponent>;
-  let courseService: CourseService;
+  let router: Router;
+  let store: jasmine.SpyObj<Store>;
 
   beforeEach(async () => {
+    const mockStore = jasmine.createSpyObj('Store', ['dispatch']);
+
     await TestBed.configureTestingModule({
-      imports: [ReactiveFormsModule, HttpClientTestingModule],
+      imports: [ReactiveFormsModule, HttpClientTestingModule, NgMultiSelectDropDownModule],
       declarations: [
         CourseInfoComponent,
         InputComponent,
@@ -27,7 +33,7 @@ describe('CourseInfoComponent', () => {
         ButtonComponent,
       ],
       providers: [
-        CourseService,
+        provideMockStore(),
         {
           provide: ActivatedRoute,
           useValue: {
@@ -43,81 +49,22 @@ describe('CourseInfoComponent', () => {
         },
         {
           provide: Router,
-          useValue: {
-            navigate: jasmine.createSpy('navigate'),
-          },
+          useFactory: () => jasmine.createSpyObj('Router', ['navigate']),
+        },
+        {
+          provide: Store,
+          useClass: MockStore,
         },
       ],
     }).compileComponents();
 
     fixture = TestBed.createComponent(CourseInfoComponent);
     component = fixture.componentInstance;
-    courseService = TestBed.inject(CourseService);
+    router = TestBed.inject(Router);
+    store = TestBed.inject(Store) as jasmine.SpyObj<Store>;
     fixture.detectChanges();
   });
 
-  const coursesMockedData: COURSE_MODEL[] = [
-    {
-    "id": 8693,
-    "name": "duis mollit reprehenderit ad",
-    "description": "Est minim ea aute sunt laborum minim eu excepteur. Culpa sint exercitation mollit enim ad culpa aliquip laborum cillum. Dolor officia culpa labore ex eiusmod ut est ea voluptate ea nostrud.",
-    "isTopRated": false,
-    "date": "2017-09-28T04:39:24+00:00",
-    "authors": [
-      {
-        "id": 1370,
-        "name": "Polly",
-        "lastName": "Sosa"
-      }
-    ],
-    "length": 157
-  },
-  {
-    "id": 4980,
-    "name": "magna excepteur aute deserunt",
-    "description": "Sunt culpa officia minim commodo eiusmod irure sunt nostrud. Mollit aliquip id occaecat officia proident anim dolor officia qui voluptate consectetur laborum. Duis incididunt culpa aliqua mollit do fugiat ea dolor mollit irure Lorem tempor.",
-    "isTopRated": false,
-    "date": "2016-05-31T02:02:36+00:00",
-    "authors": [
-      {
-        "id": 8413,
-        "name": "Greta",
-        "lastName": "Richardson"
-      },
-      {
-        "id": 7458,
-        "name": "Deana",
-        "lastName": "Bruce"
-      },
-      {
-        "id": 5508,
-        "name": "Patsy",
-        "lastName": "Bright"
-      }
-    ],
-    "length": 207
-    },
-    {
-      "id": 4282,
-      "name": "sit voluptate eiusmod ea",
-      "description": "Commodo id sunt sunt adipisicing et aliquip voluptate laborum consectetur. Occaecat nisi sint exercitation ullamco adipisicing irure est in consectetur aute voluptate. Ea pariatur dolor anim ea reprehenderit ut non occaecat magna adipisicing exercitation nisi consequat.",
-      "isTopRated": true,
-      "date": "2017-03-25T12:57:37+00:00",
-      "authors": [
-        {
-          "id": 3618,
-          "name": "Laura",
-          "lastName": "Kirby"
-        },
-        {
-          "id": 9064,
-          "name": "Quinn",
-          "lastName": "Cain"
-        }
-      ],
-      "length": 197
-    },
-];
 
   it('should create', () => {
     expect(component).toBeTruthy();
@@ -129,7 +76,7 @@ describe('CourseInfoComponent', () => {
       description: 'Test Description',
       length: '60',
       date: '2023-06-16',
-      authors: 'John Doe',
+      authors: [new FormControl({ item_id: '3618', item_text: 'Laura Kirby' })] as any,
     });
     component.cancelCreating();
     expect(component.courseForm.controls['name'].value).toBe(null);
@@ -141,27 +88,28 @@ describe('CourseInfoComponent', () => {
 
   it('should create new course', () => {
     spyOn(component.courseCreated, 'emit');
-    spyOn(courseService, 'courseCreated').and.callThrough();
+    const storeDispatchSpy = spyOn(store, 'dispatch').and.callThrough();
 
-    const newCourseData= {
+    const newCourseData = {
       name: 'Test Title',
       description: 'Test Description',
       length: 60,
-      date: '2023-06-16',
-      authors: [
-        {
-          id: 3618,
-          name: 'Laura',
-          lastName: 'Kirby',
-        },
-      ],
-      id: 0,
-      topRated: false
+      date: '2017-09-28',
+      authors: [{ item_id: '3618', item_text: 'Laura Kirby' }] as any,
     };
-    const createdCourse = courseService.courseCreated(newCourseData);
-    component.courseCreated.emit(createdCourse);
+
+    component.courseForm.patchValue(newCourseData as any);
 
     component.createCourse(new Event('submit'));
-    expect(component.courseCreated.emit).toHaveBeenCalledTimes(1);
+
+    expect(storeDispatchSpy).toHaveBeenCalledWith(
+      createCourse({ newCourse: {
+        name: 'Test Title',
+        description: 'Test Description',
+        length: 60,
+        date: '2017-09-28',
+        authors: [{ id: '3618', name: 'Laura Kirby' }] as any,
+      } })
+    );
   });
 });

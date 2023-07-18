@@ -2,25 +2,28 @@ import { TestBed } from '@angular/core/testing';
 import { ActivatedRouteSnapshot, RouterStateSnapshot, Router } from '@angular/router';
 import { HttpClientTestingModule } from '@angular/common/http/testing';
 import { AuthGuard } from './auth.guard';
-import { AuthService } from '../services/auth.service';
-import { BehaviorSubject, of } from 'rxjs';
+import { MockStore, provideMockStore } from '@ngrx/store/testing';
 
 describe('AuthGuard', () => {
   let guard: AuthGuard;
-  let authService: AuthService;
   let router: Router;
   let routerNavigateSpy: jasmine.Spy;
+  let store: MockStore;
 
   beforeEach(() => {
     routerNavigateSpy = jasmine.createSpy('navigate');
 
     TestBed.configureTestingModule({
       imports: [HttpClientTestingModule],
-      providers: [AuthService, AuthGuard, { provide: Router, useValue: {navigate: routerNavigateSpy} }]
+      providers: [
+        AuthGuard,
+        { provide: Router, useValue: {navigate: routerNavigateSpy} },
+        provideMockStore({ initialState: { auth: { isAuthenticated: false } } } as any),
+      ]
     });
 
     guard = TestBed.inject(AuthGuard);
-    authService = TestBed.inject(AuthService);
+    store = TestBed.inject(MockStore);
     router = TestBed.inject(Router);
   });
 
@@ -33,7 +36,7 @@ describe('AuthGuard', () => {
       const route = { data: { requiresLogin: true } } as unknown as ActivatedRouteSnapshot;
       const state = { url: 'test' } as RouterStateSnapshot;
 
-     authService.isAuthenticated$ = new BehaviorSubject<boolean>(false);
+      store.setState({ auth: { isAuthenticated: false } })
 
       guard.canActivate(route, state).subscribe((canActivate) => {
         expect(canActivate).toBe(false);
@@ -48,7 +51,7 @@ describe('AuthGuard', () => {
       const route = { data: { requiresLogin: true } } as unknown as ActivatedRouteSnapshot;
       const state = { url: 'test' } as RouterStateSnapshot;
 
-      authService.isAuthenticated$ = new BehaviorSubject<boolean>(true);
+      store.setState({ auth: { isAuthenticated: true } })
 
       guard.canActivate(route, state).subscribe((canActivate) => {
         expect(canActivate).toBe(true);
