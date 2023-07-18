@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { Actions, createEffect, ofType } from '@ngrx/effects';
 import { noop, of } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 import { catchError, concatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { loginSuccess, loginFailure, AuthActionTypes, GetUserActionTypes, getUserSuccess, getUserFailure, getUser, logoutSuccess, logoutFail } from './auth.actions';
 import { ajax } from 'rxjs/ajax';
@@ -15,32 +16,26 @@ export class AuthEffects {
     {
       return this.actions$.pipe(
         ofType(AuthActionTypes.Login),
-        mergeMap(({ login, password }): any => {
-          return ajax({
-            url: 'http://localhost:3004/auth/login',
-            method: 'POST',
-            body: { login, password },
-            headers: {
-              'Content-Type': 'application/json'
-            }
-            }).pipe(
-              map(({ response }) => {
-                const data = response as { token: string; user: UserLogin }
-                const token = data.token;
-                localStorage.setItem('token', token);
-                return data;
-              }),
-            )}
-        ),
-        concatMap((data: any): any => {
-          return of(
-            loginSuccess(data),
-            data.token ? getUser({ token: data.token }) : noop,
-          );
+        mergeMap(({ login, password }) =>
+          this.http.post<{ token: string; user: UserLogin }>(
+            'http://localhost:3004/auth/login',
+            { login, password })
+          ),
+        map((data) => {
+          const token = data.token;
+          localStorage.setItem('token', token);
+          return data;
         }),
+        concatMap((data) =>
+          of(
+            data.token ? getUser({ token: data.token }) : noop,
+            loginSuccess(data),
+          )
+        ),
         catchError((error) => of(loginFailure({ error: error.message })))
       )
-    });
+    }
+  );
 
   loginSuccess$ = createEffect(() => {
     return this.actions$.pipe(
@@ -51,7 +46,7 @@ export class AuthEffects {
     )
    }, { dispatch: false });
 
-  logout$ = createEffect((): any =>
+  logout$ = createEffect(() =>
     { return this.actions$.pipe(
       ofType(AuthActionTypes.Logout),
       mergeMap(() => {
@@ -73,28 +68,22 @@ export class AuthEffects {
     )
    }, { dispatch: false });
 
-  getUser$ = createEffect(() =>
-  { return this.actions$.pipe(
-    ofType(GetUserActionTypes.GetUser),
-    mergeMap(({ token }) =>
-    ajax({
-      url: 'http://localhost:3004/auth/userinfo',
-          method: 'POST',
-          body: { token },
-          headers: {
-            'Content-Type': 'application/json'
-          }
-    })),
-    concatMap(({ response }: any) => {
-      const data = response as {user: User};
-      return of(getUserSuccess(data));
-    }),
-    catchError((error) => of(getUserFailure({ error: error.message })))
-  )
-  })
+   getUser$ = createEffect(() =>
+   { return this.actions$.pipe(
+     ofType(GetUserActionTypes.GetUser),
+     mergeMap(({ token }) =>
+       this.http.post<{ user: User }>(
+         'http://localhost:3004/auth/userinfo',
+         { token })
+     ),
+     map((user) => getUserSuccess(user)),
+     catchError((error) => of(getUserFailure({ error: error.message })))
+   ) }
+ );
 
   constructor(
     private actions$: Actions,
     private router: Router,
+    private http: HttpClient,
   ) {}
 }
