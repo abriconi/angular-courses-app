@@ -20,7 +20,7 @@ export interface CourseState {
   error: string | null;
 }
 export interface CoursesListState {
-  courses: COURSE_MODEL[] | [];
+  courses: COURSE_MODEL[];
   error: string | null;
 }
 

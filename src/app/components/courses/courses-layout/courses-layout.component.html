@@ -1,9 +1,9 @@
 <div class="coursesLayout">
   <app-section (search)="handleSearch($event)"></app-section>
   <div class="coursesWrapper">
-      <ng-container *ngIf="courses.length > 0; else noData">
-        <ul class="coursesList">
-          <li *ngFor="let course of courses; trackBy: trackCourseById">
+    <ng-container *ngIf="courses$ | async; else noData">
+      <ul class="coursesList">
+        <li *ngFor="let course of courses$ | async; trackBy: trackCourseById">
             <app-courses-item
               [courseData]="course"
               [appHighlight]="course.date"

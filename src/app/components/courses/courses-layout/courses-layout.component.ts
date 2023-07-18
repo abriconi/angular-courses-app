@@ -1,7 +1,7 @@
-import { Component, ContentChildren, OnDestroy, OnInit } from '@angular/core';
+import { Component, ContentChildren, OnInit } from '@angular/core';
 import { HighlightDirective } from 'src/app/shared/directives/highlight/highlight.directive';
 import { COURSE_MODEL } from 'src/app/utilus/global.moduls';
-import { Subscription } from 'rxjs';
+import { Observable, of } from 'rxjs';
 import { Store } from '@ngrx/store';
 import { deleteCourse as deleteCourseAction, getCourses as getCoursesAction } from '../../../store/courses/courses.actions';
 import { selectCoursesList } from 'src/app/store/courses/courses.selectors';
@@ -11,9 +11,7 @@ import { selectCoursesList } from 'src/app/store/courses/courses.selectors';
   templateUrl: './courses-layout.component.html',
   styleUrls: ['./courses-layout.component.scss'],
 })
-export class CoursesLayoutComponent implements OnInit, OnDestroy  {
-
-  coursesSubscripton!: Subscription;
+export class CoursesLayoutComponent implements OnInit  {
 
   constructor(
     private store: Store,
@@ -21,7 +19,7 @@ export class CoursesLayoutComponent implements OnInit, OnDestroy  {
 
   @ContentChildren(HighlightDirective) appHighlight: any;
 
-  courses!: COURSE_MODEL[] | [];
+  courses$: Observable<COURSE_MODEL[]> = of([]);
   private currentPage = 1;
   private searchText = '';
   private pageSize = 3;
@@ -31,9 +29,7 @@ export class CoursesLayoutComponent implements OnInit, OnDestroy  {
   }
 
   ngOnInit(): void {
-    this.coursesSubscripton = this.store.select((selectCoursesList)).subscribe((courses) => {
-      this.courses = courses;
-    });
+    this.courses$ = this.store.select(selectCoursesList);
     this.getCourses();
   }
 
@@ -58,9 +54,5 @@ export class CoursesLayoutComponent implements OnInit, OnDestroy  {
     const amount = this.pageSize * this.currentPage
     this.searchText = searchText;
     this.store.dispatch(getCoursesAction({ amount: amount, textFragment: this.searchText }));
-  }
-
-  ngOnDestroy(): void {
-    this.coursesSubscripton.unsubscribe();
   }
 }
