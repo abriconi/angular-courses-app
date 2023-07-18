@@ -1,6 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
-import { Observable, Subscription } from 'rxjs';
-import { AfterViewInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { Observable } from 'rxjs';
 import { LoadService } from './services/load.service';
 import { Store } from '@ngrx/store';
 import { selectIsAuthenticated } from './store/auth/auth.selectors';
@@ -14,7 +13,6 @@ import { getUser } from './store/auth/auth.actions';
 export class AppComponent implements OnInit {
 
   public isAuthenticated$!: Observable<boolean>;
-  private loadingSubscription!: Subscription;
 
   isLoading$ = this.loadService.loader$;
 

@@ -25,7 +25,7 @@ export class SectionComponent implements OnInit, OnDestroy {
       this.handleSearch(e);
     });
   }
-    //TODO
+
     ngOnDestroy(): void {
       this.searchtextSubscription.unsubscribe();
     }

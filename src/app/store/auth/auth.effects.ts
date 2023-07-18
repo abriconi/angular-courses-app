@@ -4,7 +4,6 @@ import { noop, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { catchError, concatMap, map, mergeMap, tap } from 'rxjs/operators';
 import { loginSuccess, loginFailure, AuthActionTypes, GetUserActionTypes, getUserSuccess, getUserFailure, getUser, logoutSuccess, logoutFail } from './auth.actions';
-import { ajax } from 'rxjs/ajax';
 import { UserLogin, User } from 'src/app/utilus/global.moduls';
 import { Router } from '@angular/router';
 

@@ -110,7 +110,6 @@ export class CoursesEffects {
     )
   });
 
-
   constructor(
     private actions$: Actions,
     private http: HttpClient
